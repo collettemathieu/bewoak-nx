@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Article } from '../../../shared/models/article';
-import { ApiCrossRefServiceService } from './api-cross-ref-service.service';
 import { environment } from '../../../../environments/environment';
 import { switchMap, catchError } from 'rxjs/operators';
 import { ErrorService } from '../error.service';
+import { ApiCrossRefService } from '@bewoak-nx/api-cross-ref'
 
 @Injectable()
 export class DoiService {
 
   constructor(
     private errorService: ErrorService,
-    private ApiCrossRefService: ApiCrossRefServiceService
+    private crossRefService: ApiCrossRefService
   ) { }
 
   /**
@@ -19,10 +19,10 @@ export class DoiService {
    * @param id Identifiant DOI de l'article.
    */
   public getArticleByDoi(doi: string): Observable<Article | null> {
-    this.ApiCrossRefService.setOptions({
+    this.crossRefService.setOptions({
       pid: environment.apiCrossRef.pid
     });
-    return this.ApiCrossRefService.getArticleData(doi).pipe(
+    return this.crossRefService.getArticleData(doi).pipe(
       switchMap(data => {
         return of(new Article({
           doi,
@@ -46,6 +46,6 @@ export class DoiService {
    * @param doi L'identifiant de l'article.
    */
   public extractDoi(doi: string): string {
-    return this.ApiCrossRefService.extractDOI(doi);
+    return this.crossRefService.extractDOI(doi);
   }
 }

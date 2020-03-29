@@ -17,6 +17,9 @@
     "bewoak-e2e": {
       "tags": [],
       "implicitDependencies": ["bewoak"]
+    },
+    "api-cross-ref": {
+      "tags": []
     }
   }
 }

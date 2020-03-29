@@ -121,6 +121,37 @@
           }
         }
       }
+    },
+    "api-cross-ref": {
+      "projectType": "library",
+      "root": "libs/api-cross-ref",
+      "sourceRoot": "libs/api-cross-ref/src",
+      "prefix": "cr",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/api-cross-ref/tsconfig.lib.json",
+              "libs/api-cross-ref/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/api-cross-ref/**"]
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/api-cross-ref/src/test.ts",
+            "tsConfig": "libs/api-cross-ref/tsconfig.spec.json",
+            "karmaConfig": "libs/api-cross-ref/karma.conf.js"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
     }
   },
   "cli": {

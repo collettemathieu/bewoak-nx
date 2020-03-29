@@ -2,12 +2,10 @@ import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { HttpBackend, HttpClient, HttpHeaders } from '@angular/common/http';
 import { switchMap, catchError } from 'rxjs/operators';
-import { CrossRefInterface } from '../../../shared/interface/cross-ref-interface';
+import { CrossRefInterface } from '../interfaces/cross-ref-interface';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class ApiCrossRefServiceService {
+@Injectable()
+export class ApiCrossRefService {
 
   private static readonly STATUS_RESOLVED = 'resolved';
   private static readonly STATUS_UNRESOLVED = 'unresolved';
@@ -49,16 +47,16 @@ export class ApiCrossRefServiceService {
         if (parseError.length !== 0) {
           return throwError({
             code: 404,
-            statusText: ApiCrossRefServiceService.ERROR_PARSER
+            statusText: ApiCrossRefService.ERROR_PARSER
           });
         }
         const status = xmlDoc.getElementsByTagName('query')[0].getAttribute('status');
-        if (status === ApiCrossRefServiceService.STATUS_RESOLVED) {
+        if (status === ApiCrossRefService.STATUS_RESOLVED) {
           return of(this.getDataFromCrossRef(xmlDoc));
         }
-        if (status === ApiCrossRefServiceService.STATUS_UNRESOLVED) {
+        if (status === ApiCrossRefService.STATUS_UNRESOLVED) {
           return throwError({
-            statusText: ApiCrossRefServiceService.STATUS_UNRESOLVED
+            statusText: ApiCrossRefService.STATUS_UNRESOLVED
           });
         }
         return of(null);

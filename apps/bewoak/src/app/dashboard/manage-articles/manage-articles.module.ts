@@ -5,7 +5,7 @@ import { AddArticleComponent } from './add-article/add-article.component';
 import { ViewArticleComponent } from './view-article/view-article.component';
 import { SharedModule } from '../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ApiCrossRefServiceService } from '../../core/services/article/api-cross-ref-service.service';
+import { ApiCrossRefService } from '@bewoak-nx/api-cross-ref';
 import { DoiService } from '../../core/services/article/doi.service';
 import { RemoveArticleComponent } from './remove-article/remove-article.component';
 import { AddArticleModule } from './add-article/add-article.module';
@@ -19,7 +19,7 @@ import { AddArticleModule } from './add-article/add-article.module';
     ManageArticlesRoutingModule,
     AddArticleModule
   ],
-  providers: [ApiCrossRefServiceService, DoiService],
+  providers: [ApiCrossRefService, DoiService],
   exports: [AddArticleComponent, ViewArticleComponent],
 
 })
