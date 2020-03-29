@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <bw-add-course></bw-add-course>
+        </div>   
+    </div>
+    <div class="row">
+        <div class="col">
+            <div *ngIf="(courses$ | async) as courses">
+                <div *ngIf="courses?.length; else elseBlock" class="row">
+                    <div *ngFor="let course of courses" class="col-md-4">
+                        <bw-course-user [course]="course" (removeCourse)="remove($event)"></bw-course-user>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #elseBlock>
+    <div class="jumbotron">
+        <h1 class="display-4">Aucun parcours trouvé</h1>
+        <p class="lead">Vous n'avez pas encore créé de parcours pédagogique.</p>
+        <p class="lead">Cliquez sur le bouton ajouter un parcours pédagogique pour commencer.</p>
+    </div>
+</ng-template>

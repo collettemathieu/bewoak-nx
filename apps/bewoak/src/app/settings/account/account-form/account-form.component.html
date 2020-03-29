@@ -1,0 +1,14 @@
+<form [formGroup]="formAccount">
+    <div class="form-group form-row">
+        <label for="email" class="col-4 col-form-label">Adresse électronique*</label>
+        <div class="col-4" tooltip="Vous ne pouvez pas encore modifier votre adresse électronique." placement="right">
+            <input id="email" name="email" placeholder="Votre adresse électronique" class="form-control-plaintext"
+                type="email" autocomplete="false" autocorrect="false" [value]="user?.email" readonly>
+        </div>
+    </div>
+    <div class="form-group form-row">
+        <div class="offset-4 col-8">
+            <button disabled class="btn-default" name="submit" type="submit" class="btn btn-primary">Valider</button>
+        </div>
+    </div>
+</form>

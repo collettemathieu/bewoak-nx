@@ -1,0 +1,17 @@
+<div class="container" *ngIf="(courses$ | async) as courses">
+    <div class="row">
+        <div *ngIf="courses?.length; else elseBlock" class="col-md-4">
+            <div *ngFor="let course of courses">
+                <bw-search-course [course]="course"></bw-search-course>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #elseBlock>
+    <div class="jumbotron col">
+        <h1 class="display-4">Oops... Aucun parcours trouvé !</h1>
+        <p class="lead">Vous avez peut-être demandé un parcours qui n'existe pas encore.</p>
+        <p class="lead">En faire la demande... <button class="btn btn-primary">Go</button></p>
+    </div>
+</ng-template>

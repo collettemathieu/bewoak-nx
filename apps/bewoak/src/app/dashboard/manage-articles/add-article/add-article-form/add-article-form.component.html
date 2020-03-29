@@ -1,0 +1,42 @@
+<div class="modal-body">
+    <form [formGroup]="formArticle" role="form" (ngSubmit)="preview()" novalidate>
+        <div class="form-group form-row">
+            <label for="doi">Rechercher un article via son DOI*</label>
+            <input id="doi" formControlName="doi" name="doi"
+                placeholder="Entrer un identifiant DOI (eg: 10.1000/123456...)" class="form-control" type="text"
+                autocomplete="false" autocorrect="false">
+            <small *ngIf="doi.errors && doi.dirty" class="form-text text-muted">
+                <span [hidden]="!doi.errors.required">
+                    Un identifiant DOI est requis
+                </span>
+                <span [hidden]="!doi.errors.pattern">
+                    L'identifiant DOI n'est pas valide (eg: 10.1000/123456...).
+                </span>
+            </small>
+        </div>
+        <div *ngIf="article.value">
+            <label for="title">Résultat : </label>
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="title">Titre</span>
+                </div>
+                <input type="text" readonly class="form-control-plaintext form-control-sm px-1" aria-label="title"
+                    aria-describedby="title" [value]="article.value.title">
+            </div>
+        </div>
+        <div *ngIf="!article.value" class="form-group form-row">
+            <button type="submit" class="btn btn-primary ml-auto" [disabled]="!formArticle.valid"
+                [ngClass]="{'btn-success': formArticle.valid, 'btn-default': !formArticle.valid}">
+                Visualiser
+            </button>
+        </div>
+    </form>
+    <div *ngIf="article.value" class="form-group form-row">
+        <button (click)="cancel()" class="btn btn-primary mb-2">
+            Annuler
+        </button>
+        <button (click)="submit()" class="btn btn-success mb-2 ml-auto">
+            Valider
+        </button>
+    </div>
+</div>

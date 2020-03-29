@@ -1,0 +1,8 @@
+<button (click)="openModal(template)" type="button" class="btn btn-sm btn-outline-secondary">Supprimer</button>
+<ng-template #template>
+    <div class="modal-body text-center">
+        <p>Souhaitez-vous réellement supprimer ce parcours ?</p>
+        <button type="button" class="btn btn-default" (click)="remove()">Oui, j'en suis sûr(e) !</button>
+        <button type="button" class="btn btn-primary" (click)="decline()">Euh... non en fait !</button>
+    </div>
+</ng-template>

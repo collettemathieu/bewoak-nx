@@ -1,0 +1,3 @@
+<div class="alert-box">
+    <bw-message *ngFor="let toastr of toastrs" [toastr]="toastr" (closeMessageEmitter)="closeToastr($event)"></bw-message>
+</div>

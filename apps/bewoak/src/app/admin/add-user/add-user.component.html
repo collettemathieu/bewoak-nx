@@ -1,0 +1,77 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <h1 class="mt-3">Ajouter un nouvel utilisateur</h1>
+    </div>
+    <div class="row justify-content-center">
+        <div *ngIf="formIsSubmitted; then userBlock else formBlock"></div>
+    </div>
+</div>
+<ng-template #formBlock>
+    <form [formGroup]="addUserForm" class="col-5 mt-5 mb-5 border p-3" role="form" novalidate (ngSubmit)="submitForm()">
+        <div class="form-group">
+            <label for="firstname">Prénom :</label>
+            <input type="text" class="form-control" id="firstname" formControlName="firstname" autocomplete="false"
+                autocorrect="false">
+            <small *ngIf="firstname.errors && firstname.dirty" class="form-text text-muted">
+                <span [hidden]="!firstname.errors.required">
+                    Un prénom est requis.
+                </span>
+                <span [hidden]="!firstname.errors.minlength">
+                    Le prénom doit comprendre au moins 3 caractères.
+                </span>
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="lastname">Nom :</label>
+            <input type="text" class="form-control" id="lastname" formControlName="lastname" autocomplete="false"
+                autocorrect="false">
+            <small *ngIf="lastname.errors && lastname.dirty" class="form-text text-muted">
+                <span [hidden]="!lastname.errors.required">
+                    Un nom est requis.
+                </span>
+                <span [hidden]="!lastname.errors.minlength">
+                    Le nom doit comprendre au moins 3 caractères.
+                </span>
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="email">Adresse électronique :</label>
+            <input type="email" class="form-control" id="email" formControlName="email" autocomplete="false"
+                autocorrect="false">
+            <small *ngIf="email.errors && email.dirty" class="form-text text-muted">
+                <span [hidden]="!email.errors.required">
+                    Une adresse électronique est requise.
+                </span>
+                <span [hidden]="!email.errors.email">
+                    L'adresse électronique renseignée n'est pas valide.
+                </span>
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="role">Role :</label>
+            <ngx-select-dropdown formControlName="roleControl" [multiple]="true" [options]="roles" [config]="config"
+                autocomplete="false" autocorrect="false"></ngx-select-dropdown>
+            <small *ngIf="roleControl.errors && roleControl.dirty" class="form-text text-muted">
+                <span [hidden]="!roleControl.errors.required">
+                    Le rôle de l'utilisateur est requis.
+                </span>
+            </small>
+        </div>
+        <button type="submit" class="btn btn-primary float-right" [disabled]="!addUserForm.valid"
+            [ngClass]="{'btn-success': addUserForm.valid, 'btn-default': !addUserForm.valid}">
+            Valider</button>
+    </form>
+</ng-template>
+<ng-template #userBlock>
+    <div class="jumbotron">
+        <h1 class="display-4">Utilisateur enregistré !</h1>
+        <p class="lead">L'utilisateur <span class="font-weight-bold">{{ user.firstname }} {{user.lastname}}</span> a
+            bien été enregistré.
+            Vous pouvez le contacter afin de lui transmettre ses identifiants de connexion.
+        </p>
+        <hr class="my-2">
+        <p><span class="font-weight-bold">Identifiant : </span>{{ user.email }}</p>
+        <p><span class="font-weight-bold">Mot de passe : </span>{{ passwordUser }}</p>
+        <button class="btn btn-primary float-right mt-4" (click)="goHome()" role="button">Ok</button>
+    </div>
+</ng-template>

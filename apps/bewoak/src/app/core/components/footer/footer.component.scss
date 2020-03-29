@@ -1,0 +1,14 @@
+$textColor: white;
+$backgroundColor: #2196f3;
+
+.footer.blue {
+    background-color: $backgroundColor !important;
+    color: $textColor;
+
+    a{
+        color: $textColor;
+        &:hover{
+            color: $textColor;
+        }
+    }
+}

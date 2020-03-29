@@ -1,0 +1,76 @@
+<div class="modal-body">
+    <form [formGroup]="formCourse" class="col-12 mx-auto mt-5 mb-5" (ngSubmit)="submit()" novalidate>
+        <div class="form-group">
+            <label for="name" class="col-12 col-form-label">Nom du parcours*</label>
+            <div class="col-12">
+                <input id="name" formControlName="name" name="name" placeholder="Nom du parcours"
+                    class="form-control here" type="text" autocomplete="false" autocorrect="false">
+                <small *ngIf="name.errors && name.dirty" class="form-text text-muted">
+                    <span [hidden]="!name.errors.required">
+                        Un nom de parcours est requis
+                    </span>
+                    <span [hidden]="!name.errors.minlength">
+                        Le nom du parcours doit comporter au moins 3 caractères.
+                    </span>
+                    <span [hidden]="!name.errors.maxlength">
+                        Le nom du parcours ne peut exéceder 100 caractères.
+                    </span>
+                    <span [hidden]="!name.errors.checkCourseName">
+                        Le nom de ce parcours est déjà utilisé. Renseignez un autre nom.
+                    </span>
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="description" class="col-12 col-form-label">Description du parcours*</label>
+            <div class="col-12">
+                <textarea id="description" formControlName="description" name="description"
+                    placeholder="Description du parcours" class="form-control here" autocomplete="false"
+                    autocorrect="false"></textarea>
+                <small *ngIf="description.errors && description.dirty" class="form-text text-muted">
+                    <span [hidden]="!description.errors.required">
+                        Une description pour le parcours est requise.
+                    </span>
+                    <span [hidden]="!description.errors.minlength">
+                        La description du parcours doit comporter au moins 10 caractères.
+                    </span>
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="keywords" class="col-12 col-form-label">Mots clés du parcours*</label>
+            <div class="col-12">
+                <input id="keywords" formControlName="keywords" name="keywords" placeholder="Mot-clé un, mot-clé deux, ..."
+                    class="form-control here" type="text" autocomplete="false" autocorrect="false">
+                <small *ngIf="keywords.errors && keywords.dirty" class="form-text text-muted">
+                    <span [hidden]="!keywords.errors.required">
+                        Au moins un mot clé est requis afin d'identifier le parcours.
+                    </span>
+                    <span [hidden]="!keywords.errors.minlength">
+                        Un mot clé d'au moins 3 caractères est requis.
+                    </span>
+                    <span [hidden]="!keywords.errors.pattern">
+                        Les mots clés doivent contenir uniquement des caractères minuscules et 
+                        être séparés par des virgules (informatique, angular, ...).
+                    </span>
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="role" class="col-12 col-form-label">Difficulté du parcours*</label>
+            <div class="col-12">
+                <ngx-select-dropdown formControlName="levelControl" [multiple]="false" [options]="levels"
+                    [config]="config" autocomplete="false" autocorrect="false"></ngx-select-dropdown>
+                <small *ngIf="levelControl.errors && levelControl.dirty" class="form-text text-muted">
+                    <span [hidden]="!levelControl.errors.required">
+                        La difficulté du parcours est requise.
+                    </span>
+                </small>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary float-right" [disabled]="!formCourse.valid"
+            [ngClass]="{'btn-success': formCourse.valid, 'btn-default': !formCourse.valid}">
+            Valider
+        </button>
+    </form>
+</div>
