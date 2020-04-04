@@ -3,6 +3,12 @@
 @import "../../../node_modules/bootstrap/scss/bootstrap.scss";
 @import "../../../node_modules/bootswatch/dist/cosmo/bootswatch";
 
+body > *:first-child {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 /* Material icons */
 .material-icons {
     font-family: 'Material Icons';

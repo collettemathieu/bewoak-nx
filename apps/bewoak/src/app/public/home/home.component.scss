@@ -1,0 +1,8 @@
+section:last-child::before{
+    background: url(/assets/images/wave-bottom.svg) repeat-x top;
+    background-size: 1440px 80px;
+    content: "";
+    display: block;
+    height: 80px;
+    width: 100%;
+}

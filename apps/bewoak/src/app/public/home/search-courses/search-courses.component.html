@@ -1,9 +1,7 @@
-<div class="container" *ngIf="(courses$ | async) as courses">
-    <div class="row">
-        <div *ngIf="courses?.length; else elseBlock" class="col-md-4">
-            <div *ngFor="let course of courses">
-                <bw-search-course [course]="course"></bw-search-course>
-            </div>
+<div class="row" *ngIf="(courses$ | async) as courses">
+    <div *ngIf="courses?.length; else elseBlock" class="col-md-4">
+        <div *ngFor="let course of courses">
+            <bw-search-course [course]="course"></bw-search-course>
         </div>
     </div>
 </div>
