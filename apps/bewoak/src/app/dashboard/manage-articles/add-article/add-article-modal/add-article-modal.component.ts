@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { MDBModalRef } from 'angular-bootstrap-md';
 
 @Component({
   selector: 'bw-add-article-modal',
@@ -10,7 +10,7 @@ export class AddArticleModalComponent {
 
   public title: string;
 
-  constructor(private bsModelRef: BsModalRef) { }
+  constructor(private bsModelRef: MDBModalRef) { }
 
   /**
    * Fermeture de la fenêtre modale

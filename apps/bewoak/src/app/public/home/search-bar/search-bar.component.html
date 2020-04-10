@@ -1,13 +1,16 @@
-<form [formGroup]="searchForm" class="form" (ngSubmit)="submit()" role="form">
-    <div class="form-row align-items-start justify-content-center">
-        <div class="form-group col-6">
-            <label for="search" class="col-form-label sr-only">Votre recherche</label>
-            <input class="form-control" formControlName="search" type="text" id="search"
-                placeholder="Effectuez une recherche" aria-label="Rechercher" autocomplete="false" autocorrect="false">
+<form [formGroup]="searchForm" novalidate (ngSubmit)="submit()" role="form">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-6">
+            <div class="md-form">
+                <input mdbInput class="form-control" formControlName="search" type="text" id="search"
+                    aria-label="Rechercher" autocomplete="false" autocorrect="false">
+                <label for="search">Effectuez votre recherche</label>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary" [disabled]="!searchForm.valid"
-            [ngClass]="{'btn-success': searchForm.valid, 'btn-default': !searchForm.valid}">
-            <i class="material-icons" aria-hidden="true">search</i>
-        </button>
+        <div class="col-1">
+            <button type="submit" mdbBtn mdbWavesEffect color="success">
+                <mdb-icon fas icon="search"></mdb-icon>
+            </button>
+        </div>
     </div>
 </form>

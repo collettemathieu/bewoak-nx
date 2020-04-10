@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, TemplateRef } from '@angular/core';
 import { Course } from '../../../shared/models/course';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
 
 @Component({
   selector: 'bw-remove-course',
@@ -12,9 +12,9 @@ export class RemoveCourseComponent {
   @Output()
   removeCourse: EventEmitter<Course> = new EventEmitter();
 
-  public modalRef: BsModalRef;
+  public modalRef: MDBModalRef;
 
-  constructor(private modalService: BsModalService) { }
+  constructor(private modalService: MDBModalService) { }
 
   /**
    * Ouverture de la fenêtre modale de confirmation de suppression du parcours

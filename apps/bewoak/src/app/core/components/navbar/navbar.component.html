@@ -1,42 +1,47 @@
-<nav class="navbar navbar-expand-lg navbar-dark stylish-color">
-    <a class="navbar-brand" (click)="navigate(homePath)">Bewoak</a>
+<mdb-navbar [SideClass]="getClassNav()">
+    <mdb-navbar-brand>
+        <a class="navbar-brand" [href]="homePath">Bewoak</a>
+    </mdb-navbar-brand>
 
-    <ul class="navbar-nav mr-auto">
-        <li *ngIf="user?.hasRole('EXPERT')" dropdown class="nav-item dropdown">
-            <a dropdownToggle [class.active]='isActive(dashboardPath)' class="nav-link dropdown-toggle"
-                id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Tableau de bord
-            </a>
-            <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" (click)="navigate(manageCoursePath)">Gérer mes parcours</a>
-            </div>
-        </li>
-        <li *ngIf="user?.hasRole('ADMIN')" dropdown class="nav-item dropdown">
-            <a dropdownToggle class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false" [class.active]="isActive(adminPath)">
-                Administration
-            </a>
-            <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" (click)="navigate(addUserPath)">Ajouter un utilisateur</a>
-            </div>
-        </li>
-        <li *ngIf="!user" [class.active]='isActive(loginPath)' class="nav-item">
-            <a class="nav-link" (click)="navigate(loginPath)">Connexion</a>
-        </li>
-    </ul>
-    <ul *ngIf="user" class="navbar-nav">
-        <li dropdown class="nav-item dropdown">
-            <a dropdownToggle class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false" [class.active]="isActive(settingsPath)">
-                <i class="material-icons">
-                    account_circle
-                </i> {{ user.firstname }}
-            </a>
-            <div *dropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" (click)="navigate(settingsProfilePath)">Paramètres</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" (click)="logOut()">Deconnexion</a>
-            </div>
-        </li>
-    </ul>
-</nav>
+    <links>
+        <ul class="navbar-nav mr-auto">
+            <li *ngIf="user?.hasRole('EXPERT')" dropdown class="nav-item" [class.active]='isActive(dashboardPath)'>
+                <a dropdownToggle mdbWavesEffect class="nav-link dropdown-toggle waves-light" type="button"
+                    aria-haspopup="true" aria-expanded="false">
+                    Tableau de bord<span class="caret"></span>
+                </a>
+                <div *dropdownMenu class="dropdown-menu dropdown" role="menu">
+                    <a mdbWavesEffect class="dropdown-item waves-light" (click)="navigate(manageCoursePath)">Gérer mes
+                        parcours</a>
+                </div>
+            </li>
+            <li *ngIf="user?.hasRole('ADMIN')" dropdown class="nav-item" [class.active]="isActive(adminPath)">
+                <a dropdownToggle mdbWavesEffect class="nav-link dropdown-toggle" type="button" aria-haspopup="true"
+                    aria-expanded="false">
+                    Administration<span class="caret"></span>
+                </a>
+                <div *dropdownMenu class="dropdown-menu dropdown" role="menu">
+                    <a mdbWavesEffect class="dropdown-item waves-light" (click)="navigate(addUserPath)">Ajouter un
+                        utilisateur</a>
+                </div>
+            </li>
+            <li *ngIf="!user" [class.active]='isActive(loginPath)' class="nav-item">
+                <a mdbWavesEffect class="nav-link waves-light" (click)="navigate(loginPath)">Connexion</a>
+            </li>
+        </ul>
+        <ul *ngIf="user" class="navbar-nav">
+            <li dropdown class="nav-item" [class.active]="isActive(settingsPath)">
+                <a dropdownToggle mdbWavesEffect class="nav-link dropdown-toggle waves-light" type="button"
+                    aria-haspopup="true" aria-expanded="false">
+                    <mdb-icon fas icon="user"></mdb-icon> {{ user.firstname }}<span class="caret"></span>
+                </a>
+                <div *dropdownMenu class="dropdown dropdown-menu">
+                    <a mdbWavesEffect class="dropdown-item waves-light"
+                        (click)="navigate(settingsProfilePath)">Paramètres</a>
+                    <div class="dropdown-divider"></div>
+                    <a mdbWavesEffect class="dropdown-item waves-light" (click)="logOut()">Deconnexion</a>
+                </div>
+            </li>
+        </ul>
+    </links>
+</mdb-navbar>

@@ -1,14 +1,18 @@
 <form [formGroup]="formAccount">
-    <div class="form-group form-row">
-        <label for="email" class="col-4 col-form-label">Adresse électronique*</label>
-        <div class="col-4" tooltip="Vous ne pouvez pas encore modifier votre adresse électronique." placement="right">
-            <input id="email" name="email" placeholder="Votre adresse électronique" class="form-control-plaintext"
-                type="email" autocomplete="false" autocorrect="false" [value]="user?.email" readonly>
+    <div class="row align-items-baseline">
+        <label for="email" class="col-4">Adresse électronique*</label>
+        <div class="col-8">
+            <div class="md-form mb-0">
+                <input mdbInput id="email" mdbTooltip="Vous ne pouvez pas encore modifier votre adresse électronique." placement="left"
+                    class="form-control-plaintext" type="text" [value]="user?.email" readonly>
+            </div>
         </div>
     </div>
     <div class="form-group form-row">
         <div class="offset-4 col-8">
-            <button disabled class="btn-default" name="submit" type="submit" class="btn btn-primary">Valider</button>
+            <button type="submit" mdbBtn color="primary" mdbWavesEffect disabled>
+                Valider
+            </button>
         </div>
     </div>
 </form>

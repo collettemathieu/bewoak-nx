@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { MDBModalRef } from 'angular-bootstrap-md';
 
 @Component({
   selector: 'bw-add-course-modal',
@@ -10,13 +10,13 @@ export class AddCourseModalComponent {
 
   public title: string;
 
-  constructor(private bsModelRef: BsModalRef) { }
+  constructor(private modalRef: MDBModalRef) { }
 
   /**
    * Fermeture de la fenêtre modale
    */
   public closeModal() {
-    this.bsModelRef.hide();
+    this.modalRef.hide();
   }
 
   /**

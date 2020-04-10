@@ -2,9 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CourseStateService } from '../../../core/services/course/course-state.service';
 import { Observable, Subscription } from 'rxjs';
 import { Course } from '../../../shared/models/course';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { AddCourseModalComponent } from '../add-course/add-course-modal/add-course-modal.component';
 import { ActivatedRoute } from '@angular/router';
+import { MDBModalService, MDBModalRef } from 'angular-bootstrap-md';
 
 @Component({
   selector: 'bw-edit-course',
@@ -14,12 +14,12 @@ import { ActivatedRoute } from '@angular/router';
 export class EditCourseComponent implements OnInit, OnDestroy {
 
   public course$: Observable<Course | null>;
-  private bsModelRef: BsModalRef;
+  private modalRef: MDBModalRef;
   private subscription: Subscription;
 
   constructor(
     private courseStateService: CourseStateService,
-    private modalService: BsModalService,
+    private modalService: MDBModalService,
     private route: ActivatedRoute
   ) { }
 
@@ -37,8 +37,8 @@ export class EditCourseComponent implements OnInit, OnDestroy {
   }
 
   public editCourse() {
-    this.bsModelRef = this.modalService.show(AddCourseModalComponent, { class: 'modal-lg' });
-    this.bsModelRef.content.title = 'Modifier le parcours pédagogique';
+    this.modalRef = this.modalService.show(AddCourseModalComponent, { class: 'modal-lg' });
+    this.modalRef.content.title = 'Modifier le parcours pédagogique';
   }
 
 }

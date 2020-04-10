@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgxBootstrapModule } from './modules/ngx-bootstrap.module';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    NgxBootstrapModule,
+    MDBBootstrapModule.forRoot(),
     SelectDropDownModule
   ],
   exports: [
     CommonModule,
-    NgxBootstrapModule,
+    MDBBootstrapModule,
     SelectDropDownModule
   ]
 })

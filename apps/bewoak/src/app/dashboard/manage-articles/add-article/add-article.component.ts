@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { AddArticleModalComponent } from '../add-article/add-article-modal/add-article-modal.component';
+import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
 
 @Component({
   selector: 'bw-add-article',
@@ -9,15 +9,15 @@ import { AddArticleModalComponent } from '../add-article/add-article-modal/add-a
 })
 export class AddArticleComponent {
 
-  private bsModelRef: BsModalRef;
+  private modalRef: MDBModalRef;
 
-  constructor(private modalService: BsModalService) { }
+  constructor(private modalService: MDBModalService) { }
 
   /**
    * Modal pour l'ajout d'un nouvel article
    */
   public addArticle() {
-    this.bsModelRef = this.modalService.show(AddArticleModalComponent, { class: 'modal-lg' });
-    this.bsModelRef.content.title = 'Ajouter un article au parcours';
+    this.modalRef = this.modalService.show(AddArticleModalComponent, { class: 'modal-lg' });
+    this.modalRef.content.title = 'Ajouter un article au parcours';
   }
 }

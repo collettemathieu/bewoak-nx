@@ -1,9 +1,9 @@
 <div class="modal-body d-flex justify-content-center">
-    <form [formGroup]="formCourse" role="form" class="mb-5 w-75" (ngSubmit)="submit()" novalidate>
-        <div class="form-group form-row">
-            <label for="name" class="col-form-label">Nom du parcours*</label>
-            <input id="name" formControlName="name" name="name" placeholder="Nom du parcours"
-                class="form-control here" type="text" autocomplete="false" autocorrect="false">
+    <form [formGroup]="formCourse" role="form" class="mb-5 w-75 border p-3" (ngSubmit)="submit()" novalidate>
+        <div class="md-form">
+            <input mdbInput id="name" formControlName="name" name="name" class="form-control here" type="text"
+                autocomplete="false" autocorrect="false">
+            <label for="name">Nom du parcours*</label>
             <small *ngIf="name.errors && name.dirty" class="form-text text-muted">
                 <span [hidden]="!name.errors.required">
                     Un nom de parcours est requis
@@ -19,11 +19,10 @@
                 </span>
             </small>
         </div>
-        <div class="form-group form-row">
-            <label for="description" class="col-form-label">Description du parcours*</label>
-            <textarea id="description" formControlName="description" name="description"
-                placeholder="Description du parcours" class="form-control here" autocomplete="false"
-                autocorrect="false"></textarea>
+        <div class="md-form">
+            <textarea mdbInput id="description" formControlName="description" name="description"
+                class="md-textarea form-control here" autocomplete="false" autocorrect="false"></textarea>
+            <label for="description">Description du parcours*</label>
             <small *ngIf="description.errors && description.dirty" class="form-text text-muted">
                 <span [hidden]="!description.errors.required">
                     Une description pour le parcours est requise.
@@ -33,10 +32,10 @@
                 </span>
             </small>
         </div>
-        <div class="form-group form-row">
-            <label for="keywords" class="col-form-label">Mots clés du parcours*</label>
-            <input id="keywords" formControlName="keywords" name="keywords" placeholder="Mot-clé un, mot-clé deux, ..."
-                class="form-control here" type="text" autocomplete="false" autocorrect="false">
+        <div class="md-form">
+            <input mdbInput id="keywords" formControlName="keywords" name="keywords" class="form-control here"
+                type="text" autocomplete="false" autocorrect="false">
+            <label for="keywords">Mots clés du parcours (Mot-clé un, mot-clé deux, ...)*</label>
             <small *ngIf="keywords.errors && keywords.dirty" class="form-text text-muted">
                 <span [hidden]="!keywords.errors.required">
                     Au moins un mot clé est requis afin d'identifier le parcours.
@@ -45,13 +44,13 @@
                     Un mot clé d'au moins 3 caractères est requis.
                 </span>
                 <span [hidden]="!keywords.errors.pattern">
-                    Les mots clés doivent contenir uniquement des caractères minuscules et 
+                    Les mots clés doivent contenir uniquement des caractères minuscules et
                     être séparés par des virgules (informatique, angular, ...).
                 </span>
             </small>
         </div>
-        <div class="form-group form-row">
-            <label for="role" class="w-100 col-form-label">Difficulté du parcours*</label>
+        <div class="md-form">
+            <label for="role">Difficulté du parcours*</label>
             <ngx-select-dropdown class="w-100" formControlName="levelControl" [multiple]="false" [options]="levels"
                 [config]="config" autocomplete="false" autocorrect="false"></ngx-select-dropdown>
             <small *ngIf="levelControl.errors && levelControl.dirty" class="form-text text-muted">
@@ -60,9 +59,10 @@
                 </span>
             </small>
         </div>
-        <button type="submit" class="btn btn-primary float-right" [disabled]="!formCourse.valid"
-            [ngClass]="{'btn-success': formCourse.valid, 'btn-default': !formCourse.valid}">
-            Valider
-        </button>
+        <div class="form-group form-row">
+            <button type="submit" mdbBtn class="ml-auto" color="primary" mdbWavesEffect [disabled]="!formCourse.valid">
+                Valider
+            </button>
+        </div>
     </form>
 </div>

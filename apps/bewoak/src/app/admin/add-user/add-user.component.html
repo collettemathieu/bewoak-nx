@@ -8,9 +8,9 @@
 </div>
 <ng-template #formBlock>
     <form [formGroup]="addUserForm" class="col-5 mt-5 mb-5 border p-3" role="form" novalidate (ngSubmit)="submitForm()">
-        <div class="form-group">
-            <label for="firstname">Prénom :</label>
-            <input type="text" class="form-control" id="firstname" formControlName="firstname" autocomplete="false"
+        <div class="md-form">
+            <label for="firstname">Prénom</label>
+            <input mdbInput type="text" class="form-control" id="firstname" formControlName="firstname" autocomplete="false"
                 autocorrect="false">
             <small *ngIf="firstname.errors && firstname.dirty" class="form-text text-muted">
                 <span [hidden]="!firstname.errors.required">
@@ -21,9 +21,9 @@
                 </span>
             </small>
         </div>
-        <div class="form-group">
-            <label for="lastname">Nom :</label>
-            <input type="text" class="form-control" id="lastname" formControlName="lastname" autocomplete="false"
+        <div class="md-form">
+            <label for="lastname">Nom</label>
+            <input mdbInput type="text" class="form-control" id="lastname" formControlName="lastname" autocomplete="false"
                 autocorrect="false">
             <small *ngIf="lastname.errors && lastname.dirty" class="form-text text-muted">
                 <span [hidden]="!lastname.errors.required">
@@ -34,9 +34,9 @@
                 </span>
             </small>
         </div>
-        <div class="form-group">
-            <label for="email">Adresse électronique :</label>
-            <input type="email" class="form-control" id="email" formControlName="email" autocomplete="false"
+        <div class="md-form">
+            <label for="email">Adresse électronique</label>
+            <input mdbInput type="email" class="form-control" id="email" formControlName="email" autocomplete="false"
                 autocorrect="false">
             <small *ngIf="email.errors && email.dirty" class="form-text text-muted">
                 <span [hidden]="!email.errors.required">
@@ -47,8 +47,8 @@
                 </span>
             </small>
         </div>
-        <div class="form-group">
-            <label for="role">Role :</label>
+        <div class="md-form">
+            <label for="role">Role</label>
             <ngx-select-dropdown formControlName="roleControl" [multiple]="true" [options]="roles" [config]="config"
                 autocomplete="false" autocorrect="false"></ngx-select-dropdown>
             <small *ngIf="roleControl.errors && roleControl.dirty" class="form-text text-muted">
@@ -57,9 +57,11 @@
                 </span>
             </small>
         </div>
-        <button type="submit" class="btn btn-primary float-right" [disabled]="!addUserForm.valid"
-            [ngClass]="{'btn-success': addUserForm.valid, 'btn-default': !addUserForm.valid}">
-            Valider</button>
+        <div class="form-group form-row">
+            <button type="submit" mdbBtn class="ml-auto" color="primary" mdbWavesEffect [disabled]="!addUserForm.valid">
+                Valider
+            </button>
+        </div>
     </form>
 </ng-template>
 <ng-template #userBlock>

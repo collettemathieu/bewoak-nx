@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { AddCourseModalComponent } from './add-course-modal/add-course-modal.component';
+import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
 
 @Component({
   selector: 'bw-add-course',
@@ -9,16 +9,16 @@ import { AddCourseModalComponent } from './add-course-modal/add-course-modal.com
 })
 export class AddCourseComponent {
 
-  public bsModelRef: BsModalRef;
+  public modalRef: MDBModalRef;
 
-  constructor(private modalService: BsModalService) { }
+  constructor(private modalService: MDBModalService) { }
 
   /**
    * Modal pour l'ajout d'un nouveau parcours
    */
   addCourse() {
-    this.bsModelRef = this.modalService.show(AddCourseModalComponent, { class: 'modal-lg' });
-    this.bsModelRef.content.title = 'Nouveau parcours pédagogique';
+    this.modalRef = this.modalService.show(AddCourseModalComponent, { class: 'modal-lg' });
+    this.modalRef.content.title = 'Nouveau parcours pédagogique';
   }
 
 }

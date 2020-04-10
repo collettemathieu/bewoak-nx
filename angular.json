@@ -21,9 +21,17 @@
             "polyfills": "apps/bewoak/src/polyfills.ts",
             "tsConfig": "apps/bewoak/tsconfig.app.json",
             "aot": true,
-            "assets": ["apps/bewoak/src/favicon.ico", "apps/bewoak/src/assets"],
-            "styles": ["apps/bewoak/src/styles.scss"],
-            "scripts": []
+            "assets": [
+              "apps/bewoak/src/favicon.ico",
+              "apps/bewoak/src/assets"
+            ],
+            "styles": [
+              "apps/bewoak/src/styles.scss"
+            ],
+            "scripts": [
+              "node_modules/chart.js/dist/Chart.js",
+              "node_modules/hammerjs/hammer.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -80,7 +88,10 @@
               "apps/bewoak/tsconfig.app.json",
               "apps/bewoak/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/bewoak/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/bewoak/**"
+            ]
           }
         },
         "test": {
@@ -117,7 +128,10 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "apps/bewoak-e2e/tsconfig.e2e.json",
-            "exclude": ["**/node_modules/**", "!apps/bewoak-e2e/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/bewoak-e2e/**"
+            ]
           }
         }
       }
@@ -135,7 +149,10 @@
               "libs/api-cross-ref/tsconfig.lib.json",
               "libs/api-cross-ref/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/api-cross-ref/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/api-cross-ref/**"
+            ]
           }
         },
         "test": {

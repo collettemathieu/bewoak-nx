@@ -1,10 +1,10 @@
 <div class="modal-body">
     <form [formGroup]="formArticle" role="form" (ngSubmit)="preview()" novalidate>
-        <div class="form-group form-row">
-            <label for="doi">Rechercher un article via son DOI*</label>
-            <input id="doi" formControlName="doi" name="doi"
-                placeholder="Entrer un identifiant DOI (eg: 10.1000/123456...)" class="form-control" type="text"
+        <div class="md-form">
+            <input mdbInput id="doi" formControlName="doi" name="doi"
+                class="form-control" type="text"
                 autocomplete="false" autocorrect="false">
+                <label for="doi">Rechercher un article via son DOI*</label>
             <small *ngIf="doi.errors && doi.dirty" class="form-text text-muted">
                 <span [hidden]="!doi.errors.required">
                     Un identifiant DOI est requis
@@ -25,17 +25,16 @@
             </div>
         </div>
         <div *ngIf="!article.value" class="form-group form-row">
-            <button type="submit" class="btn btn-primary ml-auto" [disabled]="!formArticle.valid"
-                [ngClass]="{'btn-success': formArticle.valid, 'btn-default': !formArticle.valid}">
+            <button type="submit" mdbWavesEffect mdbBtn class="ml-auto" color="success" [disabled]="!formArticle.valid">
                 Visualiser
             </button>
         </div>
     </form>
     <div *ngIf="article.value" class="form-group form-row">
-        <button (click)="cancel()" class="btn btn-primary mb-2">
+        <button (click)="cancel()" mdbWavesEffect mdbBtn color="primary" class="mb-2">
             Annuler
         </button>
-        <button (click)="submit()" class="btn btn-success mb-2 ml-auto">
+        <button (click)="submit()" mdbWavesEffect mdbBtn color="success" class="mb-2 ml-auto">
             Valider
         </button>
     </div>
