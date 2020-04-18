@@ -1,7 +1,7 @@
-type roles = 'USER' | 'EXPERT' | 'ADMIN';
+type roles = 'USER' | 'EXPERT' | 'ADMIN' | 'ROOT';
 
 export class User {
-    readonly id: string;
+    id: string;
     firstname: string;
     lastname: string;
     email: string;
@@ -16,7 +16,7 @@ export class User {
         firstname?: string,
         lastname?: string,
         email?: string,
-        roles?: Array<roles>,
+        roles?: roles[],
         avatarUrl?: string,
         jobBackground?: string,
         dateAdd?: number,

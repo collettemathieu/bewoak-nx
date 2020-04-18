@@ -90,6 +90,9 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
     let userRole: string;
     user.roles.forEach((role, index) => {
       switch (role) {
+        case 'ROOT' :
+          userRole = 'Super administrateur';
+          break;
         case 'ADMIN':
           userRole = 'Administrateur';
           break;

@@ -9,6 +9,7 @@ import { ToastrService } from '../toastr.service';
 import { ErrorService } from '../error.service';
 import { LoaderService } from '../loader.service';
 import { Router } from '@angular/router';
+import { RandomService } from '../random.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,8 @@ export class AuthService {
     private userService: UserService,
     private toastrService: ToastrService,
     private errorService: ErrorService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private randomService: RandomService
   ) {
     // Requête Http sans intercepteur
     this.http = new HttpClient(this.handler);
@@ -116,21 +118,15 @@ export class AuthService {
    * Méthode permettant l'enregistrement de l'utilisateur sur firebase
    * @param options Données de l'utilisateur
    */
-  register(options: {
-    firstname: string,
-    lastname: string,
-    email: string,
-    password: string,
-    role: Array<'USER' | 'EXPERT' | 'ADMIN'>,
-  }): Observable<User | null> {
+  register(newUser: User): Observable<{ user: User, password: string } | null> {
     // Mise en attente
     this.loaderService.setLoading(true);
 
     // Configuration
     const url = `${environment.firebase.auth.baseUrl}accounts:signUp?key=${environment.firebase.apiKey}`;
     const requestData = {
-      email: options.email,
-      password: options.password,
+      email: newUser.email,
+      password: this.randomService.generatePassword(),
       returnSecureToken: true
     };
     const httpOptions = {
@@ -142,16 +138,14 @@ export class AuthService {
     // Envoi requête
     return this.http.post<User>(url, requestData, httpOptions).pipe(
       switchMap((data: any) => {
-        const user: User = new User({
-          id: data.localId,
-          firstname: options.firstname,
-          lastname: options.lastname,
-          email: data.email,
-          roles: options.role,
-          dateAdd: Date.now(),
-          dateUpdate: Date.now()
+        newUser.id = data.localId;
+        newUser.dateAdd = Date.now();
+        newUser.dateUpdate = Date.now();
+        this.userService.save(newUser).subscribe();
+        return of({
+          user: newUser,
+          password: requestData.password
         });
-        return this.userService.save(user);
       }),
       tap(_ => {
         // Envoi d'un message

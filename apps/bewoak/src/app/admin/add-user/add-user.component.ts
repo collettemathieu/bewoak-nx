@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { AuthService } from '../../core/services/user/auth.service';
-import { RandomService } from '../../core/services/random.service';
 import { FormUserService } from '../../core/services/user/form-user.service';
 import { User } from '../../shared/models/user';
 import { Router } from '@angular/router';
@@ -35,15 +34,20 @@ export class AddUserComponent implements OnInit {
     // label thats displayed in search input
     searchPlaceholder: 'Rechercher',
   };
+  public currentUserIsRoot = false;
+  private currentUser: User;
 
   constructor(
     private authService: AuthService,
     private router: Router,
-    private randomService: RandomService,
     private formUserService: FormUserService
   ) { }
 
   ngOnInit() {
+    this.currentUser = this.authService.getCurrentUser();
+    if(this.currentUser.hasRole('ROOT')){
+      this.currentUserIsRoot = true;
+    }
     this.addUserForm = this.createForm();
   }
 
@@ -52,7 +56,11 @@ export class AddUserComponent implements OnInit {
    */
   private createForm(): FormGroup {
     // Contrôles demandés
-    const controlsAsked = ['firstname', 'lastname', 'email', 'roleControl'];
+    const controlsAsked = ['firstname', 'lastname', 'email'];
+    // Les rôles ne sont gérés que par le super administrateur
+    if(this.currentUserIsRoot){
+      controlsAsked.push('roleControl');
+    }
     // Récupération du formulaire standard de l'entité User
     return this.formUserService.generateFormGroup(controlsAsked);
   }
@@ -62,21 +70,23 @@ export class AddUserComponent implements OnInit {
    */
   public submitForm(): void {
     if (this.addUserForm.valid) {
-      const options = {
+      const newUser = new User({
         firstname: this.firstname.value,
         lastname: this.lastname.value,
         email: this.email.value,
-        password: this.randomService.generatePassword(),
-        role: this.roleControl.value
-      };
+        roles: ['USER', 'EXPERT']
+      });
+      if(this.currentUserIsRoot){
+        newUser.roles = this.roleControl.value;
+      }
 
       // Enregistrement de l'utilisateur dans le firebase
       // Affichage des informations utilisateur si ok
       // On reste sur le formulaire si ko
-      this.authService.register(options).subscribe(
-        user => {
-          this.user = user;
-          this.passwordUser = options.password;
+      this.authService.register(newUser).subscribe(
+        data => {
+          this.user = data.user;
+          this.passwordUser = data.password;
           this.formIsSubmitted = true;
         }
       );
