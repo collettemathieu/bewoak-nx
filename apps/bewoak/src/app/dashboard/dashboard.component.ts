@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User } from '../shared/models/user';
 import { AuthService } from '../core/services/user/auth.service';
 import { CoursesStateUserService } from '../core/services/course/courses-state-user.service';
-import { CourseStateService } from '../core/services/course/course-state.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'bw-dashboard',
   templateUrl: './dashboard.component.html',
   styles: []
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
 
   private user: User;
+  private subscription: Subscription;
 
   constructor(
     private authService: AuthService,
@@ -19,7 +20,13 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.user = this.authService.getCurrentUser();
+    this.subscription = this.authService.user$.subscribe(
+      user => this.user = user
+    );
     this.coursesStateUserService.getCoursesByUser(this.user.id).subscribe();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

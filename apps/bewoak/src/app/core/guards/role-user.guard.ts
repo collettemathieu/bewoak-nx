@@ -9,12 +9,19 @@ import { map } from 'rxjs/operators';
 })
 export class RoleUserGuard implements CanActivate, CanActivateChild {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) { }
 
   canActivate(): Observable<boolean> {
     return this.authService.user$.pipe(
       map(user => {
-        return !!user && user.hasRole('USER');
+        const hasRole = !!user && user.hasRole('USER');
+        if (!hasRole) {
+          this.router.navigate(['home']);
+        }
+        return hasRole;
       })
     );
   }

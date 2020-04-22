@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { AuthService } from '../../core/services/user/auth.service';
 import { FormUserService } from '../../core/services/user/form-user.service';
 import { User } from '../../shared/models/user';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'bw-add-user',
   templateUrl: './add-user.component.html',
   styleUrls: ['./add-user.component.scss']
 })
-export class AddUserComponent implements OnInit {
+export class AddUserComponent implements OnInit, OnDestroy {
 
   public formIsSubmitted = false; // Après enregistrement, affiche les informations de l'utilisateur
   public user: User = new User({});
@@ -34,8 +35,8 @@ export class AddUserComponent implements OnInit {
     // label thats displayed in search input
     searchPlaceholder: 'Rechercher',
   };
-  public currentUserIsRoot = false;
   private currentUser: User;
+  private subscription: Subscription;
 
   constructor(
     private authService: AuthService,
@@ -44,11 +45,14 @@ export class AddUserComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.currentUser = this.authService.getCurrentUser();
-    if(this.currentUser.hasRole('ROOT')){
-      this.currentUserIsRoot = true;
-    }
+    this.subscription = this.authService.user$.subscribe(
+      user => this.currentUser = user
+    );
     this.addUserForm = this.createForm();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   /**
@@ -58,7 +62,7 @@ export class AddUserComponent implements OnInit {
     // Contrôles demandés
     const controlsAsked = ['firstname', 'lastname', 'email'];
     // Les rôles ne sont gérés que par le super administrateur
-    if(this.currentUserIsRoot){
+    if (this.currentUser.hasRole('ROOT')) {
       controlsAsked.push('roleControl');
     }
     // Récupération du formulaire standard de l'entité User
@@ -76,7 +80,7 @@ export class AddUserComponent implements OnInit {
         email: this.email.value,
         roles: ['USER', 'EXPERT']
       });
-      if(this.currentUserIsRoot){
+      if (this.currentUser.hasRole('ROOT')) {
         newUser.roles = this.roleControl.value;
       }
 

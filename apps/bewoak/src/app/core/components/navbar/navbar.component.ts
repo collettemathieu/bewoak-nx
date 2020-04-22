@@ -11,9 +11,8 @@ import { User } from '../../../shared/models/user';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
 
-  private subscription: Subscription;
-  public user: User;
 
+  public user: User;
   public homePath = 'home';
   public dashboardPath = 'dashboard';
   public loginPath = 'login';
@@ -22,6 +21,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public manageCoursePath = '/dashboard/manageCourse';
   public settingsPath = 'settings';
   public settingsProfilePath = 'settings/profile';
+  private subscription: Subscription;
 
   constructor(
     private router: Router,

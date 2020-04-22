@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Course } from '../../../../shared/models/course';
 import { AuthService } from '../../../../core/services/user/auth.service';
@@ -6,13 +6,14 @@ import { User } from '../../../../shared/models/user';
 import { CoursesStateUserService } from '../../../../core/services/course/courses-state-user.service';
 import { CheckCourseNameValidator } from '../../../../shared/validators/check-course-name.validator';
 import { CourseStateService } from '../../../../core/services/course/course-state.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'bw-add-course-form',
   templateUrl: './add-course-form.component.html',
   styleUrls: ['./add-course-form.component.scss']
 })
-export class AddCourseFormComponent implements OnInit {
+export class AddCourseFormComponent implements OnInit, OnDestroy {
 
   @Output()
   private closeModalParent: EventEmitter<boolean> = new EventEmitter(false);
@@ -43,6 +44,7 @@ export class AddCourseFormComponent implements OnInit {
   private user: User;
   // Parcours pédagogique courant
   private course: Course;
+  private subscription: Subscription;
 
 
   constructor(
@@ -55,9 +57,15 @@ export class AddCourseFormComponent implements OnInit {
 
   ngOnInit() {
     this.course = this.courseStateService.getCurrentCourse();
-    this.user = this.authService.getCurrentUser();
+    this.subscription = this.authService.user$.subscribe(
+      user => this.user = user
+    );
     this.formCourse = this.createForm();
     this.initForm();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   /**

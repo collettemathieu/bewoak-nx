@@ -13,8 +13,9 @@ import { Subscription } from 'rxjs';
 export class ProfileFormComponent implements OnInit, OnDestroy {
 
   public formProfile: FormGroup;
-  private subscription: Subscription;
   public roles: string;
+  private user: User;
+  private subscription: Subscription;
 
   constructor(
     private authService: AuthService,
@@ -28,6 +29,7 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = this.authService.user$.subscribe(
       user => {
+        this.user = user;
         if (user) {
           // Affichage des rôles de l'utiliateur (pour information)
           this.roles = this.getRolesFromUser(user);
@@ -49,7 +51,7 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
    */
   public submit(): void {
     if (this.formProfile.valid) {
-      const user = this.authService.getCurrentUser();
+      const user = this.user;
       user.firstname = this.firstname.value;
       user.lastname = this.lastname.value;
       user.jobBackground = this.jobBackground.value;
@@ -90,7 +92,7 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
     let userRole: string;
     user.roles.forEach((role, index) => {
       switch (role) {
-        case 'ROOT' :
+        case 'ROOT':
           userRole = 'Super administrateur';
           break;
         case 'ADMIN':

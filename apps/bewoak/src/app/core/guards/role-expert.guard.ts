@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, CanActivateChild } from '@angular/router';
+import { CanActivate, CanActivateChild, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/user/auth.service';
 import { map } from 'rxjs/operators';
@@ -9,12 +9,19 @@ import { map } from 'rxjs/operators';
 })
 export class RoleExpertGuard implements CanActivate, CanActivateChild {
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) { }
 
   canActivate(): Observable<boolean> {
     return this.authService.user$.pipe(
       map(user => {
-        return !!user && user.hasRole('EXPERT');
+        const hasRole = !!user && user.hasRole('EXPERT');
+        if (!hasRole) {
+          this.router.navigate(['home']);
+        }
+        return hasRole;
       })
     );
   }
