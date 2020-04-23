@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, CanActivateChild, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AuthService } from '../services/user/auth.service';
-import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,19 +14,18 @@ export class RoleAdminGuard implements CanActivate, CanActivateChild {
   ) { }
 
   canActivate(): Observable<boolean> {
-    return this.authService.user$.pipe(
-      map(user => {
-        const hasRole = !!user && user.hasRole('ADMIN');
-        if (!hasRole) {
-          this.router.navigate(['home']);
-        }
-        return hasRole;
-      })
-    );
+    if(!this.authService.isAuthenticated()){
+      return of(false);
+    }
+    const currentUser = this.authService.getCurrentUser();
+    const hasRole = !!currentUser && currentUser.hasRole('ADMIN');
+    if (!hasRole) {
+      this.router.navigate(['home']);
+    }
+    return of(hasRole);
   }
 
   canActivateChild(): Observable<boolean> {
     return this.canActivate();
   }
-
 }

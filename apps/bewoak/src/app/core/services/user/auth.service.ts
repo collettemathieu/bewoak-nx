@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, BehaviorSubject, ReplaySubject } from 'rxjs';
+import { Observable, of, ReplaySubject } from 'rxjs';
 import { User } from '../../../shared/models/user';
 import { HttpClient, HttpHeaders, HttpBackend } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
@@ -24,9 +24,10 @@ export class AuthService {
 
   private user: ReplaySubject<User | null> = new ReplaySubject();
   public readonly user$: Observable<User | null> = this.user.asObservable();
+  private currentUser: User;
 
   private http: HttpClient;
-
+  private helper: JwtHelperService;
 
   constructor(
     private handler: HttpBackend,
@@ -39,6 +40,7 @@ export class AuthService {
   ) {
     // Requête Http sans intercepteur.
     this.http = new HttpClient(this.handler);
+    this.helper = new JwtHelperService();
   }
 
   /**
@@ -75,6 +77,11 @@ export class AuthService {
         return this.userService.getUser(userId);
       }),
       tap(user => this.user.next(user)),
+      tap(_ => {
+        this.user.subscribe(
+          user => this.currentUser = user
+        );
+      }),
       tap(_ => this.logOutTimer(connectingTime)),
       tap(user => {
         // Envoi d'un message.
@@ -104,30 +111,29 @@ export class AuthService {
     const data = this.getDataFromLocalStorage();
     const userId: string = data.id || '';
     const jwt: string = data.token || '';
-    const now = new Date().getTime();
-    const expirationDate: number = +data.date || now;
 
-    if (!jwt) {
+    if (this.helper.isTokenExpired(jwt)) {
       return;
     }
 
-    if (now >= expirationDate) {
-      return;
-    }
+    this.user.subscribe(
+      user => this.currentUser = user
+    );
 
     this.userService.getUser(userId).subscribe(
       user => {
         this.user.next(user);
       }
     );
+
+
   }
 
   public isAuthenticated(): boolean {
-    const helper = new JwtHelperService();
     const data = this.getDataFromLocalStorage();
     const jwt: string = data.token || '';
     // Vérifie la date d'expiration du token.
-    return !helper.isTokenExpired(jwt);
+    return !this.helper.isTokenExpired(jwt);
   }
 
   /**
@@ -216,18 +222,22 @@ export class AuthService {
    */
   public getDataFromLocalStorage(): {
     id: string,
-    token: string,
-    date: number
+    token: string
   } {
     const userId: string = localStorage.getItem('userId') || '';
     const jwt: string = localStorage.getItem('token') || '';
-    const expirationDate: number = +localStorage.getItem('expirationDate') || 0;
 
     return {
       id: userId,
-      token: jwt,
-      date: expirationDate
+      token: jwt
     };
+  }
+
+  /**
+   * Retourne l'utilisateur courant connecté
+   */
+  public getCurrentUser(): User {
+    return this.currentUser;
   }
 
   /**
@@ -236,10 +246,8 @@ export class AuthService {
    */
   private setDataFromLocalStorage(data: {
     id: string,
-    token: string,
-    date: Date
+    token: string
   }): void {
-    localStorage.setItem('expirationDate', (data.date.getTime() + 3600 * 1000).toString());
     localStorage.setItem('token', data.token);
     localStorage.setItem('userId', data.id);
   }
@@ -248,7 +256,6 @@ export class AuthService {
    * Méthode permettant de supprimer les informations du local storage.
    */
   private removeDataFromLocalStorage(): void {
-    localStorage.removeItem('expirationDate');
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
   }
@@ -273,8 +280,7 @@ export class AuthService {
   private saveAuthData(userId: string, jwt: string): void {
     this.setDataFromLocalStorage({
       id: userId,
-      token: jwt,
-      date: new Date()
+      token: jwt
     });
   }
 
