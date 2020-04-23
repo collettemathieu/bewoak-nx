@@ -3,8 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../core/guards/auth.guard';
 import { RoleUserGuard } from '../core/guards/role-user.guard';
 import { SettingsComponent } from './settings.component';
-import { ProfileComponent } from './profile/profile.component';
-import { AccountComponent } from './account/account.component';
 
 
 const routes: Routes = [
@@ -14,8 +12,14 @@ const routes: Routes = [
     canActivate: [AuthGuard, RoleUserGuard],
     canActivateChild: [AuthGuard, RoleUserGuard],
     children: [
-      { path: 'profile', component: ProfileComponent },
-      { path: 'account', component: AccountComponent }
+      {
+        path: 'profile',
+        loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule)
+      },
+      {
+        path: 'account',
+        loadChildren: () => import('./account/account.module').then(m => m.AccountModule)
+      }
     ]
   }
 ];
