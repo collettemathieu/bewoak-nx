@@ -6,7 +6,6 @@ import { DashboardComponent } from './dashboard.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { DashboardRoutingModule } from './dashboard-routing.module';
-import { CoursesUserModule } from './manage-courses/courses-user.module';
 import { CourseService } from '../core/services/course/course.service';
 import { CourseStateService } from '../core/services/course/course-state.service';
 import { CoursesStateUserService } from '../core/services/course/courses-state-user.service';
@@ -17,8 +16,7 @@ registerLocaleData(localeFr, 'fr-FR');
   imports: [
     SharedModule,
     DashboardRoutingModule,
-    ReactiveFormsModule,
-    CoursesUserModule
+    ReactiveFormsModule
   ],
   providers: [
     CourseService,
