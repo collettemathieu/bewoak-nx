@@ -25,12 +25,12 @@ export class CourseStateService {
 
   /**
    * Récupère le parcours pédagogique en fonction de son ID
-   * avec les articles qu'il contient dans l'ordre d'apparition
-   * @param id Id du parcours pédagogique
-   * @return Une observable du parcours pédagogique
+   * avec les articles qu'il contient dans l'ordre d'apparition.
+   * @param id Id du parcours pédagogique.
+   * @return Une observable du parcours pédagogique.
    */
   public getCourse(id: string): Observable<Course> {
-    // Mise en attente
+    // Mise en attente.
     this.loaderService.setLoading(true);
 
     return this.courseService.getCourse(id).pipe(
@@ -46,15 +46,15 @@ export class CourseStateService {
       }),
       catchError(error => this.errorService.handleError(error)),
       finalize(() => {
-        // Fin mise en attente
+        // Fin mise en attente.
         this.loaderService.setLoading(false);
       })
     );
   }
 
   /**
-   * Modifie un parcours pédagogique
-   * @param course Le parcours pédagogique à modifier
+   * Modifie un parcours pédagogique.
+   * @param course Le parcours pédagogique à modifier.
    */
   public updateCourse(course: Course): Observable<Course> {
 
@@ -66,7 +66,7 @@ export class CourseStateService {
         this.course.next(updatedCourse);
       }),
       tap(_ => {
-        // Envoi d'un message à l'utilisateur
+        // Envoi d'un message à l'utilisateur.
         this.toastrService.showMessage({
           type: 'success',
           message: 'Le parcours pédagogique a bien été modifié'
@@ -74,29 +74,29 @@ export class CourseStateService {
       }),
       catchError(error => this.errorService.handleError(error)),
       finalize(() => {
-        // Fin mise en attente
+        // Fin mise en attente.
         this.loaderService.setLoading(false);
       })
     );
   }
 
   /**
-   * Retourne le parcours pédagogique courant
+   * Retourne le parcours pédagogique courant.
    */
   public getCurrentCourse(): Course {
     return this.course.getValue();
   }
 
   /**
-   * Annule l'état du parcours courant
+   * Annule l'état du parcours courant.
    */
   public resetCourse(): void {
     this.course.next(null);
   }
 
   /**
-   * Tri les articles selon leur ordre d'apparition dans le parcours pédagogique
-   * @param articles Un tableau d'articles à trier
+   * Tri les articles selon leur ordre d'apparition dans le parcours pédagogique.
+   * @param articles Un tableau d'articles à trier.
    */
   private sortByOrder(articles: Article[]) {
     const idCourse: string = this.getCurrentCourse().id;

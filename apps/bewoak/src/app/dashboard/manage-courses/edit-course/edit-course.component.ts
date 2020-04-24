@@ -24,11 +24,11 @@ export class EditCourseComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    // Récupération du cours en fonction de son id
+    // Récupération du cours en fonction de son id.
     const idCourse = this.route.snapshot.paramMap.get('id');
     this.subscription = this.courseStateService.getCourse(idCourse).subscribe();
 
-    // On s'abonne à l'état du parcours demandé
+    // On s'abonne à l'état du parcours demandé.
     this.course$ = this.courseStateService.course$;
   }
 

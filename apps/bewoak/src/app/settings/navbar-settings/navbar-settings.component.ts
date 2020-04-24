@@ -14,16 +14,16 @@ export class NavbarSettingsComponent {
   constructor(private router: Router) { }
 
   /**
-   * Retourne si la lien demandée est le lien actif
-   * @param path chemin demandé
+   * Retourne si la lien demandée est le lien actif.
+   * @param path chemin demandé.
    */
   public isActive(path: string): boolean {
-    return this.router.isActive(path, true); // L'url est exact
+    return this.router.isActive(path, true); // L'url est exact.
   }
 
   /**
-   * Redirige l'utilisateur vers le lien demandé
-   * @param path chemin demandé
+   * Redirige l'utilisateur vers le lien demandé.
+   * @param path chemin demandé.
    */
   public navigate(path: string): void {
     this.router.navigate([path]);

@@ -34,8 +34,8 @@ export class User {
     }
 
     /**
-     * Détermine si l'utilisateur possède tel rôle
-     * @param role Le rôle que l'on souhaite contrôler
+     * Détermine si l'utilisateur possède tel rôle.
+     * @param role Le rôle que l'on souhaite contrôler.
      */
     public hasRole(role: roles): boolean {
         return this.roles.includes(role);

@@ -24,18 +24,18 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
 
   /**
    * Si l'utilisateur est connecté, création et insertion des données
-   * utilisateur dans le formulaire de profil
+   * utilisateur dans le formulaire de profil.
    */
   ngOnInit() {
     this.subscription = this.authService.user$.subscribe(
       user => {
         this.user = user;
         if (user) {
-          // Affichage des rôles de l'utiliateur (pour information)
+          // Affichage des rôles de l'utiliateur (pour information).
           this.roles = this.getRolesFromUser(user);
-          // Création du formulaire de profil
+          // Création du formulaire de profil.
           this.formProfile = this.createForm();
-          // Insertion des données utilisateur
+          // Insertion des données utilisateur.
           this.formProfile.setValue(this.getDataForFormProfile(user));
         }
       }
@@ -47,7 +47,7 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Enregistrement des modifications du profil utilisateur
+   * Enregistrement des modifications du profil utilisateur.
    */
   public submit(): void {
     if (this.formProfile.valid) {
@@ -61,19 +61,19 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Création du formulaire de profil utilisateur
+   * Création du formulaire de profil utilisateur.
    */
   private createForm(): FormGroup {
-    // Contrôles demandés
+    // Contrôles demandés.
     const controlsAsked = ['firstname', 'lastname', 'jobBackground'];
-    // Récupération du formulaire standard de l'entité User
+    // Récupération du formulaire standard de l'entité User.
     return this.formUserService.generateFormGroup(controlsAsked);
   }
 
   /**
-   * Transformation des données utilisateur pour le formulaire de profil
-   * @param user utilisateur courant
-   * @return Un object JSON avec les données pour le formulaire
+   * Transformation des données utilisateur pour le formulaire de profil.
+   * @param user utilisateur courant.
+   * @return Un object JSON avec les données pour le formulaire.
    */
   private getDataForFormProfile(user: User): object {
     return {
@@ -84,8 +84,8 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Transformation des rôles de l'objet utilisateur pour un affichage dans le formulaire
-   * @param user utilisateur courant
+   * Transformation des rôles de l'objet utilisateur pour un affichage dans le formulaire.
+   * @param user utilisateur courant.
    */
   private getRolesFromUser(user: User): string {
     let roles = '';

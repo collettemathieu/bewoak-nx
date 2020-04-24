@@ -18,13 +18,13 @@ export class CourseService {
     private randomService: RandomService,
     private handler: HttpBackend
   ) {
-    // Requête Http sans intercepteur
+    // Requête Http sans intercepteur.
     this.http = new HttpClient(this.handler);
   }
 
   /**
-   * Retourne les parcours pédagogiques en fonction d'un item de recherche
-   * @param search Item de recherche
+   * Retourne les parcours pédagogiques en fonction d'un item de recherche.
+   * @param search Item de recherche.
    */
   public getCourses(search: string): Observable<Course[]> {
     const url = `${environment.firestore.baseUrlDocument}:runQuery?key=${environment.firebase.apiKey}`;
@@ -51,8 +51,8 @@ export class CourseService {
   }
 
   /**
-   * Récupére le parcours pédagogique par son ID
-   * @param id Id du parcours pédagogique
+   * Récupére le parcours pédagogique par son ID.
+   * @param id Id du parcours pédagogique.
    */
   public getCourse(id: string): Observable<Course> {
     const url = `${environment.firestore.baseUrlDocument}:runQuery?key=${environment.firebase.apiKey}`;
@@ -75,8 +75,8 @@ export class CourseService {
   }
 
   /**
-   * Retourne les parcours pédagogiques de l'utilisateur
-   * @param userId L'identifiant de l'utilisateur
+   * Retourne les parcours pédagogiques de l'utilisateur.
+   * @param userId L'identifiant de l'utilisateur.
    */
   public getCoursesByUser(userId: string): Observable<Course[]> {
     const url = `${environment.firestore.baseUrlDocument}:runQuery?key=${environment.firebase.apiKey}`;
@@ -104,8 +104,8 @@ export class CourseService {
 
 
   /**
-   * Enregistrer un nouveau parcours pédagogique
-   * @param course Le parcours pédagogique
+   * Enregistrer un nouveau parcours pédagogique.
+   * @param course Le parcours pédagogique.
    */
   public save(course: Course): Observable<Course | null> {
     const id = this.randomService.generateId();
@@ -137,8 +137,8 @@ export class CourseService {
   }
 
   /**
-   * Modifie un parcours pédagogique
-   * @param course Le parcours pédagogique
+   * Modifie un parcours pédagogique.
+   * @param course Le parcours pédagogique.
    */
   public update(course: Course): Observable<Course | null> {
     const url = `${environment.firestore.baseUrlDocument}courses/${course.id}?key=${environment.firebase.apiKey}&currentDocument.exists=true`;
@@ -160,8 +160,8 @@ export class CourseService {
 
 
   /**
-   * Suppression d'un parcours pédagogique
-   * @param course Le parcours pédagogique à supprimer
+   * Suppression d'un parcours pédagogique.
+   * @param course Le parcours pédagogique à supprimer.
    */
   public remove(course: Course): Observable<Course> {
     const url = `${environment.firestore.baseUrlDocument}courses/${course.id}?key=${environment.firebase.apiKey}`;
@@ -181,8 +181,8 @@ export class CourseService {
   }
 
   /**
-   * Retourne si le nom du parcours pédagogique est disponible
-   * @param name Le nom du parcours pédagogique
+   * Retourne si le nom du parcours pédagogique est disponible.
+   * @param name Le nom du parcours pédagogique.
    */
   public isAvailable(name: string): Observable<boolean> {
     const url = `${environment.firestore.baseUrlDocument}:runQuery?key=${environment.firebase.apiKey}`;
@@ -207,8 +207,8 @@ export class CourseService {
   }
 
   /**
-   * Retourne les données du parcours pédagogique pour le firestore
-   * @param course Le parcours pédagogique
+   * Retourne les données du parcours pédagogique pour le firestore.
+   * @param course Le parcours pédagogique.
    */
   private getDataCourseForFirestore(course: Course): object {
     return {
@@ -233,9 +233,9 @@ export class CourseService {
   }
 
   /**
-   * Méthode pour la transformation des données du firestore vers le parcours pédagogique
-   * @param fields Champs retournés par le firestore
-   * @return Un parcours pédagogique avec les données de firestore
+   * Méthode pour la transformation des données du firestore vers le parcours pédagogique.
+   * @param fields Champs retournés par le firestore.
+   * @return Un parcours pédagogique avec les données de firestore.
    */
   private getCourseFromFirestore(fields: any): Course {
     return new Course({
@@ -254,9 +254,9 @@ export class CourseService {
   }
 
   /**
-   * Méthode pour la transformation des mots clés d'un parcours pédagogique vers le firestore
-   * @param course Le parcours pédagogique
-   * @return Un tableau de {stringValue: keyword}
+   * Méthode pour la transformation des mots clés d'un parcours pédagogique vers le firestore.
+   * @param course Le parcours pédagogique.
+   * @return Un tableau de {stringValue: keyword}.
    */
   private getKeywordsDataForFirestore(course: Course): object {
     const keywords = [];
@@ -269,9 +269,9 @@ export class CourseService {
   }
 
   /**
-   * Méthode pour la transformation des mots clés du firestore vers le parcours pédagogique
-   * @param keywords Les mots clés du parcours pédagogique
-   * @return Un tableau de mots clés du parcours
+   * Méthode pour la transformation des mots clés du firestore vers le parcours pédagogique.
+   * @param keywords Les mots clés du parcours pédagogique.
+   * @return Un tableau de mots clés du parcours.
    */
   private getKeywordsDataFromFirestore(keywords: any): Array<string> {
     const keywordsCourse = [];
@@ -283,9 +283,9 @@ export class CourseService {
 
   /**
    * Méthode pour le requêtage en base depuis firestore afin de récupérer les parcours
-   * pédagogiques de l'utilisateur
-   * @param field Le champ recherché avec sa valeur
-   * @return Une requête pour firestore
+   * pédagogiques de l'utilisateur.
+   * @param field Le champ recherché avec sa valeur.
+   * @return Une requête pour firestore.
    */
   private getStructureQuery(field: { fieldPath: string, value: string }): object {
     return {
@@ -310,9 +310,9 @@ export class CourseService {
 
   /**
    * Méthode pour le requêtage en base depuis firestore afin de récupérer les parcours
-   * pédagogiques de l'utilisateur
-   * @param field Le champ recherché avec sa valeur
-   * @return Une requête pour firestore
+   * pédagogiques de l'utilisateur.
+   * @param field Le champ recherché avec sa valeur.
+   * @return Une requête pour firestore.
    */
   private getStructureQueryForSearching(field: { fieldPath: string, value: string }): object {
     return {

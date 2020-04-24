@@ -10,10 +10,10 @@ export class FormUserService {
 
   constructor(private fb: FormBuilder) { }
 
-  /*
-  * Retourne le formGroup pour l'entité User en fonction des contrôles demandés
-  * @return FormGroup
-  */
+
+  /**
+   * Retourne le formGroup pour l'entité User en fonction des contrôles demandés.
+   */
   public generateFormGroup(controls: string[]): FormGroup {
     this.form = this.fb.group({});
     controls.forEach((control) => {
@@ -47,9 +47,9 @@ export class FormUserService {
     this.form.addControl('firstname', control);
   }
 
-  /*
-  * Définition des contrôles du FormGroup
-  */
+  /**
+   * Définition des contrôles du FormGroup.
+   */
   private addLastNameControl() {
     const control = new FormControl('', {
       validators: [Validators.required, Validators.minLength(3)],

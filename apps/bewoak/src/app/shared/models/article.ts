@@ -7,20 +7,20 @@ export class Article {
     id: string;
     title: string;
     doi: string;
-    courseIds: Array<string>; // Id des parcours dans lequel l'article apparaît
-    orderByCourseId: { [key: string]: number }; // Ordre d'apparition de l'article par Id de parcours
+    courseIds: Array<string>; // Id des parcours dans lequel l'article apparaît.
+    orderByCourseId: { [key: string]: number }; // Ordre d'apparition de l'article par Id de parcours.
     avatarUrl: string;
-    linkUrl: string; // Lien url de l'article
-    dateAdd: number; // Date d'ajout de l'article en base
-    dateUpdate: number; // Date de modification de l'article en base
-    releaseDate: number; // Date de publication de l'article
+    linkUrl: string; // Lien url de l'article.
+    dateAdd: number; // Date d'ajout de l'article en base.
+    dateUpdate: number; // Date de modification de l'article en base.
+    releaseDate: number; // Date de publication de l'article.
     type: typeArticle;
     keywords: string;
-    trainingTime: number; // Temps moyen d'apprentissage
-    thematic: string; // Thématique de l'article
-    chapters: Chapter[]; // Liste des chapitres de l'article
-    level: typeLevel; // Niveau d'apprentissage
-    complexity: number; // Complexité d'apprentissage
+    trainingTime: number; // Temps moyen d'apprentissage.
+    thematic: string; // Thématique de l'article.
+    chapters: Chapter[]; // Liste des chapitres de l'article.
+    level: typeLevel; // Niveau d'apprentissage.
+    complexity: number; // Complexité d'apprentissage.
 
     constructor(options: {
         id?: string,

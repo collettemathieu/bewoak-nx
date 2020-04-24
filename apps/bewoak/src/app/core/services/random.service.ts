@@ -9,7 +9,7 @@ export class RandomService {
   constructor() { }
 
   /**
-   * Génération d'un mot de passe aléatoire
+   * Génération d'un mot de passe aléatoire.
    */
   generatePassword(): string {
     return generator.generate({
@@ -19,7 +19,7 @@ export class RandomService {
   }
 
   /**
-   * Génération d'un id aléatoire
+   * Génération d'un id aléatoire.
    */
   generateId(): string {
     return generator.generate({

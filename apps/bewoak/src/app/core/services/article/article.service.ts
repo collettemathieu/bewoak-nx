@@ -114,7 +114,7 @@ export class ArticleService {
       })
     };
 
-    // Enregistrement en base
+    // Enregistrement en base.
     return this.httpClient.patch<Article>(url, dataArticle, httpOptions).pipe(
       switchMap((data: any) => {
         return of(this.getArticleFromFirestore(data.fields));

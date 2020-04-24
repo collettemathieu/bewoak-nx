@@ -27,7 +27,7 @@ export class CourseUserComponent {
   }
 
   /**
-   * Suppression du parcours pédagogique
+   * Suppression du parcours pédagogique.
    */
   public remove(): void {
     this.removeCourse.emit(this.course);

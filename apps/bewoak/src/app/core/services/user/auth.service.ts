@@ -234,14 +234,14 @@ export class AuthService {
   }
 
   /**
-   * Retourne l'utilisateur courant connecté
+   * Retourne l'utilisateur courant connecté.
    */
   public getCurrentUser(): User {
     return this.currentUser;
   }
 
   /**
-   * Méthode permettant de modifier les informations du local storage
+   * Méthode permettant de modifier les informations du local storage.
    * @param data Données à mettre dans le storage du navigateur.
    */
   private setDataFromLocalStorage(data: {

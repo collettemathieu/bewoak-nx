@@ -10,7 +10,7 @@ import { LoaderService } from '../loader.service';
 @Injectable()
 export class CoursesStateUserService {
 
-  // Etat des parcours pédagogiques d'un utilisateur
+  // Etat des parcours pédagogiques d'un utilisateur.
   private coursesByUser: BehaviorSubject<Course[]> = new BehaviorSubject([]);
   public readonly coursesByUser$: Observable<Course[]> = this.coursesByUser.asObservable();
 
@@ -23,13 +23,13 @@ export class CoursesStateUserService {
   ) { }
 
   /**
-   * Ajout un nouveau parcours pédagogique
-   * @param course Le parcours pédagogique
-   * @return Retourne le tableau des parcours pédagogiques de l'utilisateur mis à jour
+   * Ajout un nouveau parcours pédagogique.
+   * @param course Le parcours pédagogique.
+   * @return Retourne le tableau des parcours pédagogiques de l'utilisateur mis à jour.
    */
   public register(course: Course): Observable<Course> {
 
-    // Mise en attente
+    // Mise en attente.
     this.loaderService.setLoading(true);
 
     return this.courseService.save(course).pipe(
@@ -39,7 +39,7 @@ export class CoursesStateUserService {
         this.coursesByUser.next(courses);
       }),
       tap(_ => {
-        // Envoi d'un message à l'utilisateur
+        // Envoi d'un message à l'utilisateur.
         this.toastrService.showMessage({
           type: 'success',
           message: 'Le parcours pédagogique a bien été enregistré'
@@ -47,19 +47,19 @@ export class CoursesStateUserService {
       }),
       catchError(error => this.errorService.handleError(error)),
       finalize(() => {
-        // Fin mise en attente
+        // Fin mise en attente.
         this.loaderService.setLoading(false);
       })
     );
   }
 
   /**
-   * Retourne les parcours pédagogiques de l'utilisateur
-   * @param userId L'identifiant de l'utilisateur
+   * Retourne les parcours pédagogiques de l'utilisateur.
+   * @param userId L'identifiant de l'utilisateur.
    */
   public getCoursesByUser(userId: string): Observable<Course[]> {
 
-    // Mise en attente
+    // Mise en attente.
     this.loaderService.setLoading(true);
 
     return this.courseService.getCoursesByUser(userId).pipe(
@@ -68,18 +68,18 @@ export class CoursesStateUserService {
       }),
       catchError(error => this.errorService.handleError(error)),
       finalize(() => {
-        // Fin mise en attente
+        // Fin mise en attente.
         this.loaderService.setLoading(false);
       })
     );
   }
 
   /**
-   * Suppression d'un parcours pédagogique
-   * @param course Le parcours pédagogiqe à supprimer
+   * Suppression d'un parcours pédagogique.
+   * @param course Le parcours pédagogiqe à supprimer.
    */
   public removeCourse(course: Course): void {
-    // Mise en attente
+    // Mise en attente.
     this.loaderService.setLoading(true);
 
     this.courseService.remove(course).pipe(
@@ -96,7 +96,7 @@ export class CoursesStateUserService {
       }),
       catchError(error => this.errorService.handleError(error)),
       finalize(() => {
-        // Mise en attente
+        // Mise en attente.
         this.loaderService.setLoading(false);
       })
     ).subscribe();

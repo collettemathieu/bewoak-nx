@@ -18,9 +18,9 @@ export class UserService {
 
   /**
    * Méthode pour récupérer un utilisateur depuis le firestore en fonction de son
-   * identififiant après authentification
-   * @param userId Identifiant de l'utilisateur
-   * @return Une observable de User
+   * identififiant après authentification.
+   * @param userId Identifiant de l'utilisateur.
+   * @return Une observable de User.
    */
   public getUser(userId: string): Observable<User | null> {
     const url = `${environment.firestore.baseUrlDocument}:runQuery?key=${environment.firebase.apiKey}`;
@@ -41,9 +41,9 @@ export class UserService {
   }
 
   /**
-   * Méthode pour l'enregistrement d'un nouvel utilisateur dans le firestore après authentification
-   * @param user Utilisateur courant
-   * @return Une observable de User
+   * Méthode pour l'enregistrement d'un nouvel utilisateur dans le firestore après authentification.
+   * @param user Utilisateur courant.
+   * @return Une observable de User.
    */
   public save(user: User): Observable<User | null> {
     const url = `${environment.firestore.baseUrlDocument}users?key=${environment.firebase.apiKey}&documentId=${user.id}`;
@@ -64,12 +64,12 @@ export class UserService {
   }
 
   /**
-   * Méthode permettant d'enregistrer des modifications partielles d'un utilisateur
-   * @param user Utilisateur courant
-   * @return Une observable de User
+   * Méthode permettant d'enregistrer des modifications partielles d'un utilisateur.
+   * @param user Utilisateur courant.
+   * @return Une observable de User.
    */
   public update(user: User): Observable<User | null> {
-    // Configuration
+    // Configuration.
     const url = `${environment.firestore.baseUrlDocument}users/${user.id}?key=${environment.firebase.apiKey}&currentDocument.exists=true`;
     const dataUser = this.getDataUserForFirestore(user);
     const httpOptions = {
@@ -78,7 +78,7 @@ export class UserService {
       })
     };
 
-    // Enregistrement en base
+    // Enregistrement en base.
     return this.httpClient.patch<User>(url, dataUser, httpOptions).pipe(
       switchMap((data: any) => {
         return of(this.getUserFromFirestore(data.fields));
@@ -90,9 +90,9 @@ export class UserService {
   }
 
   /**
-   * Méthode pour la transformation des données utilisateur vers le firestore
-   * @param user Utilisateur courant
-   * @return Un JSON pour firestore
+   * Méthode pour la transformation des données utilisateur vers le firestore.
+   * @param user Utilisateur courant.
+   * @return Un JSON pour firestore.
    */
   private getDataUserForFirestore(user: User): object {
     return {
@@ -115,9 +115,9 @@ export class UserService {
   }
 
   /**
-   * Méthode pour la transformation des données du firestore vers l'utilisateur
-   * @param fields Champs retournés par le firestore
-   * @return Un utilisateur avec les données de firestore
+   * Méthode pour la transformation des données du firestore vers l'utilisateur.
+   * @param fields Champs retournés par le firestore.
+   * @return Un utilisateur avec les données de firestore.
    */
   private getUserFromFirestore(fields: any): User {
     return new User({
@@ -134,9 +134,9 @@ export class UserService {
   }
 
   /**
-   * Méthode pour la transformation des roles de l'utilisateur vers le firestore
-   * @param user Utilisateur courant
-   * @return Un tableau de {stringValue: role}
+   * Méthode pour la transformation des roles de l'utilisateur vers le firestore.
+   * @param user Utilisateur courant.
+   * @return Un tableau de {stringValue: role}.
    */
   private getRolesDataForFirestore(user: User): object {
     const rolesUser = [];
@@ -149,9 +149,9 @@ export class UserService {
   }
 
   /**
-   * Méthode pour la transformation des roles du firestore vers l'utilisateur
-   * @param roles Roles de l'utilisateur courant
-   * @return Un tableau des rôles de l'utilisateur
+   * Méthode pour la transformation des roles du firestore vers l'utilisateur.
+   * @param roles Roles de l'utilisateur courant.
+   * @return Un tableau des rôles de l'utilisateur.
    */
   private getRolesDataFromFirestore(roles: any): Array<'USER' | 'EXPERT' | 'ADMIN'> {
     const rolesUser = [];
@@ -162,9 +162,9 @@ export class UserService {
   }
 
   /**
-   * Méthode pour le requêtage en base depuis firestore
-   * @param userId Identifiant utilisateur
-   * @return Une requête pour firestore
+   * Méthode pour le requêtage en base depuis firestore.
+   * @param userId Identifiant utilisateur.
+   * @return Une requête pour firestore.
    */
   private getStructureQuery(userId: string): object {
     return {

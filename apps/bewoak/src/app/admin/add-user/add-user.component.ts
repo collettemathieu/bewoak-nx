@@ -13,26 +13,26 @@ import { Subscription } from 'rxjs';
 })
 export class AddUserComponent implements OnInit, OnDestroy {
 
-  public formIsSubmitted = false; // Après enregistrement, affiche les informations de l'utilisateur
+  public formIsSubmitted = false; // Après enregistrement, affiche les informations de l'utilisateur.
   public user: User = new User({});
   public passwordUser: string;
   public addUserForm: FormGroup;
   public roles: Array<string> = ['USER', 'EXPERT', 'ADMIN'];
   public config = {
-    // if objects array passed which key to be displayed defaults to description
+    // if objects array passed which key to be displayed defaults to description.
     displayKey: 'description',
-    // true/false for the search functionlity defaults to false
+    // true/false for the search functionlity defaults to false.
     search: true,
-    // height of the list so that if there are more no of items it can show
-    // a scroll defaults to auto. With auto height scroll will never appear
+    // height of the list so that if there are more no of items it can show.
+    // a scroll defaults to auto. With auto height scroll will never appear.
     height: 'auto',
-    // text to be displayed when no item is selected defaults to Select
+    // text to be displayed when no item is selected defaults to Select.
     placeholder: 'Sélectionner les roles',
-    // text to be displayed whenmore than one items are selected like Option 1 + 5 more
+    // text to be displayed whenmore than one items are selected like Option 1 + 5 more.
     moreText: 'en plus',
-    // text to be displayed when no items are found while searching
+    // text to be displayed when no items are found while searching.
     noResultsFound: 'Aucun résultat trouvé !',
-    // label thats displayed in search input
+    // label thats displayed in search input.
     searchPlaceholder: 'Rechercher',
   };
   private currentUser: User;
@@ -56,21 +56,21 @@ export class AddUserComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Création du formulaire de l'utilisateur à partir du générateur de formulaire
+   * Création du formulaire de l'utilisateur à partir du générateur de formulaire.
    */
   private createForm(): FormGroup {
     // Contrôles demandés
     const controlsAsked = ['firstname', 'lastname', 'email'];
-    // Les rôles ne sont gérés que par le super administrateur
+    // Les rôles ne sont gérés que par le super administrateur.
     if (this.currentUser.hasRole('ROOT')) {
       controlsAsked.push('roleControl');
     }
-    // Récupération du formulaire standard de l'entité User
+    // Récupération du formulaire standard de l'entité User.
     return this.formUserService.generateFormGroup(controlsAsked);
   }
 
   /**
-   * Soummission du formulaire
+   * Soummission du formulaire.
    */
   public submitForm(): void {
     if (this.addUserForm.valid) {
@@ -84,9 +84,9 @@ export class AddUserComponent implements OnInit, OnDestroy {
         newUser.roles = this.roleControl.value;
       }
 
-      // Enregistrement de l'utilisateur dans le firebase
-      // Affichage des informations utilisateur si ok
-      // On reste sur le formulaire si ko
+      // Enregistrement de l'utilisateur dans le firebase.
+      // Affichage des informations utilisateur si ok.
+      // On reste sur le formulaire si ko.
       this.authService.register(newUser).subscribe(
         data => {
           this.user = data.user;
@@ -98,7 +98,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Redirection vers la page d'accueil
+   * Redirection vers la page d'accueil.
    */
   public goHome() {
     this.router.navigate(['home']);

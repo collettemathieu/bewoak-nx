@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   }
 
   /**
-   * Création du formulaire de LogIn pour l'utilisateur
+   * Création du formulaire de LogIn pour l'utilisateur.
    */
   private createLoginForm(): FormGroup {
     return this.fb.group({
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
   }
 
   /**
-   * Soumission du formulaire de logIn et redirection si nécessaire
+   * Soumission du formulaire de logIn et redirection si nécessaire.
    */
   public submitForm(): void {
     if (this.loginForm.valid) {

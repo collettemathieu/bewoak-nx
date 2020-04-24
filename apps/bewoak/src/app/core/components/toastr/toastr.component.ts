@@ -20,14 +20,14 @@ export class ToastrComponent implements OnInit, OnDestroy {
   constructor(private toastrService: ToastrService) { }
 
   ngOnInit() {
-    // On s'abonne au service d'envoi de message
+    // On s'abonne au service d'envoi de message.
     this.subscription = this.toastrService.toastr$.subscribe(
       toastr => {
-        // On ignore les messages vides
+        // On ignore les messages vides.
         if (toastr === null) {
           return;
         }
-        // On applique à chaque toastr un temps d'apparition
+        // On applique à chaque toastr un temps d'apparition.
         timer(0, lifeTime).pipe(take(2)).subscribe(
           index => {
             if (index === 0) {
@@ -45,9 +45,9 @@ export class ToastrComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  /* Ferme le message d'avertissement à l'utilisateur
-    @return void
-  */
+  /**
+   * Ferme le message d'avertissement à l'utilisateur.
+   */
   closeToastr(toastr: Toastr) {
     // On récupère l'index du toastr
     const index = this.toastrs.findIndex(t => {

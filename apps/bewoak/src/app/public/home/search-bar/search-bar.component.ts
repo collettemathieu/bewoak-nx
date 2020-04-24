@@ -18,7 +18,7 @@ export class SearchBarComponent implements OnInit {
   }
 
   /**
-   * Création du formulaire de recherche des parcours pédagogiques
+   * Création du formulaire de recherche des parcours pédagogiques.
    */
   private createForm(): FormGroup {
     return this.fb.group({
@@ -27,7 +27,7 @@ export class SearchBarComponent implements OnInit {
   }
 
   /**
-   * Soumission du formulaire de recherche
+   * Soumission du formulaire de recherche.
    */
   public submit(): void {
     this.coursesStateSearchService.searchCourse(this.search.value).subscribe();

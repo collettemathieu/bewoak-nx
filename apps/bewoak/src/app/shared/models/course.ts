@@ -10,9 +10,9 @@ export class Course {
     keywords: Array<string>;
     url: string;
     avatar: string;
-    like: number; // Nombre de like
-    userId: string; // id de l'utilisateur ayant créé le parcours
-    level: typeCourseLevel; // Niveau de difficulté du parcours
+    like: number; // Nombre de like.
+    userId: string; // id de l'utilisateur ayant créé le parcours.
+    level: typeCourseLevel; // Niveau de difficulté du parcours.
     dateAdd: number;
     dateUpdate: number;
 

@@ -14,7 +14,7 @@ export class AddArticleComponent {
   constructor(private modalService: MDBModalService) { }
 
   /**
-   * Modal pour l'ajout d'un nouvel article
+   * Modal pour l'ajout d'un nouvel article.
    */
   public addArticle() {
     this.modalRef = this.modalService.show(AddArticleModalComponent, { class: 'modal-lg' });

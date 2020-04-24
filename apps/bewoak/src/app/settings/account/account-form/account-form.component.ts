@@ -24,7 +24,7 @@ export class AccountFormComponent implements OnInit {
   }
 
   /**
-   * Création du formulaire de profil utilisateur
+   * Création du formulaire de profil utilisateur.
    */
   private createForm(): FormGroup {
     return this.fb.group({});

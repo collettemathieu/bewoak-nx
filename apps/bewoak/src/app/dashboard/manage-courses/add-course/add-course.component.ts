@@ -14,7 +14,7 @@ export class AddCourseComponent {
   constructor(private modalService: MDBModalService) { }
 
   /**
-   * Modal pour l'ajout d'un nouveau parcours
+   * Modal pour l'ajout d'un nouveau parcours.
    */
   addCourse() {
     this.modalRef = this.modalService.show(AddCourseModalComponent, { class: 'modal-lg' });

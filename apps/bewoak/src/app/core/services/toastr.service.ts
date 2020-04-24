@@ -13,8 +13,8 @@ export class ToastrService {
   constructor() { }
 
   /**
-   * Affiche un message d'avertissement à l'utilisateur
-   * @param toastr toastr à afficher à l'utilisateur
+   * Affiche un message d'avertissement à l'utilisateur.
+   * @param toastr toastr à afficher à l'utilisateur.
    */
   public showMessage(toastr: Toastr): void {
     toastr.id = this.generateId();

@@ -111,7 +111,7 @@ export class AddArticleFormComponent implements OnInit {
       _ => {
         this.courseStateService.getCourse(this.currentCourse.id).subscribe();
         this.article.next(null);
-        // Fermeture de la fenêtre modale
+        // Fermeture de la fenêtre modale.
         this.closeModalArticle.emit(true);
       }
     );
@@ -128,7 +128,7 @@ export class AddArticleFormComponent implements OnInit {
         type: 'info',
         message: 'Vous ne pouvez pas ajouter plusieurs fois le même article dans un même parcours.'
       });
-      // Fermeture de la fenêtre modale
+      // Fermeture de la fenêtre modale.
       this.closeModalArticle.emit(true);
       return;
     }
@@ -141,7 +141,7 @@ export class AddArticleFormComponent implements OnInit {
       _ => {
         this.courseStateService.getCourse(this.currentCourse.id).subscribe();
         this.article.next(null);
-        // Fermeture de la fenêtre modale
+        // Fermeture de la fenêtre modale.
         this.closeModalArticle.emit(true);
       }
     );

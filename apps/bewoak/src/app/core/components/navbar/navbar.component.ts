@@ -52,7 +52,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
    * @param page page demandée.
    */
   public isActive(page: string): boolean {
-    return this.router.isActive(page, false); // false, la route n'est pas exacte
+    return this.router.isActive(page, false); // false, la route n'est pas exacte.
   }
 
   /**
