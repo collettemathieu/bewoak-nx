@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CoursesStateSearchService } from '../../../core/services/course/courses-state-search.service';
 import { Observable } from 'rxjs';
 import { Course } from '../../../shared/models/course';
+import { Store } from '@ngrx/store';
+import { State, getSearchResults } from '../../store';
 
 @Component({
   selector: 'bw-search-courses',
@@ -12,10 +13,10 @@ export class SearchCoursesComponent implements OnInit {
 
   public courses$: Observable<Course[]>;
 
-  constructor(private coursesStateSearchService: CoursesStateSearchService) { }
+  constructor(private store: Store<State>) { }
 
   ngOnInit() {
-    this.courses$ = this.coursesStateSearchService.searchCourses$;
+    this.courses$ = this.store.select(getSearchResults);
   }
 
 }

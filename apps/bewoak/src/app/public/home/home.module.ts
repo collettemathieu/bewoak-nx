@@ -6,8 +6,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SearchCoursesComponent } from './search-courses/search-courses.component';
 import { SearchCourseComponent } from './search-courses/search-course/search-course.component';
 import { CourseService } from '../../core/services/course/course.service';
-import { CoursesStateSearchService } from '../../core/services/course/courses-state-search.service';
-
 
 
 @NgModule({
@@ -16,6 +14,6 @@ import { CoursesStateSearchService } from '../../core/services/course/courses-st
     SharedModule,
     ReactiveFormsModule
   ],
-  providers: [CourseService, CoursesStateSearchService]
+  providers: [CourseService]
 })
 export class HomeModule { }

@@ -3,10 +3,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Course } from '../../../../shared/models/course';
 import { AuthService } from '../../../../core/services/user/auth.service';
 import { User } from '../../../../shared/models/user';
-import { CoursesStateUserService } from '../../../../core/services/course/courses-state-user.service';
 import { CheckCourseNameValidator } from '../../../../shared/validators/check-course-name.validator';
 import { CourseStateService } from '../../../../core/services/course/course-state.service';
 import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { State } from '../../../store';
+import { AddUserCourse } from '../../../store/actions/userCourses';
 
 @Component({
   selector: 'bw-add-course-form',
@@ -50,9 +52,9 @@ export class AddCourseFormComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private coursesStateUserService: CoursesStateUserService,
     private checkCourseNameValidator: CheckCourseNameValidator,
-    private courseStateService: CourseStateService
+    private courseStateService: CourseStateService,
+    private store: Store<State>
   ) { }
 
   ngOnInit() {
@@ -137,7 +139,7 @@ export class AddCourseFormComponent implements OnInit, OnDestroy {
       dateAdd: Date.now(),
       dateUpdate: Date.now()
     });
-    this.coursesStateUserService.register(course).subscribe();
+    this.store.dispatch(new AddUserCourse({ course }));
   }
 
   /**

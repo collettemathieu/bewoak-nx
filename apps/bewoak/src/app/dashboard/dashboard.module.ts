@@ -9,6 +9,9 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { CourseService } from '../core/services/course/course.service';
 import { CourseStateService } from '../core/services/course/course-state.service';
 import { CoursesStateUserService } from '../core/services/course/courses-state-user.service';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { reducers, effects } from './store';
 registerLocaleData(localeFr, 'fr-FR');
 
 @NgModule({
@@ -16,7 +19,9 @@ registerLocaleData(localeFr, 'fr-FR');
   imports: [
     SharedModule,
     DashboardRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StoreModule.forFeature('dashBoardPage', reducers),
+    EffectsModule.forFeature(effects)
   ],
   providers: [
     CourseService,

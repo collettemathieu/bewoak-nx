@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User } from '../shared/models/user';
 import { AuthService } from '../core/services/user/auth.service';
-import { CoursesStateUserService } from '../core/services/course/courses-state-user.service';
 import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { LoadUserCourses, State } from './store';
 
 @Component({
   selector: 'bw-dashboard',
@@ -16,14 +17,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
-    private coursesStateUserService: CoursesStateUserService,
+    private store: Store<State>
   ) { }
 
   ngOnInit() {
     this.subscription = this.authService.user$.subscribe(
       user => this.user = user
     );
-    this.coursesStateUserService.getCoursesByUser(this.user.id).subscribe();
+    this.store.dispatch(new LoadUserCourses({userId: this.user.id}));
   }
 
   ngOnDestroy() {

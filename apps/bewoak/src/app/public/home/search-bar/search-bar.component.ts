@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CoursesStateSearchService } from '../../../core/services/course/courses-state-search.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { SearchAction } from '../../store';
 
 @Component({
   selector: 'bw-search-bar',
@@ -11,7 +12,10 @@ export class SearchBarComponent implements OnInit {
 
   public searchForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private coursesStateSearchService: CoursesStateSearchService) { }
+  constructor(
+    private fb: FormBuilder,
+    private store: Store
+  ) { }
 
   ngOnInit() {
     this.searchForm = this.createForm();
@@ -30,7 +34,7 @@ export class SearchBarComponent implements OnInit {
    * Soumission du formulaire de recherche.
    */
   public submit(): void {
-    this.coursesStateSearchService.searchCourse(this.search.value).subscribe();
+    this.store.dispatch(new SearchAction({ searchQuery: this.search.value }));
   }
 
   get search() {
