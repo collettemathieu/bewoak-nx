@@ -12,7 +12,7 @@ const initialState: State = {
     searchResults: null
 }
 
-export function reducer(state = initialState, action: SearchActions): State {
+export function reducer(state: State = initialState, action: SearchActions): State {
     switch (action.type) {
         case SearchActionTypes.Search:
             return {

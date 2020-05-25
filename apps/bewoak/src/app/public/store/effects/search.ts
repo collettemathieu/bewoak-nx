@@ -15,6 +15,11 @@ const handleLoadedCourses = () => (source: Observable<Course[]>) => source.pipe(
 @Injectable()
 export class SearchEffects {
 
+    constructor(
+        private readonly action$: Actions,
+        private readonly courseService: CourseService
+    ) { }
+
     @Effect()
     loadCourses$: Observable<Action> = this.action$.pipe(
         ofType(SearchActionTypes.Search),
@@ -23,5 +28,4 @@ export class SearchEffects {
         handleLoadedCourses()
     );
 
-    constructor(private readonly action$: Actions, private readonly courseService: CourseService) { }
 }

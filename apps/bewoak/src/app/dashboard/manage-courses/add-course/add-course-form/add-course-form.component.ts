@@ -7,8 +7,7 @@ import { CheckCourseNameValidator } from '../../../../shared/validators/check-co
 import { CourseStateService } from '../../../../core/services/course/course-state.service';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { State } from '../../../store';
-import { AddUserCourse } from '../../../store/actions/userCourses';
+import { State, AddUserCourse } from '../../../store';
 
 @Component({
   selector: 'bw-add-course-form',

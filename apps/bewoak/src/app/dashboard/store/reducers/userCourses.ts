@@ -12,7 +12,7 @@ const initialState: State = {
     userCourses: null
 };
 
-export function reducer(state = initialState, action: userCoursesAction) {
+export function reducer(state: State = initialState, action: userCoursesAction): State {
     switch (action.type) {
         case UserCoursesActionTypes.Load:
             return {
@@ -53,9 +53,6 @@ export function reducer(state = initialState, action: userCoursesAction) {
             };
         }
         default:
-            return {
-                loading: false,
-                userCourses: []
-            };
+            return state;
     }
 }

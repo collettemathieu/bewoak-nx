@@ -13,7 +13,7 @@ export const reducers = {
     userCourses: fromUserCourses.reducer
 }
 export const effects = [UserCoursesEffect];
-export const LoadUserCourses = fromActions.LoadUserCourses;
+export const {LoadUserCourses, AddUserCourse, RemoveUserCourse} = fromActions;
 
 // Les sélecteurs pour le module DashBoard
 export const getPublicState = createFeatureSelector<DashBoardState>('dashBoardPage');

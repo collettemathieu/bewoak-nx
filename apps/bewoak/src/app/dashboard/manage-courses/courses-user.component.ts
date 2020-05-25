@@ -3,8 +3,7 @@ import { Observable } from 'rxjs';
 import { Course } from '../../shared/models/course';
 import { CourseStateService } from '../../core/services/course/course-state.service';
 import { Store } from '@ngrx/store';
-import { getUserCourses, State } from '../store';
-import { RemoveUserCourse } from '../store/actions/userCourses';
+import { getUserCourses, State, RemoveUserCourse } from '../store';
 
 @Component({
   selector: 'bw-courses-user',

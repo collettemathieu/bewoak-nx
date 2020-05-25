@@ -3,9 +3,11 @@ import { Course } from '../../../shared/models/course';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { HttpHeaders, HttpClient, HttpBackend } from '@angular/common/http';
-import { catchError, switchMap } from 'rxjs/operators';
+import { catchError, switchMap, finalize, tap } from 'rxjs/operators';
 import { ErrorService } from '../error.service';
 import { RandomService } from '../random.service';
+import { LoaderService } from '../loader.service';
+import { ToastrService } from '../toastr.service';
 
 @Injectable()
 export class CourseService {
@@ -16,7 +18,9 @@ export class CourseService {
     private httpClient: HttpClient,
     private errorService: ErrorService,
     private randomService: RandomService,
-    private handler: HttpBackend
+    private handler: HttpBackend,
+    private loaderService: LoaderService,
+    private toastrService: ToastrService
   ) {
     // Requête Http sans intercepteur.
     this.http = new HttpClient(this.handler);
@@ -27,6 +31,7 @@ export class CourseService {
    * @param search Item de recherche.
    */
   public getCourses(search: string): Observable<Course[]> {
+    this.loaderService.setLoading(true);
     const url = `${environment.firestore.baseUrlDocument}:runQuery?key=${environment.firebase.apiKey}`;
     const req = this.getStructureQueryForSearching({ fieldPath: 'name', value: search });
     const httpOptions = {
@@ -46,6 +51,9 @@ export class CourseService {
       }),
       catchError((error) => {
         return this.errorService.handleError(error);
+      }),
+      finalize(() => {
+        this.loaderService.setLoading(false);
       })
     );
   }
@@ -79,6 +87,7 @@ export class CourseService {
    * @param userId L'identifiant de l'utilisateur.
    */
   public getCoursesByUser(userId: string): Observable<Course[]> {
+    this.loaderService.setLoading(true);
     const url = `${environment.firestore.baseUrlDocument}:runQuery?key=${environment.firebase.apiKey}`;
     const req = this.getStructureQuery({ fieldPath: 'userId', value: userId });
     const httpOptions = {
@@ -98,6 +107,9 @@ export class CourseService {
       }),
       catchError((error) => {
         return this.errorService.handleError(error);
+      }),
+      finalize(() => {
+        this.loaderService.setLoading(false);
       })
     );
   }
@@ -108,6 +120,7 @@ export class CourseService {
    * @param course Le parcours pédagogique.
    */
   public save(course: Course): Observable<Course | null> {
+    this.loaderService.setLoading(true);
     const id = this.randomService.generateId();
     const newCourse = new Course({
       id,
@@ -130,8 +143,18 @@ export class CourseService {
       switchMap((data: any) => {
         return of(this.getCourseFromFirestore(data.fields));
       }),
+      tap(_ => {
+        // Envoi d'un message à l'utilisateur.
+        this.toastrService.showMessage({
+          type: 'success',
+          message: 'Le parcours pédagogique a bien été enregistré.'
+        });
+      }),
       catchError((error) => {
         return this.errorService.handleError(error);
+      }),
+      finalize(() => {
+        this.loaderService.setLoading(false);
       })
     );
   }
@@ -164,6 +187,7 @@ export class CourseService {
    * @param course Le parcours pédagogique à supprimer.
    */
   public remove(course: Course): Observable<Course> {
+    this.loaderService.setLoading(true);
     const url = `${environment.firestore.baseUrlDocument}courses/${course.id}?key=${environment.firebase.apiKey}`;
     const httpOptions = {
       headers: new HttpHeaders({
@@ -176,6 +200,9 @@ export class CourseService {
       }),
       catchError((error) => {
         return this.errorService.handleError(error);
+      }),
+      finalize(() => {
+        this.loaderService.setLoading(false);
       })
     );
   }
