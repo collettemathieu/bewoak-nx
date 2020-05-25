@@ -32,4 +32,4 @@ export class RemoveUserCourse implements Action {
     constructor(public readonly payload: { course: Course }) { }
 }
 
-export type userCoursesAction = LoadUserCourses | LoadUserCoursesSuccess | AddUserCourse | RemoveUserCourse;
+export type UserCoursesAction = LoadUserCourses | LoadUserCoursesSuccess | AddUserCourse | RemoveUserCourse;

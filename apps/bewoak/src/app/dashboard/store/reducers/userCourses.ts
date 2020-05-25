@@ -1,5 +1,5 @@
 import { Course } from '../../../shared/models/course';
-import { userCoursesAction, UserCoursesActionTypes } from '../actions/userCourses';
+import { UserCoursesAction, UserCoursesActionTypes } from '../actions/userCourses';
 
 
 export interface State {
@@ -12,7 +12,7 @@ const initialState: State = {
     userCourses: null
 };
 
-export function reducer(state: State = initialState, action: userCoursesAction): State {
+export function reducer(state: State = initialState, action: UserCoursesAction): State {
     switch (action.type) {
         case UserCoursesActionTypes.Load:
             return {

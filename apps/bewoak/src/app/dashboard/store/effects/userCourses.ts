@@ -6,7 +6,6 @@ import { map, switchMap, catchError, tap } from 'rxjs/operators';
 import { Course } from '../../../shared/models/course';
 import { Observable, throwError } from 'rxjs';
 import { Action } from '@ngrx/store';
-import { LoaderService } from '../../../core/services/loader.service';
 
 
 const handleLoadedCourses = () => (source: Observable<Course[]>) => source.pipe(

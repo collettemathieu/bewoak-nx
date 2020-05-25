@@ -63,6 +63,7 @@ export class CourseService {
    * @param id Id du parcours pédagogique.
    */
   public getCourse(id: string): Observable<Course> {
+    this.loaderService.setLoading(true);
     const url = `${environment.firestore.baseUrlDocument}:runQuery?key=${environment.firebase.apiKey}`;
     const req = this.getStructureQuery({ fieldPath: 'id', value: id });
     const httpOptions = {
@@ -78,6 +79,9 @@ export class CourseService {
       }),
       catchError((error) => {
         return this.errorService.handleError(error);
+      }),
+      finalize(() => {
+        this.loaderService.setLoading(false);
       })
     );
   }
@@ -164,6 +168,7 @@ export class CourseService {
    * @param course Le parcours pédagogique.
    */
   public update(course: Course): Observable<Course | null> {
+    this.loaderService.setLoading(true);
     const url = `${environment.firestore.baseUrlDocument}courses/${course.id}?key=${environment.firebase.apiKey}&currentDocument.exists=true`;
     const dataCourse = this.getDataCourseForFirestore(course);
     const httpOptions = {
@@ -177,6 +182,15 @@ export class CourseService {
       }),
       catchError((error) => {
         return this.errorService.handleError(error);
+      }),
+      tap(_ => {
+        this.toastrService.showMessage({
+          type: 'success',
+          message: 'Le parcours pédagogique a bien été modifié.'
+        });
+      }),
+      finalize(() => {
+        this.loaderService.setLoading(false);
       })
     );
   }
