@@ -8,6 +8,8 @@ import { ErrorService } from '../error.service';
 import { RandomService } from '../random.service';
 import { LoaderService } from '../loader.service';
 import { ToastrService } from '../toastr.service';
+import { Article } from '../../../shared/models/article';
+import { ArticleService } from '../article/article.service';
 
 @Injectable()
 export class CourseService {
@@ -19,6 +21,7 @@ export class CourseService {
     private errorService: ErrorService,
     private randomService: RandomService,
     private handler: HttpBackend,
+    private articleService: ArticleService,
     private loaderService: LoaderService,
     private toastrService: ToastrService
   ) {
@@ -75,13 +78,32 @@ export class CourseService {
     return this.httpClient.post(url, req, httpOptions).pipe(
       switchMap((data: any) => {
         const course: Course = this.getCourseFromFirestore(data[0].document.fields);
-        return of(course);
+        return this.addArticlesInCourse(course);
       }),
       catchError((error) => {
         return this.errorService.handleError(error);
       }),
       finalize(() => {
         this.loaderService.setLoading(false);
+      })
+    );
+  }
+
+  /**
+   * Ajout dans le parcours pédagogique les articles du parcours.
+   * @param course Le parcours pédagogique.
+   */
+  public addArticlesInCourse(course: Course): Observable<Course> {
+    course.articles = [];
+    return this.articleService.getCourseArticles(course.id).pipe(
+      switchMap(articles => {
+        this.sortByOrder(articles, course.id).forEach(options => {
+          course.articles.push(new Article(options));
+        });
+        return of(course);
+      }),
+      catchError((error) => {
+        return this.errorService.handleError(error);
       })
     );
   }
@@ -320,6 +342,16 @@ export class CourseService {
       keywordsCourse.push(value.stringValue);
     });
     return keywordsCourse;
+  }
+
+  /**
+   * Tri les articles selon leur ordre d'apparition dans le parcours pédagogique.
+   * @param articles Un tableau d'articles à trier.
+   */
+  private sortByOrder(articles: Article[], idCourse: string) {
+    return articles.sort((a: Article, b: Article) => {
+      return a.orderByCourseId[idCourse] - b.orderByCourseId[idCourse];
+    });
   }
 
   /**

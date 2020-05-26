@@ -4,10 +4,9 @@ import { Course } from '../../../../shared/models/course';
 import { AuthService } from '../../../../core/services/user/auth.service';
 import { User } from '../../../../shared/models/user';
 import { CheckCourseNameValidator } from '../../../../shared/validators/check-course-name.validator';
-import { CourseStateService } from '../../../../core/services/course/course-state.service';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { State, AddUserCourse } from '../../../store';
+import { State, AddUserCourse, UpdateCurrentCourse, getCurrentCourse } from '../../../store';
 
 @Component({
   selector: 'bw-add-course-form',
@@ -52,12 +51,11 @@ export class AddCourseFormComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private authService: AuthService,
     private checkCourseNameValidator: CheckCourseNameValidator,
-    private courseStateService: CourseStateService,
     private store: Store<State>
   ) { }
 
   ngOnInit() {
-    this.course = this.courseStateService.getCurrentCourse();
+    this.store.select(getCurrentCourse).subscribe(course => this.course = course);
     this.subscription = this.authService.user$.subscribe(
       user => this.user = user
     );
@@ -124,7 +122,7 @@ export class AddCourseFormComponent implements OnInit, OnDestroy {
       this.course.description = this.description.value;
       this.course.level = this.levelControl.value.name;
       this.course.dateUpdate = Date.now();
-      this.courseStateService.updateCourse(this.course).subscribe();
+      this.store.dispatch(new UpdateCurrentCourse({ course: this.course }));
       return;
     }
 

@@ -3,10 +3,9 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 import { CurrentCourseActionTypes, LoadCurrentCourse, LoadCurrentCourseSuccess, UpdateCurrentCourse } from '../actions/currentCourse';
 import { map, switchMap, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { throwError, Observable, of } from 'rxjs';
+import { throwError, Observable } from 'rxjs';
 import { Course } from '../../../shared/models/course';
 import { ArticleService } from '../../../core/services/article/article.service';
-import { Article } from '../../../shared/models/article';
 
 
 const handleLoadedCourse = () => (source: Observable<Course>) => source.pipe(
@@ -28,21 +27,7 @@ export class CurrentCourseEffect {
         ofType(CurrentCourseActionTypes.Load),
         map((action: LoadCurrentCourse) => action.payload.idCourse),
         switchMap(
-            (idCourse: string) => {
-                return this.courseService.getCourse(idCourse);
-            }
-        ),
-        switchMap(
-            (course: Course) => {
-                this.articleService.getCourseArticles(course.id).subscribe(
-                    articles => {
-                        this.sortByOrder(articles, course.id).forEach(article => {
-                            course.articles.push(new Article(article));
-                        });
-                    }
-                );
-                return of(course);
-            }
+            (idCourse: string) => this.courseService.getCourse(idCourse)
         ),
         handleLoadedCourse()
     );
@@ -55,14 +40,4 @@ export class CurrentCourseEffect {
             (course: Course) => this.courseService.update(course)
         )
     );
-
-    /**
-     * Tri les articles selon leur ordre d'apparition dans le parcours pédagogique.
-     * @param articles Un tableau d'articles à trier.
-     */
-    private sortByOrder(articles: Article[], idCourse: string) {
-        return articles.sort((a: Article, b: Article) => {
-            return a.orderByCourseId[idCourse] - b.orderByCourseId[idCourse];
-        });
-    }
 }
