@@ -30,14 +30,22 @@ export class RemoveArticleComponent implements OnInit {
    * Suppression logique du lien entre l'article et le parcours pédagogique courant.
    */
   public remove(): void {
+
+    const courseIds = [... this.article.courseIds];
+    const orderByCourseId = { ... this.article.orderByCourseId };
     const index = this.article.courseIds.findIndex((element) => {
       return element === this.currentCourse.id;
     });
-    if (index !== -1) {
-      this.article.courseIds.splice(index, 1);
+    if (index === -1) {
+      return;
     }
-    delete this.article.orderByCourseId[this.currentCourse.id];
-    this.articleService.update(this.article).subscribe(
+    courseIds.splice(index, 1);
+    delete orderByCourseId[this.currentCourse.id];
+    const article = Object.assign({}, this.article, {
+      courseIds,
+      orderByCourseId
+    });
+    this.articleService.update(article).subscribe(
       _ => {
         this.store.dispatch(new RefreshArticlesInCurrentCourse({ course: this.currentCourse }));
       }

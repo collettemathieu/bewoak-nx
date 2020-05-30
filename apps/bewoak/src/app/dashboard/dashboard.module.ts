@@ -7,7 +7,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { CourseService } from '../core/services/course/course.service';
-import { CourseStateService } from '../core/services/course/course-state.service';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { reducers, effects } from './store';
@@ -24,7 +23,6 @@ registerLocaleData(localeFr, 'fr-FR');
   ],
   providers: [
     CourseService,
-    CourseStateService,
     { provide: LOCALE_ID, useValue: 'fr-FR' }
   ]
 })

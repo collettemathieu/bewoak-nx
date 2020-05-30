@@ -230,13 +230,18 @@ export class CourseService {
    * @param course Le parcours pédagogique.
    */
   public refreshArticlesInCourse(course: Course): Observable<Course> {
-    course.articles = [];
     return this.articleService.getCourseArticles(course.id).pipe(
       switchMap(articles => {
+        const freshArticles: Article[] = [];
         this.sortByOrder(articles, course.id).forEach(options => {
-          course.articles.push(new Article(options));
+          freshArticles.push(new Article(options));
         });
-        return of(course);
+
+        const freshCourse = Object.assign({}, course, {
+          articles: freshArticles
+        });
+
+        return of(freshCourse);
       }),
       catchError((error) => {
         return this.errorService.handleError(error);
@@ -338,7 +343,7 @@ export class CourseService {
    * @param keywords Les mots clés du parcours pédagogique.
    * @return Un tableau de mots clés du parcours.
    */
-  private getKeywordsDataFromFirestore(keywords: any): Array<string> {
+  private getKeywordsDataFromFirestore(keywords: any): string[] {
     const keywordsCourse = [];
     keywords.values.forEach((value: any) => {
       keywordsCourse.push(value.stringValue);
@@ -350,7 +355,7 @@ export class CourseService {
    * Tri les articles selon leur ordre d'apparition dans le parcours pédagogique.
    * @param articles Un tableau d'articles à trier.
    */
-  private sortByOrder(articles: Article[], idCourse: string) {
+  private sortByOrder(articles: Article[], idCourse: string): Article[] {
     return articles.sort((a: Article, b: Article) => {
       return a.orderByCourseId[idCourse] - b.orderByCourseId[idCourse];
     });

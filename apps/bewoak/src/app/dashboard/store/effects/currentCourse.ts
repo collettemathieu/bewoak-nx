@@ -41,7 +41,7 @@ export class CurrentCourseEffect {
 
     @Effect()
     $refreshArticles = this.action$.pipe(
-        ofType(CurrentCourseActionTypes.Update),
+        ofType(CurrentCourseActionTypes.RefreshArticles),
         map((action: UpdateCurrentCourse) => action.payload.course),
         switchMap(
             (course: Course) => this.courseService.refreshArticlesInCourse(course)
