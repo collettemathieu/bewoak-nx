@@ -5,7 +5,6 @@ import { map, switchMap, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { throwError, Observable } from 'rxjs';
 import { Course } from '../../../shared/models/course';
-import { ArticleService } from '../../../core/services/article/article.service';
 
 
 const handleLoadedCourse = () => (source: Observable<Course>) => source.pipe(
@@ -18,12 +17,11 @@ const handleLoadedCourse = () => (source: Observable<Course>) => source.pipe(
 export class CurrentCourseEffect {
     constructor(
         private courseService: CourseService,
-        private articleService: ArticleService,
         private action$: Actions
     ) { }
 
     @Effect()
-    $loadCourse = this.action$.pipe(
+    $load = this.action$.pipe(
         ofType(CurrentCourseActionTypes.Load),
         map((action: LoadCurrentCourse) => action.payload.idCourse),
         switchMap(
@@ -32,12 +30,22 @@ export class CurrentCourseEffect {
         handleLoadedCourse()
     );
 
-    @Effect()
-    $updateCourse = this.action$.pipe(
+    @Effect({ dispatch: false })
+    $update = this.action$.pipe(
         ofType(CurrentCourseActionTypes.Update),
         map((action: UpdateCurrentCourse) => action.payload.course),
         switchMap(
             (course: Course) => this.courseService.update(course)
         )
+    );
+
+    @Effect()
+    $refreshArticles = this.action$.pipe(
+        ofType(CurrentCourseActionTypes.Update),
+        map((action: UpdateCurrentCourse) => action.payload.course),
+        switchMap(
+            (course: Course) => this.courseService.refreshArticlesInCourse(course)
+        ),
+        handleLoadedCourse()
     );
 }

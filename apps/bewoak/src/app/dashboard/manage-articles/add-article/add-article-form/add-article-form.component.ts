@@ -1,12 +1,13 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ArticleService } from '../../../../core/services/article/article.service';
-import { CourseStateService } from '../../../../core/services/course/course-state.service';
 import { Course } from '../../../../shared/models/course';
 import { Article } from '../../../../shared/models/article';
 import { BehaviorSubject } from 'rxjs';
 import { DoiService } from '../../../../core/services/article/doi.service';
 import { ToastrService } from '../../../../core/services/toastr.service';
+import { Store } from '@ngrx/store';
+import { State, getCurrentCourse, RefreshArticlesInCurrentCourse } from '../../../store';
 
 @Component({
   selector: 'bw-add-article-form',
@@ -24,14 +25,14 @@ export class AddArticleFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private articleService: ArticleService,
-    private courseStateService: CourseStateService,
+    private store: Store<State>,
     private doiService: DoiService,
     private toastrService: ToastrService
   ) { }
 
   ngOnInit() {
     this.formArticle = this.createForm();
-    this.currentCourse = this.courseStateService.getCurrentCourse();
+    this.store.select(getCurrentCourse).subscribe((currentCourse: Course) => this.currentCourse = currentCourse);
   }
 
   /**
@@ -109,7 +110,7 @@ export class AddArticleFormComponent implements OnInit {
 
     this.articleService.add(article).subscribe(
       _ => {
-        this.courseStateService.getCourse(this.currentCourse.id).subscribe();
+        this.store.dispatch(new RefreshArticlesInCurrentCourse({ course: this.currentCourse }));
         this.article.next(null);
         // Fermeture de la fenêtre modale.
         this.closeModalArticle.emit(true);
@@ -139,7 +140,7 @@ export class AddArticleFormComponent implements OnInit {
 
     this.articleService.update(article).subscribe(
       _ => {
-        this.courseStateService.getCourse(this.currentCourse.id).subscribe();
+        this.store.dispatch(new RefreshArticlesInCurrentCourse({ course: this.currentCourse }));
         this.article.next(null);
         // Fermeture de la fenêtre modale.
         this.closeModalArticle.emit(true);

@@ -19,7 +19,7 @@ export const reducers = {
 }
 export const effects = [UserCoursesEffect, CurrentCourseEffect];
 export const { LoadUserCourses, AddUserCourse, RemoveUserCourse } = fromUserCoursesActions;
-export const { LoadCurrentCourse, UpdateCurrentCourse } = fromCurrentCourseActions;
+export const { LoadCurrentCourse, UpdateCurrentCourse, RefreshArticlesInCurrentCourse, ResetCurrentCourse } = fromCurrentCourseActions;
 
 // Les sélecteurs pour le module DashBoard
 export const getPublicState = createFeatureSelector<DashBoardState>('dashBoardPage');

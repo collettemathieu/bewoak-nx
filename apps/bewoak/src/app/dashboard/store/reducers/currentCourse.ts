@@ -29,6 +29,17 @@ export function reducer(state: State = InitialState, action: UserCourseAction): 
                 ...state,
                 course: action.payload.course
             }
+        case CurrentCourseActionTypes.RefreshArticles:
+            return {
+                ...state,
+                loading: true
+            }
+        case CurrentCourseActionTypes.Reset:
+            return {
+                ...state,
+                loading: false,
+                course: null
+            }
         default:
             return state;
     }

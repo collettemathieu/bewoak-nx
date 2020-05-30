@@ -78,32 +78,13 @@ export class CourseService {
     return this.httpClient.post(url, req, httpOptions).pipe(
       switchMap((data: any) => {
         const course: Course = this.getCourseFromFirestore(data[0].document.fields);
-        return this.addArticlesInCourse(course);
+        return this.refreshArticlesInCourse(course);
       }),
       catchError((error) => {
         return this.errorService.handleError(error);
       }),
       finalize(() => {
         this.loaderService.setLoading(false);
-      })
-    );
-  }
-
-  /**
-   * Ajout dans le parcours pédagogique les articles du parcours.
-   * @param course Le parcours pédagogique.
-   */
-  public addArticlesInCourse(course: Course): Observable<Course> {
-    course.articles = [];
-    return this.articleService.getCourseArticles(course.id).pipe(
-      switchMap(articles => {
-        this.sortByOrder(articles, course.id).forEach(options => {
-          course.articles.push(new Article(options));
-        });
-        return of(course);
-      }),
-      catchError((error) => {
-        return this.errorService.handleError(error);
       })
     );
   }
@@ -242,6 +223,27 @@ export class CourseService {
       })
     );
   }
+
+
+  /**
+   * Rafraîchit les articles du parcours pédagogique.
+   * @param course Le parcours pédagogique.
+   */
+  public refreshArticlesInCourse(course: Course): Observable<Course> {
+    course.articles = [];
+    return this.articleService.getCourseArticles(course.id).pipe(
+      switchMap(articles => {
+        this.sortByOrder(articles, course.id).forEach(options => {
+          course.articles.push(new Article(options));
+        });
+        return of(course);
+      }),
+      catchError((error) => {
+        return this.errorService.handleError(error);
+      })
+    );
+  }
+
 
   /**
    * Retourne si le nom du parcours pédagogique est disponible.

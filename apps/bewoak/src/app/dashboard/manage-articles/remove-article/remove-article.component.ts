@@ -1,39 +1,45 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Article } from '../../../shared/models/article';
 import { ArticleService } from '../../../core/services/article/article.service';
-import { CourseStateService } from '../../../core/services/course/course-state.service';
+import { Store } from '@ngrx/store';
+import { State, getCurrentCourse, RefreshArticlesInCurrentCourse } from '../../store';
+import { Course } from '../../../shared/models/course';
 
 @Component({
   selector: 'bw-remove-article',
   templateUrl: './remove-article.component.html',
   styleUrls: ['./remove-article.component.scss']
 })
-export class RemoveArticleComponent {
+export class RemoveArticleComponent implements OnInit {
 
   @Input()
   article: Article;
 
+  private currentCourse: Course;
+
   constructor(
     private articleService: ArticleService,
-    private courseStateService: CourseStateService
+    private store: Store<State>
   ) { }
 
+  ngOnInit() {
+    this.store.select(getCurrentCourse).subscribe((currentCourse: Course) => this.currentCourse = currentCourse);
+  }
+
   /**
-   * Suppression logique d'un article du parcours pédagogique en cours.
+   * Suppression logique du lien entre l'article et le parcours pédagogique courant.
    */
   public remove(): void {
-    const course = this.courseStateService.getCurrentCourse();
     const index = this.article.courseIds.findIndex((element) => {
-      return element === course.id;
+      return element === this.currentCourse.id;
     });
     if (index !== -1) {
       this.article.courseIds.splice(index, 1);
     }
-    delete this.article.orderByCourseId[course.id];
-
+    delete this.article.orderByCourseId[this.currentCourse.id];
     this.articleService.update(this.article).subscribe(
       _ => {
-        this.courseStateService.getCourse(course.id).subscribe();
+        this.store.dispatch(new RefreshArticlesInCurrentCourse({ course: this.currentCourse }));
       }
     );
   }

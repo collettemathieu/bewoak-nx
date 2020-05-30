@@ -55,12 +55,14 @@ export class AddCourseFormComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.store.select(getCurrentCourse).subscribe(course => this.course = course);
+    this.store.select(getCurrentCourse).subscribe(course => {
+      this.course = course;
+      this.formCourse = this.createForm();
+      this.initForm();
+    });
     this.subscription = this.authService.user$.subscribe(
       user => this.user = user
     );
-    this.formCourse = this.createForm();
-    this.initForm();
   }
 
   ngOnDestroy() {

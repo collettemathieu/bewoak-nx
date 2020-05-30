@@ -4,7 +4,9 @@ import { Course } from '../../../shared/models/course';
 export enum CurrentCourseActionTypes {
     Load = '[Course] load a user course',
     LoadSuccess = '[Course] load a user course with success',
-    Update = '[Course] update a user course'
+    Update = '[Course] update a user course',
+    RefreshArticles = '[Course] refresh articles in current course',
+    Reset = '[Course] reset the current course'
 }
 
 export class LoadCurrentCourse implements Action {
@@ -25,4 +27,15 @@ export class UpdateCurrentCourse implements Action {
     constructor(public readonly payload: { course: Course }) { }
 }
 
-export type UserCourseAction = LoadCurrentCourse | LoadCurrentCourseSuccess | UpdateCurrentCourse;
+export class RefreshArticlesInCurrentCourse implements Action {
+    readonly type = CurrentCourseActionTypes.RefreshArticles;
+
+    constructor(public readonly payload: { course: Course }) { }
+}
+
+export class ResetCurrentCourse implements Action {
+    readonly type = CurrentCourseActionTypes.Reset;
+}
+
+export type UserCourseAction = LoadCurrentCourse | LoadCurrentCourseSuccess | UpdateCurrentCourse
+    | RefreshArticlesInCurrentCourse | ResetCurrentCourse;

@@ -7,7 +7,7 @@ export class Course {
     name: string;
     description: string;
     articles: Article[];
-    keywords: Array<string>;
+    keywords: string[];
     url: string;
     avatar: string;
     like: number; // Nombre de like.
@@ -21,7 +21,7 @@ export class Course {
         name: string,
         description: string,
         articles?: Article[],
-        keywords: Array<string>,
+        keywords: string[],
         url?: string,
         avatar?: string,
         like?: number,

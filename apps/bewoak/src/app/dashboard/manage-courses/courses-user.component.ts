@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Course } from '../../shared/models/course';
-import { CourseStateService } from '../../core/services/course/course-state.service';
 import { Store } from '@ngrx/store';
-import { getUserCourses, State, RemoveUserCourse } from '../store';
+import { getUserCourses, State, RemoveUserCourse, ResetCurrentCourse } from '../store';
 
 @Component({
   selector: 'bw-courses-user',
@@ -15,13 +14,12 @@ export class CoursesUserComponent implements OnInit {
   public courses$: Observable<Course[]>;
 
   constructor(
-    private store: Store<State>,
-    private courseStateService: CourseStateService
+    private store: Store<State>
   ) { }
 
   ngOnInit() {
     this.courses$ = this.store.select(getUserCourses);
-    this.courseStateService.resetCourse();
+    this.store.dispatch(new ResetCurrentCourse());
   }
 
   public remove(course: Course): void {
