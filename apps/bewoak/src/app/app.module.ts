@@ -9,7 +9,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
-
+import { reducers, effects } from './store';
 
 @NgModule({
   declarations: [
@@ -19,11 +19,11 @@ import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
     BrowserModule,
     BrowserAnimationsModule,
     CoreModule,
-    StoreModule.forRoot({router: routerReducer}),
+    StoreModule.forRoot({...reducers, router: routerReducer}),
     StoreRouterConnectingModule.forRoot({
       stateKey: 'router'
     }),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot(effects),
     StoreDevtoolsModule.instrument({
       name: 'Bewoak DevTools',
       maxAge: 25,

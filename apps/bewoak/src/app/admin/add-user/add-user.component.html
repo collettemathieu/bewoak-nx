@@ -47,7 +47,7 @@
                 </span>
             </small>
         </div>
-        <div *ngIf="currentUserIsRoot" class="md-form">
+        <div *ngIf="currentUser.hasRole('ROOT')" class="md-form">
             <label for="role">Role</label>
             <ngx-select-dropdown formControlName="roleControl" [multiple]="true" [options]="roles" [config]="config"
                 autocomplete="false" autocorrect="false"></ngx-select-dropdown>

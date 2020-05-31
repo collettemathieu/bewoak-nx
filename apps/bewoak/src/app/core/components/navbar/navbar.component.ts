@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/user/auth.service';
 import { Subscription } from 'rxjs';
 import { User } from '../../../shared/models/user';
+import { Store } from '@ngrx/store';
+import { getCurrentUser } from '../../../store';
 
 @Component({
   selector: 'bw-navbar',
@@ -25,11 +27,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
+    private store: Store,
     private authService: AuthService
   ) { }
 
   ngOnInit() {
-    this.subscription = this.authService.user$.subscribe(
+    this.subscription = this.store.select(getCurrentUser).subscribe(
       user => this.user = user
     );
   }

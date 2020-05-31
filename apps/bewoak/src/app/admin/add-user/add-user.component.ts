@@ -35,7 +35,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
     // label thats displayed in search input.
     searchPlaceholder: 'Rechercher',
   };
-  private currentUser: User;
+  public currentUser: User;
   private subscription: Subscription;
 
   constructor(

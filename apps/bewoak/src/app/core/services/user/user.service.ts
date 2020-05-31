@@ -3,8 +3,10 @@ import { User } from '../../../shared/models/user';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { switchMap, catchError } from 'rxjs/operators';
+import { switchMap, catchError, finalize, tap } from 'rxjs/operators';
 import { ErrorService } from '../error.service';
+import { LoaderService } from '../loader.service';
+import { ToastrService } from '../toastr.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +15,8 @@ export class UserService {
 
   constructor(
     private httpClient: HttpClient,
+    private loaderService: LoaderService,
+    private toastrService: ToastrService,
     private errorService: ErrorService
   ) { }
 
@@ -69,7 +73,8 @@ export class UserService {
    * @return Une observable de User.
    */
   public update(user: User): Observable<User | null> {
-    // Configuration.
+    this.loaderService.setLoading(true);
+
     const url = `${environment.firestore.baseUrlDocument}users/${user.id}?key=${environment.firebase.apiKey}&currentDocument.exists=true`;
     const dataUser = this.getDataUserForFirestore(user);
     const httpOptions = {
@@ -83,9 +88,14 @@ export class UserService {
       switchMap((data: any) => {
         return of(this.getUserFromFirestore(data.fields));
       }),
+      tap(_ => this.toastrService.showMessage({
+        type: 'success',
+        message: 'Votre profil a bien été enregistré'
+      })),
       catchError((error) => {
         return this.errorService.handleError(error);
-      })
+      }),
+      finalize(() => this.loaderService.setLoading(false))
     );
   }
 

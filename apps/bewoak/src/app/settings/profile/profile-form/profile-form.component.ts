@@ -4,6 +4,8 @@ import { AuthService } from '../../../core/services/user/auth.service';
 import { FormUserService } from '../../../core/services/user/form-user.service';
 import { User } from '../../../shared/models/user';
 import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { UpdateCurrentUserAction } from '../../../store';
 
 @Component({
   selector: 'bw-profile-form',
@@ -19,6 +21,7 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
+    private store: Store,
     private formUserService: FormUserService
   ) { }
 
@@ -56,7 +59,7 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
       user.lastname = this.lastname.value;
       user.jobBackground = this.jobBackground.value;
       user.dateUpdate = Date.now();
-      this.authService.updateStateUser(user).subscribe();
+      this.store.dispatch(new UpdateCurrentUserAction({user}));
     }
   }
 

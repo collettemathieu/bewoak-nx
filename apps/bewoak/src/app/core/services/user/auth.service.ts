@@ -11,6 +11,8 @@ import { LoaderService } from '../loader.service';
 import { Router } from '@angular/router';
 import { RandomService } from '../random.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Store } from '@ngrx/store';
+import { LoadCurrentUserAction, ResetCurrentUserAction } from '../../../store';
 
 /**
  * Temps de connexion de l'utilisateur en ms.
@@ -33,6 +35,7 @@ export class AuthService {
     private handler: HttpBackend,
     private router: Router,
     private userService: UserService,
+    private store: Store,
     private toastrService: ToastrService,
     private errorService: ErrorService,
     private loaderService: LoaderService,
@@ -76,12 +79,7 @@ export class AuthService {
         // Récupération des données utilisateur.
         return this.userService.getUser(userId);
       }),
-      tap(user => this.user.next(user)),
-      tap(_ => {
-        this.user.subscribe(
-          user => this.currentUser = user
-        );
-      }),
+      tap(user => this.store.dispatch(new LoadCurrentUserAction({ user }))),
       tap(_ => this.logOutTimer(connectingTime)),
       tap(user => {
         // Envoi d'un message.
@@ -116,17 +114,11 @@ export class AuthService {
       return;
     }
 
-    this.user.subscribe(
-      user => this.currentUser = user
-    );
-
     this.userService.getUser(userId).subscribe(
       user => {
-        this.user.next(user);
+        this.store.dispatch(new LoadCurrentUserAction({ user }));
       }
     );
-
-
   }
 
   public isAuthenticated(): boolean {
@@ -189,30 +181,13 @@ export class AuthService {
     );
   }
 
-  /**
-   * Méthode permettant d'enregistrer les modifications d'un utilisateur.
-   * @param currentUser Utilisateur courant.
-   */
-  public updateStateUser(currentUser: User): Observable<User | null> {
-    this.loaderService.setLoading(true);
-
-    return this.userService.update(currentUser).pipe(
-      tap(user => this.user.next(user)),
-      tap(_ => this.toastrService.showMessage({
-        type: 'success',
-        message: 'Votre profil a bien été enregistré'
-      })),
-      catchError(error => this.errorService.handleError(error)),
-      finalize(() => this.loaderService.setLoading(false))
-    );
-  }
 
   /**
    * Méthode permettant la déconnexion de l'utilisateur.
    */
   public logout(): void {
     this.removeDataFromLocalStorage();
-    this.user.next(null);
+    this.store.dispatch(new ResetCurrentUserAction());
     this.router.navigate(['/login']);
   }
 

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { CanActivate, CanActivateChild, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { AuthService } from '../services/user/auth.service';
+import { State } from '@ngrx/store';
+import { State as CurrentUserState } from '../../store';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +12,7 @@ export class RoleExpertGuard implements CanActivate, CanActivateChild {
 
   constructor(
     private router: Router,
+    private state: State<CurrentUserState>,
     private authService: AuthService
   ) { }
 
@@ -17,7 +20,7 @@ export class RoleExpertGuard implements CanActivate, CanActivateChild {
     if(!this.authService.isAuthenticated()){
       return of(false);
     }
-    const currentUser = this.authService.getCurrentUser();
+    const currentUser = this.state.value.currentUser.currentUser;
     const hasRole = !!currentUser && currentUser.hasRole('EXPERT');
     if (!hasRole) {
       this.router.navigate(['home']);
