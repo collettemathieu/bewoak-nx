@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { AuthService } from '../../../core/services/user/auth.service';
 import { FormUserService } from '../../../core/services/user/form-user.service';
 import { User } from '../../../shared/models/user';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { UpdateCurrentUserAction } from '../../../store';
+import { UpdateCurrentUserAction, getCurrentUser } from '../../../store';
 
 @Component({
   selector: 'bw-profile-form',
@@ -20,7 +19,6 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   constructor(
-    private authService: AuthService,
     private store: Store,
     private formUserService: FormUserService
   ) { }
@@ -30,7 +28,7 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
    * utilisateur dans le formulaire de profil.
    */
   ngOnInit() {
-    this.subscription = this.authService.user$.subscribe(
+    this.subscription = this.store.select(getCurrentUser).subscribe(
       user => {
         this.user = user;
         if (user) {
@@ -54,12 +52,12 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
    */
   public submit(): void {
     if (this.formProfile.valid) {
-      const user = this.user;
+      const user = Object.assign(Object.create(Object.getPrototypeOf(this.user)), this.user)
       user.firstname = this.firstname.value;
       user.lastname = this.lastname.value;
       user.jobBackground = this.jobBackground.value;
       user.dateUpdate = Date.now();
-      this.store.dispatch(new UpdateCurrentUserAction({user}));
+      this.store.dispatch(new UpdateCurrentUserAction({ user }));
     }
   }
 

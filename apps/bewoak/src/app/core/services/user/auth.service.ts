@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, ReplaySubject } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { User } from '../../../shared/models/user';
 import { HttpClient, HttpHeaders, HttpBackend } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
@@ -23,10 +23,6 @@ const connectingTime = 3600;
   providedIn: 'root'
 })
 export class AuthService {
-
-  private user: ReplaySubject<User | null> = new ReplaySubject();
-  public readonly user$: Observable<User | null> = this.user.asObservable();
-  private currentUser: User;
 
   private http: HttpClient;
   private helper: JwtHelperService;
@@ -208,12 +204,6 @@ export class AuthService {
     };
   }
 
-  /**
-   * Retourne l'utilisateur courant connecté.
-   */
-  public getCurrentUser(): User {
-    return this.currentUser;
-  }
 
   /**
    * Méthode permettant de modifier les informations du local storage.

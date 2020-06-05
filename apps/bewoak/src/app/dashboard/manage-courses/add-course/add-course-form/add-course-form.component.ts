@@ -7,6 +7,7 @@ import { CheckCourseNameValidator } from '../../../../shared/validators/check-co
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State, AddUserCourse, UpdateCurrentCourse, getCurrentCourse } from '../../../store';
+import { getCurrentUser } from 'apps/bewoak/src/app/store';
 
 @Component({
   selector: 'bw-add-course-form',
@@ -60,8 +61,9 @@ export class AddCourseFormComponent implements OnInit, OnDestroy {
       this.formCourse = this.createForm();
       this.initForm();
     });
-    this.subscription = this.authService.user$.subscribe(
-      user => this.user = user
+
+    this.subscription = this.store.select(getCurrentUser).subscribe(
+      (user: User) => this.user = user
     );
   }
 

@@ -67,12 +67,12 @@
 <ng-template #userBlock>
     <div class="jumbotron">
         <h1 class="display-4">Utilisateur enregistré !</h1>
-        <p class="lead">L'utilisateur <span class="font-weight-bold">{{ user.firstname }} {{user.lastname}}</span> a
+        <p class="lead">L'utilisateur <span class="font-weight-bold">{{ newUser.firstname }} {{newUser.lastname}}</span> a
             bien été enregistré.
             Vous pouvez le contacter afin de lui transmettre ses identifiants de connexion.
         </p>
         <hr class="my-2">
-        <p><span class="font-weight-bold">Identifiant : </span>{{ user.email }}</p>
+        <p><span class="font-weight-bold">Identifiant : </span>{{ newUser.email }}</p>
         <p><span class="font-weight-bold">Mot de passe : </span>{{ passwordUser }}</p>
         <button class="btn btn-primary float-right mt-4" (click)="goHome()" role="button">Ok</button>
     </div>

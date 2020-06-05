@@ -5,6 +5,8 @@ import { FormUserService } from '../../core/services/user/form-user.service';
 import { User } from '../../shared/models/user';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { getCurrentUser } from '../../store';
 
 @Component({
   selector: 'bw-add-user',
@@ -14,7 +16,7 @@ import { Subscription } from 'rxjs';
 export class AddUserComponent implements OnInit, OnDestroy {
 
   public formIsSubmitted = false; // Après enregistrement, affiche les informations de l'utilisateur.
-  public user: User = new User({});
+  public newUser: User = new User({});
   public passwordUser: string;
   public addUserForm: FormGroup;
   public roles: Array<string> = ['USER', 'EXPERT', 'ADMIN'];
@@ -40,15 +42,18 @@ export class AddUserComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
+    private store: Store,
     private router: Router,
     private formUserService: FormUserService
   ) { }
 
   ngOnInit() {
-    this.subscription = this.authService.user$.subscribe(
-      user => this.currentUser = user
+    this.subscription = this.store.select(getCurrentUser).subscribe(
+      (user: User) => {
+        this.currentUser = user;
+        this.addUserForm = this.createForm();
+      }
     );
-    this.addUserForm = this.createForm();
   }
 
   ngOnDestroy() {
@@ -89,7 +94,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
       // On reste sur le formulaire si ko.
       this.authService.register(newUser).subscribe(
         data => {
-          this.user = data.user;
+          this.newUser = data.user;
           this.passwordUser = data.password;
           this.formIsSubmitted = true;
         }

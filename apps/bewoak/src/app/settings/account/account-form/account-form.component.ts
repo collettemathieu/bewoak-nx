@@ -1,26 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { User } from '../../../shared/models/user';
-import { AuthService } from '../../../core/services/user/auth.service';
+import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { getCurrentUser } from '../../../store';
 
 @Component({
   selector: 'bw-account-form',
   templateUrl: './account-form.component.html',
   styleUrls: ['./account-form.component.scss']
 })
-export class AccountFormComponent implements OnInit {
+export class AccountFormComponent implements OnInit, OnDestroy {
 
   public formAccount: FormGroup;
-
   public user: User;
+  private subscription: Subscription;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) { }
+  constructor(private fb: FormBuilder, private store: Store) { }
 
   ngOnInit() {
-    this.authService.user$.subscribe(
-      user => this.user = user
+    this.subscription = this.store.select(getCurrentUser).subscribe(
+      (user: User) => {
+        this.user = user;
+        this.formAccount = this.createForm();
+      }
     );
-    this.formAccount = this.createForm();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   /**
