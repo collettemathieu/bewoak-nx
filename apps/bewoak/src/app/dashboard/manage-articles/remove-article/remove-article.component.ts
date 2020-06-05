@@ -1,21 +1,23 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Article } from '../../../shared/models/article';
 import { ArticleService } from '../../../core/services/article/article.service';
 import { Store } from '@ngrx/store';
 import { State, getCurrentCourse, RefreshArticlesInCurrentCourse } from '../../store';
 import { Course } from '../../../shared/models/course';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'bw-remove-article',
   templateUrl: './remove-article.component.html',
   styleUrls: ['./remove-article.component.scss']
 })
-export class RemoveArticleComponent implements OnInit {
+export class RemoveArticleComponent implements OnInit, OnDestroy {
 
   @Input()
   article: Article;
 
   private currentCourse: Course;
+  private subscription: Subscription;
 
   constructor(
     private articleService: ArticleService,
@@ -23,7 +25,11 @@ export class RemoveArticleComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.store.select(getCurrentCourse).subscribe((currentCourse: Course) => this.currentCourse = currentCourse);
+    this.subscription = this.store.select(getCurrentCourse).subscribe((currentCourse: Course) => this.currentCourse = currentCourse);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   /**

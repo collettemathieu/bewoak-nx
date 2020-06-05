@@ -1,9 +1,9 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ArticleService } from '../../../../core/services/article/article.service';
 import { Course } from '../../../../shared/models/course';
 import { Article } from '../../../../shared/models/article';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { DoiService } from '../../../../core/services/article/doi.service';
 import { ToastrService } from '../../../../core/services/toastr.service';
 import { Store } from '@ngrx/store';
@@ -14,13 +14,14 @@ import { State, getCurrentCourse, RefreshArticlesInCurrentCourse } from '../../.
   templateUrl: './add-article-form.component.html',
   styleUrls: ['./add-article-form.component.scss']
 })
-export class AddArticleFormComponent implements OnInit {
+export class AddArticleFormComponent implements OnInit, OnDestroy {
 
   public formArticle: FormGroup;
   public article: BehaviorSubject<Article | null> = new BehaviorSubject(null);
   @Output()
   private closeModalArticle: EventEmitter<boolean> = new EventEmitter(false);
   private currentCourse: Course;
+  private subscription: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -32,7 +33,11 @@ export class AddArticleFormComponent implements OnInit {
 
   ngOnInit() {
     this.formArticle = this.createForm();
-    this.store.select(getCurrentCourse).subscribe((currentCourse: Course) => this.currentCourse = currentCourse);
+    this.subscription = this.store.select(getCurrentCourse).subscribe((currentCourse: Course) => this.currentCourse = currentCourse);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   /**

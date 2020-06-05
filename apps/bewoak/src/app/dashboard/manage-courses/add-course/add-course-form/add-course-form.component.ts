@@ -1,7 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Course } from '../../../../shared/models/course';
-import { AuthService } from '../../../../core/services/user/auth.service';
 import { User } from '../../../../shared/models/user';
 import { CheckCourseNameValidator } from '../../../../shared/validators/check-course-name.validator';
 import { Subscription } from 'rxjs';
@@ -45,30 +44,29 @@ export class AddCourseFormComponent implements OnInit, OnDestroy {
   private user: User;
   // Parcours pédagogique courant.
   private course: Course;
-  private subscription: Subscription;
+  private subscriptions: Subscription = new Subscription();
 
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
     private checkCourseNameValidator: CheckCourseNameValidator,
     private store: Store<State>
   ) { }
 
   ngOnInit() {
-    this.store.select(getCurrentCourse).subscribe(course => {
+    this.subscriptions.add(this.store.select(getCurrentCourse).subscribe(course => {
       this.course = course;
       this.formCourse = this.createForm();
       this.initForm();
-    });
+    }));
 
-    this.subscription = this.store.select(getCurrentUser).subscribe(
+    this.subscriptions.add(this.store.select(getCurrentUser).subscribe(
       (user: User) => this.user = user
-    );
+    ));
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 
   /**
