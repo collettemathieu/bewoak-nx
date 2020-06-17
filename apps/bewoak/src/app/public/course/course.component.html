@@ -1,0 +1,52 @@
+<ng-container *ngIf="(course$ | async) as course">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <ul class="stepper stepper-vertical">
+                <li>
+                    <a>
+                        <span class="circle">
+                            <mdb-icon fas icon="folder-open"></mdb-icon>
+                        </span>
+                        <span class="label">Début du parcours</span>
+                    </a>
+                </li>
+                <ng-container *ngFor="let article of course.articles">
+                    <li class="active">
+                        <a href="{{article.url}}" target="_blank">
+                            <span class="circle">
+                                <mdb-icon fas icon="file-alt"></mdb-icon>
+                            </span>
+                            <span class="label">{{article.title}}</span>
+                        </a>
+                        <div class="step-content">
+                            <mdb-card class="w-20">
+                                <mdb-card-body>
+                                    <mdb-card-title>
+                                        <h5>{{article.title}}</h5>
+                                        <h6 class="text-muted mb-2"><small>{{article.authors.join(', ')}}</small></h6>
+                                    </mdb-card-title>
+                                    <mdb-card-text>
+                                        Some quick example text to build on the panel title and make up the bulk of the
+                                        panel's content.
+                                    </mdb-card-text>
+                                    <a href="{{article.url}}" target="_blank" mdbBtn color="primary">Lire</a>
+                                </mdb-card-body>
+                                <mdb-card-footer><small class="text-muted">{{article.journal}} - {{article.year}}</small>
+                                </mdb-card-footer>
+                            </mdb-card>
+                        </div>
+
+                    </li>
+                </ng-container>
+                <li class="warning">
+                    <a>
+                        <span class="circle">
+                            <mdb-icon fas icon="medal"></mdb-icon>
+                        </span>
+                        <span class="label">Fin du parcours</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</ng-container>

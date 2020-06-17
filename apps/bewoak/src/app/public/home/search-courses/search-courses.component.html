@@ -1,5 +1,5 @@
 <div class="row" *ngIf="(courses$ | async) as courses">
-    <div *ngIf="courses?.length; else elseBlock" class="col-md-4">
+    <div *ngIf="courses?.length; else elseBlock" class="col-md-12">
         <div *ngFor="let course of courses">
             <bw-search-course [course]="course"></bw-search-course>
         </div>
@@ -10,6 +10,7 @@
     <div class="jumbotron col">
         <h1 class="display-4">Oops... Aucun parcours trouvé !</h1>
         <p class="lead">Vous avez peut-être demandé un parcours qui n'existe pas encore.</p>
-        <p class="lead">En faire la demande... <button class="btn btn-primary">Go</button></p>
-    </div>
+        <hr class="my-4">
+        <a mdbBtn color="primary" size="lg" role="button" mdbWavesEffect>En faire la demande !</a>
+      </div>
 </ng-template>

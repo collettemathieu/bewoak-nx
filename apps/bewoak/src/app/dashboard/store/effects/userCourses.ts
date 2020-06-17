@@ -14,7 +14,7 @@ const handleLoadedCourses = () => (source: Observable<Course[]>) => source.pipe(
 );
 
 @Injectable()
-export class UserCoursesEffect {
+export class UserCoursesEffects {
 
     constructor(
         private actions$: Actions,

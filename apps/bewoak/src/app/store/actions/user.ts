@@ -5,7 +5,7 @@ import { User } from '../../shared/models/user';
 export enum CurrentUserActionTypes {
     Load = '[User] Load the current user',
     Update = '[User] Update the current user',
-    Reset = '[User] Reset the current user'
+    Reset = '[User] Reset the current user',
 };
 
 export class LoadCurrentUserAction implements Action {

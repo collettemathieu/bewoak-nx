@@ -98,8 +98,31 @@ export class ApiCrossRefService {
    * @param xmlDoc Document XML retourné par l'API CrossRef
    */
   private getDataFromCrossRef(xmlDoc: XMLDocument): CrossRefInterface {
+    const authors: string[] = [];
+    const listAuthors = Array.from(xmlDoc.getElementsByTagName('person_name'));
+    for (const author of listAuthors) {
+      const name: string = author.getElementsByTagName('given_name')[0].childNodes[0].nodeValue;
+      const surname: string = author.getElementsByTagName('surname')[0].childNodes[0].nodeValue;
+      authors.push(`${name} ${surname}`);
+    }
+
+    const abstract = '';
+    /*
+    const jatsAbstract = xmlDoc.getElementsByTagName('jats:abstract');
+    if(jatsAbstract.length > 0){
+    }
+    const resume = xmlDoc.getElementsByTagName('jats:abstract')[1].getElementsByTagName('jats:p')[0].childNodes[0].nodeValue;
+    const abstract: string = resume || '';
+    console.log(resume, abstract);
+    */
+
     return {
-      title: xmlDoc.getElementsByTagName('title')[0].childNodes[0].nodeValue
+      title: xmlDoc.getElementsByTagName('title')[0].childNodes[0].nodeValue,
+      journal: xmlDoc.getElementsByTagName('full_title')[0].childNodes[0].nodeValue,
+      authors,
+      year: +xmlDoc.getElementsByTagName('publication_date')[0].getElementsByTagName('year')[0].childNodes[0].nodeValue,
+      abstract,
+      url: xmlDoc.getElementsByTagName('resource')[0].childNodes[0].nodeValue,
     };
   }
 

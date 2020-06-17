@@ -135,6 +135,15 @@ export class ArticleService {
         id: { stringValue: article.id },
         doi: { stringValue: article.doi },
         title: { stringValue: article.title },
+        abstract: { stringValue: article.abstract },
+        url: { stringValue: article.url },
+        journal: { stringValue: article.journal },
+        year: { integerValue: article.year },
+        authors: {
+          arrayValue: {
+            values: this.getAuthorsDataForFirestore(article)
+          }
+        },
         courseIds: {
           arrayValue: {
             values: this.getCourseIdsDataForFirestore(article)
@@ -161,10 +170,15 @@ export class ArticleService {
       id: fields.id.stringValue,
       doi: fields.doi.stringValue,
       title: fields.title.stringValue,
+      abstract: fields.abstract.stringValue,
+      url: fields.url.stringValue,
+      journal: fields.journal.stringValue,
+      year: fields.year.integerValue,
+      authors: this.getAuthorsDataFromFirestore(fields.authors),
       courseIds: this.getCourseIdsDataFromFirestore(fields.courseIds),
       orderByCourseId: this.getOrderByCourseIdDataFromFirestore(fields.orderByCourseId),
       dateAdd: fields.dateAdd.integerValue,
-      dateUpdate: fields.dateUpdate.integerValue
+      dateUpdate: fields.dateUpdate.integerValue,
     });
   }
 
@@ -181,6 +195,21 @@ export class ArticleService {
       });
     });
     return courseIds;
+  }
+
+  /**
+   * Méthode pour la transformation des auteurs de l'article vers le firestore.
+   * @param article L'article courant.
+   * @return Un tableau de {stringValue: author}.
+   */
+  private getAuthorsDataForFirestore(article: Article): object {
+    const authors = [];
+    article.authors.forEach(author => {
+      authors.push({
+        stringValue: author
+      });
+    });
+    return authors;
   }
 
   /**
@@ -205,7 +234,7 @@ export class ArticleService {
    * @param ids Ids formatés des parcours pédagogique de l'article courant.
    * @return Un tableau des ids des parcours pédagogiques de l'article.
    */
-  private getCourseIdsDataFromFirestore(ids: any): Array<string> {
+  private getCourseIdsDataFromFirestore(ids: any): string[] {
     const courseIds = [];
     if (!ids.arrayValue.values) {
       return courseIds;
@@ -214,6 +243,22 @@ export class ArticleService {
       courseIds.push(value.stringValue);
     });
     return courseIds;
+  }
+
+  /**
+   * Méthode pour la transformation des auteurs reçu par firestore.
+   * @param listAuthors Liste des auteurs retournés par firestore.
+   * @return Un tableau des auteurs avec leur nom et prénom.
+   */
+  private getAuthorsDataFromFirestore(listAuthors: any): string[] {
+    const authors = [];
+    if (!listAuthors.arrayValue.values) {
+      return authors;
+    }
+    listAuthors.arrayValue.values.forEach(value => {
+      authors.push(value.stringValue);
+    });
+    return authors;
   }
 
   /**

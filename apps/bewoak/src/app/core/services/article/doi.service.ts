@@ -26,7 +26,12 @@ export class DoiService {
       switchMap(data => {
         return of(new Article({
           doi,
-          title: data.title
+          title: data.title,
+          authors: data.authors,
+          journal: data.journal,
+          year: data.year,
+          abstract: data.abstract,
+          url: data.url,
         }));
       }),
       catchError(error => {

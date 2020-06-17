@@ -119,12 +119,14 @@ export class AddCourseFormComponent implements OnInit, OnDestroy {
 
     // Parcours pédagogique existant.
     if (this.course) {
-      this.course.name = this.name.value;
-      this.course.keywords = this.getKeywordsFromString(this.keywords.value);
-      this.course.description = this.description.value;
-      this.course.level = this.levelControl.value.name;
-      this.course.dateUpdate = Date.now();
-      this.store.dispatch(new UpdateCurrentCourse({ course: this.course }));
+      const freshCourse = Object.assign(Object.create(Object.getPrototypeOf(this.course)), this.course, {
+        name: this.name.value,
+        keywords: this.getKeywordsFromString(this.keywords.value),
+        description: this.description.value,
+        level: this.levelControl.value.name,
+        dateUpdate: Date.now(),
+      });
+      this.store.dispatch(new UpdateCurrentCourse({ course: freshCourse }));
       return;
     }
 

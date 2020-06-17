@@ -1,16 +1,25 @@
-<div class="card mb-4 shadow-sm">
-    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">
-        <title>Placeholder</title>
-        <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef"
-            dy=".3em">Thumbnail</text>
-    </svg>
-    <div class="card-body">
-        <p>{{course.name}}</p>
-        <p class="card-text">{{course.description}}</p>
-        <div class="d-flex justify-content-between align-items-center">
-            <small class="text-muted">édité le
-                {{course.dateUpdate | date: 'dd/MM/yyyy'}}</small>
+<div class="jumbotron text-center hoverable p-4">
+    <div class="row">
+        <div class="col-md-4 offset-md-1 mx-3 my-3">
+            <div class="view overlay waves-light" mdbWavesEffect>
+                <img src="https://mdbootstrap.com/img/Photos/Others/laptop-sm.jpg" class="img-fluid"
+                    alt="Sample image for first version of blog listing">
+                <a>
+                    <div class="mask rgba-white-slight"></div>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-7 text-md-left ml-3 mt-3">
+            <a href="#!" class="green-text">
+                <h6 class="h6 pb-1">
+                    <mdb-icon fas icon="desktop" class="pr-1"></mdb-icon> Work
+                </h6>
+            </a>
+            <h4 class="h4 mb-4">{{course.name}}</h4>
+            <p class="font-weight-normal">{{course.description}}</p>
+            <p class="font-weight-normal">par <a><strong>Carine Fox</strong></a>,
+                {{course.dateUpdate | date: 'dd/MM/yyyy'}}</p>
+            <a mdbBtn color="primary" mdbWavesEffect (click)="navigateToCourse()">Read me</a>
         </div>
     </div>
 </div>

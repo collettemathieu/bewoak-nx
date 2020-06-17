@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 import { RandomService } from '../random.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Store } from '@ngrx/store';
-import { LoadCurrentUserAction, ResetCurrentUserAction } from '../../../store';
+import { LoadCurrentUserAction, ResetCurrentUserAction, ResetCourseAction } from '../../../store';
 
 /**
  * Temps de connexion de l'utilisateur en ms.
@@ -184,6 +184,7 @@ export class AuthService {
   public logout(): void {
     this.removeDataFromLocalStorage();
     this.store.dispatch(new ResetCurrentUserAction());
+    this.store.dispatch(new ResetCourseAction());
     this.router.navigate(['/login']);
   }
 
