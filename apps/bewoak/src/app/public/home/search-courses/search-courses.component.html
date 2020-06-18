@@ -1,16 +1,28 @@
-<div class="row" *ngIf="(courses$ | async) as courses">
-    <div *ngIf="courses?.length; else elseBlock" class="col-md-12">
-        <div *ngFor="let course of courses">
-            <bw-search-course [course]="course"></bw-search-course>
+<ng-container *ngIf="(courses$ | async) as courses">
+    <ng-container *ngIf="courses?.length; else elseBlock">
+        <div class="row">
+            <ng-container *ngFor="let course of courses">
+                <bw-search-course [course]="course" class="col-md-4"></bw-search-course>
+            </ng-container>
         </div>
-    </div>
-</div>
+    </ng-container>
+</ng-container>
 
 <ng-template #elseBlock>
-    <div class="jumbotron col">
-        <h1 class="display-4">Oops... Aucun parcours trouvé !</h1>
-        <p class="lead">Vous avez peut-être demandé un parcours qui n'existe pas encore.</p>
-        <hr class="my-4">
-        <a mdbBtn color="primary" size="lg" role="button" mdbWavesEffect>En faire la demande !</a>
-      </div>
+    <div class="row justify-content-center">
+        <mdb-card class="mb-5">
+            <!--Card image-->
+            <mdb-card-img src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(97).jpg" alt="Card image cap"></mdb-card-img>
+            <!--Card content-->
+            <mdb-card-body>
+                <!--Title-->
+                <mdb-card-title>
+                    <h4>Oops... Aucun parcours trouvé !</h4>
+                </mdb-card-title>
+                <!--Text-->
+                <mdb-card-text>Vous avez peut-être demandé un parcours qui n'existe pas encore.</mdb-card-text>
+                <a href="#" mdbBtn color="primary" mdbWavesEffect>En faire la demande !</a>
+            </mdb-card-body>
+        </mdb-card>
+    </div>
 </ng-template>

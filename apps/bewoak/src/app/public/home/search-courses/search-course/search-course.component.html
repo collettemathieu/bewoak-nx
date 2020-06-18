@@ -1,25 +1,53 @@
-<div class="jumbotron text-center hoverable p-4">
-    <div class="row">
-        <div class="col-md-4 offset-md-1 mx-3 my-3">
-            <div class="view overlay waves-light" mdbWavesEffect>
-                <img src="https://mdbootstrap.com/img/Photos/Others/laptop-sm.jpg" class="img-fluid"
-                    alt="Sample image for first version of blog listing">
-                <a>
-                    <div class="mask rgba-white-slight"></div>
-                </a>
-            </div>
-        </div>
-        <div class="col-md-7 text-md-left ml-3 mt-3">
-            <a href="#!" class="green-text">
-                <h6 class="h6 pb-1">
-                    <mdb-icon fas icon="desktop" class="pr-1"></mdb-icon> Work
-                </h6>
-            </a>
-            <h4 class="h4 mb-4">{{course.name}}</h4>
-            <p class="font-weight-normal">{{course.description}}</p>
-            <p class="font-weight-normal">par <a><strong>Carine Fox</strong></a>,
-                {{course.dateUpdate | date: 'dd/MM/yyyy'}}</p>
-            <a mdbBtn color="primary" mdbWavesEffect (click)="navigateToCourse()">Read me</a>
-        </div>
+<!--Card-->
+<mdb-card dark="true" class="mb-4">
+    <!--Card image-->
+    <div class="view overlay waves-light" mdbWavesEffect>
+        <mdb-card-img src="https://mdbootstrap.com/img/Photos/Horizontal/Work/4-col/img%20%2821%29.jpg">
+        </mdb-card-img>
+        <a>
+            <div class="mask rgba-white-slight"></div>
+        </a>
     </div>
-</div>
+    <!--/.Card image-->
+
+    <!--Card content-->
+    <mdb-card-body class="elegant-color white-text">
+        <!--Title-->
+        <mdb-card-title>
+            <h4>{{course.name}}</h4>
+        </mdb-card-title>
+
+        <hr class="hr-light">
+
+        <!--Text-->
+        <mdb-card-text class="white-text">
+            {{course.description}}
+        </mdb-card-text>
+        <div class="d-flex justify-content-end">
+            <a class="white-text" (click)="navigateToCourse()" mdbBtn color="primary" mdbWavesEffect>Découvrir</a>
+        </div>
+    </mdb-card-body>
+    <!--/.Card content-->
+    <mdb-card-footer class="elegant-color white-text">
+        <ul class="list-unstyled list-inline font-small mt-3">
+            <li class="list-inline-item pr-2 white-text">
+                <mdb-icon far icon="clock" class="pr-1"></mdb-icon>{{course.dateUpdate | date: 'dd/MM/yyyy'}}
+            </li>
+            <li class="list-inline-item pr-2">
+                <a href="#" class="white-text">
+                    <mdb-icon far icon="comments" class="pr-1"></mdb-icon>12
+                </a>
+            </li>
+            <li class="list-inline-item pr-2">
+                <a href="#" class="white-text">
+                    <mdb-icon fab icon="facebook-f" class="pr-1"> </mdb-icon>21
+                </a>
+            </li>
+            <li class="list-inline-item">
+                <a href="#" class="white-text">
+                    <mdb-icon fab icon="twitter" class="pr-1"> </mdb-icon>5
+                </a>
+            </li>
+        </ul>
+    </mdb-card-footer>
+</mdb-card>

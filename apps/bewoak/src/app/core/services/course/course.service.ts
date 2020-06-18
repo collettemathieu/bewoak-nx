@@ -75,7 +75,7 @@ export class CourseService {
       })
     };
 
-    return this.httpClient.post(url, req, httpOptions).pipe(
+    return this.http.post(url, req, httpOptions).pipe(
       switchMap((data: any) => {
         const course: Course = this.getCourseFromFirestore(data[0].document.fields);
         return this.refreshArticlesInCourse(course);

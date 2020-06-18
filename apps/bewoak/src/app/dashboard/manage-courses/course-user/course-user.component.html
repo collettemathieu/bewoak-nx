@@ -1,20 +1,54 @@
-<div class="card mb-4 shadow-sm">
-    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">
-        <title>Placeholder</title>
-        <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef"
-            dy=".3em">Thumbnail</text>
-    </svg>
-    <div class="card-body">
-        <p>{{course.name}}</p>
-        <p class="card-text">{{course.description}}</p>
-        <div class="d-flex justify-content-between align-items-center">
-            <div class="btn-group">
-                <button (click)="edit()" type="button" class="btn btn-sm btn-outline-secondary">Editer</button>
-                <bw-remove-course (removeCourse)="remove()"></bw-remove-course>
-            </div>
-            <small class="text-muted">édité le
-                {{course.dateUpdate | date: 'dd/MM/yyyy'}}</small>
-        </div>
+<!--Card-->
+<mdb-card dark="true" class="mb-4">
+    <!--Card image-->
+    <div class="view overlay waves-light" mdbWavesEffect>
+        <mdb-card-img src="https://mdbootstrap.com/img/Photos/Horizontal/Work/4-col/img%20%2821%29.jpg">
+        </mdb-card-img>
+        <a>
+            <div class="mask rgba-white-slight"></div>
+        </a>
     </div>
-</div>
+    <!--/.Card image-->
+
+    <!--Card content-->
+    <mdb-card-body class="elegant-color white-text">
+        <!--Title-->
+        <mdb-card-title>
+            <h4>{{course.name}}</h4>
+        </mdb-card-title>
+
+        <hr class="hr-light">
+
+        <!--Text-->
+        <mdb-card-text class="white-text">
+            {{course.description}}
+        </mdb-card-text>
+        <div class="d-flex justify-content-end">
+            <a class="white-text" (click)="edit()" mdbBtn color="primary" mdbWavesEffect>Editer</a>
+            <bw-remove-course (removeCourse)="remove()"></bw-remove-course>
+        </div>
+    </mdb-card-body>
+    <!--/.Card content-->
+    <mdb-card-footer class="elegant-color white-text">
+        <ul class="list-unstyled list-inline font-small mt-3">
+            <li class="list-inline-item pr-2 white-text">
+                <mdb-icon far icon="clock" class="pr-1"></mdb-icon>{{course.dateUpdate | date: 'dd/MM/yyyy'}}
+            </li>
+            <li class="list-inline-item pr-2">
+                <a href="#" class="white-text">
+                    <mdb-icon far icon="comments" class="pr-1"></mdb-icon>12
+                </a>
+            </li>
+            <li class="list-inline-item pr-2">
+                <a href="#" class="white-text">
+                    <mdb-icon fab icon="facebook-f" class="pr-1"> </mdb-icon>21
+                </a>
+            </li>
+            <li class="list-inline-item">
+                <a href="#" class="white-text">
+                    <mdb-icon fab icon="twitter" class="pr-1"> </mdb-icon>5
+                </a>
+            </li>
+        </ul>
+    </mdb-card-footer>
+</mdb-card>

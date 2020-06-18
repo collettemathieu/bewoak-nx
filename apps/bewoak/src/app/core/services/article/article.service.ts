@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { Article } from '../../../shared/models/article';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpBackend } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { ErrorService } from '../error.service';
 import { RandomService } from '../random.service';
@@ -12,11 +12,17 @@ import { switchMap, catchError } from 'rxjs/operators';
 })
 export class ArticleService {
 
+  private http: HttpClient;
+
   constructor(
     private httpClient: HttpClient,
+    private handler: HttpBackend,
     private errorService: ErrorService,
     private randomService: RandomService
-  ) { }
+  ) {
+    // Requête Http sans intercepteur.
+    this.http = new HttpClient(this.handler);
+  }
 
 
   /**
@@ -59,7 +65,7 @@ export class ArticleService {
         'Content-Type': 'application/json'
       })
     };
-    return this.httpClient.post<Article[]>(url, req, httpOptions).pipe(
+    return this.http.post<Article[]>(url, req, httpOptions).pipe(
       switchMap((data: any) => {
         const articles: Array<Article> = [];
         data.forEach(element => {
