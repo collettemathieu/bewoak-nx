@@ -4,8 +4,8 @@ import { Course } from '../../../../shared/models/course';
 import { User } from '../../../../shared/models/user';
 import { CheckCourseNameValidator } from '../../../../shared/validators/check-course-name.validator';
 import { Subscription } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { State, AddUserCourse, UpdateCurrentCourse, getCurrentCourse } from '../../../store';
+import { Store, State } from '@ngrx/store';
+import { State as CourseState, AddUserCourse, UpdateCurrentCourse, getCurrentCourse } from '../../../store';
 import { getCurrentUser } from 'apps/bewoak/src/app/store';
 
 @Component({
@@ -50,19 +50,17 @@ export class AddCourseFormComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private checkCourseNameValidator: CheckCourseNameValidator,
-    private store: Store<State>
+    private store: Store<CourseState>,
+    private state: State<CourseState>
   ) { }
 
   ngOnInit() {
-    this.subscriptions.add(this.store.select(getCurrentCourse).subscribe(course => {
-      this.course = course;
-      this.formCourse = this.createForm();
-      this.initForm();
-    }));
-
+    this.course = this.state.value.dashBoardPage.currentCourse.course;
     this.subscriptions.add(this.store.select(getCurrentUser).subscribe(
       (user: User) => this.user = user
     ));
+    this.formCourse = this.createForm();
+    this.initForm();
   }
 
   ngOnDestroy() {

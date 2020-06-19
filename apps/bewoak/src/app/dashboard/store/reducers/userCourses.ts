@@ -34,7 +34,6 @@ export function reducer(state: State = initialState, action: UserCoursesAction):
                 loading: false,
                 userCourses: courses
             };
-
         }
 
         case UserCoursesActionTypes.Remove: {
