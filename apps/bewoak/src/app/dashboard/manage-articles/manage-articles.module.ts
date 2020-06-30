@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 
 import { ManageArticlesRoutingModule } from './manage-articles-routing.module';
-import { AddArticleComponent } from './add-article/add-article.component';
 import { ViewArticleComponent } from './view-article/view-article.component';
 import { SharedModule } from '../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -20,7 +19,7 @@ import { AddArticleModule } from './add-article/add-article.module';
     AddArticleModule
   ],
   providers: [ApiCrossRefService, DoiService],
-  exports: [AddArticleComponent, ViewArticleComponent],
+  exports: [ViewArticleComponent],
 
 })
 export class ManageArticlesModule { }
