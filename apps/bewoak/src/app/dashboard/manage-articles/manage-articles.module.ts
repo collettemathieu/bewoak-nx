@@ -19,7 +19,7 @@ import { AddArticleModule } from './add-article/add-article.module';
     AddArticleModule
   ],
   providers: [ApiCrossRefService, DoiService],
-  exports: [ViewArticleComponent],
+  exports: [ViewArticleComponent, RemoveArticleComponent],
 
 })
 export class ManageArticlesModule { }

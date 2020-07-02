@@ -16,13 +16,13 @@
                             <span class="label">Début du parcours</span>
                         </a>
                     </li>
-                    <ng-container *ngFor="let article of course.articles">
+                    <ng-container *ngFor="let article of course.articles; let index = index">
                         <li class="active">
                             <a href="{{article.url}}" target="_blank">
                                 <span class="circle">
                                     <mdb-icon fas icon="file-alt"></mdb-icon>
                                 </span>
-                                <span class="label">{{article.title}}</span>
+                                <span class="label">Article n°{{index+1}}</span>
                             </a>
                             <div class="step-content">
                                 <mdb-card class="w-20">
@@ -40,9 +40,11 @@
                                         <div class="d-flex justify-content-start">
                                             <a href="{{article.url}}" target="_blank" mdbBtn
                                                 color="primary">Consulter</a>
+                                            <bw-remove-article [article]="article"></bw-remove-article>
                                         </div>
                                     </mdb-card-body>
-                                    <mdb-card-footer><small class="text-muted">{{article.journal}} -
+                                    <mdb-card-footer><small class="text-muted">{{article.journal}} - doi:
+                                            {{article.doi}} -
                                             {{article.year}}</small>
                                     </mdb-card-footer>
                                 </mdb-card>

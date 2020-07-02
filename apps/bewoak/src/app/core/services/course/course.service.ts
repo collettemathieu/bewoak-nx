@@ -180,8 +180,8 @@ export class CourseService {
       })
     };
     return this.httpClient.patch<Course>(url, dataCourse, httpOptions).pipe(
-      switchMap((data: any) => {
-        return of(this.getCourseFromFirestore(data.fields));
+      switchMap(_ => {
+        return of(course);
       }),
       catchError((error) => {
         return this.errorService.handleError(error);

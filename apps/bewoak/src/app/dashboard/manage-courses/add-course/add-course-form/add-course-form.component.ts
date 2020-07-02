@@ -124,6 +124,7 @@ export class AddCourseFormComponent implements OnInit, OnDestroy {
         level: this.levelControl.value.name,
         dateUpdate: Date.now(),
       });
+      console.log(freshCourse);
       this.store.dispatch(new UpdateCurrentCourse({ course: freshCourse }));
       return;
     }
