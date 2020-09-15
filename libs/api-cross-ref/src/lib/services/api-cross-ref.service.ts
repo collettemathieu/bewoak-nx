@@ -107,6 +107,15 @@ export class ApiCrossRefService {
     }
 
     const abstract = '';
+    const url = xmlDoc.getElementsByTagName('resource')[0].childNodes[0].nodeValue;
+
+    this.http.get(url, {responseType: 'text'}).subscribe(
+      (data: any) => {
+        console.log(data);
+        new RegExp('(>Abstract<){0,1}(<.+>)(.+)<').exec(data);
+        console.log(RegExp.$2);
+      }
+    );
     /*
     const jatsAbstract = xmlDoc.getElementsByTagName('jats:abstract');
     if(jatsAbstract.length > 0){
@@ -122,7 +131,7 @@ export class ApiCrossRefService {
       authors,
       year: +xmlDoc.getElementsByTagName('publication_date')[0].getElementsByTagName('year')[0].childNodes[0].nodeValue,
       abstract,
-      url: xmlDoc.getElementsByTagName('resource')[0].childNodes[0].nodeValue,
+      url,
     };
   }
 
