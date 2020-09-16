@@ -109,22 +109,6 @@ export class ApiCrossRefService {
     const abstract = '';
     const url = xmlDoc.getElementsByTagName('resource')[0].childNodes[0].nodeValue;
 
-    this.http.get(url, {responseType: 'text'}).subscribe(
-      (data: any) => {
-        console.log(data);
-        new RegExp('(>Abstract<){0,1}(<.+>)(.+)<').exec(data);
-        console.log(RegExp.$2);
-      }
-    );
-    /*
-    const jatsAbstract = xmlDoc.getElementsByTagName('jats:abstract');
-    if(jatsAbstract.length > 0){
-    }
-    const resume = xmlDoc.getElementsByTagName('jats:abstract')[1].getElementsByTagName('jats:p')[0].childNodes[0].nodeValue;
-    const abstract: string = resume || '';
-    console.log(resume, abstract);
-    */
-
     return {
       title: xmlDoc.getElementsByTagName('title')[0].childNodes[0].nodeValue,
       journal: xmlDoc.getElementsByTagName('full_title')[0].childNodes[0].nodeValue,

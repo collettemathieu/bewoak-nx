@@ -1,11 +1,9 @@
 import { Article } from './article';
 
 export class Catalog {
-    articles: Article[];
+  articles: Article[];
 
-    constructor(options: {
-        articles?: Article[]
-    }) {
-        this.articles = options.articles || [];
-    }
+  constructor(options: { articles?: Article[] }) {
+    this.articles = options.articles || [];
+  }
 }
