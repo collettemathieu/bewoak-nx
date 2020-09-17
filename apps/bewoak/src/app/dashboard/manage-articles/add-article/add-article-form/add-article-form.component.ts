@@ -25,8 +25,8 @@ import {
   styleUrls: ['./add-article-form.component.scss'],
 })
 export class AddArticleFormComponent implements OnInit, OnDestroy {
+  public formDoi: FormGroup;
   public formArticle: FormGroup;
-  public secondFormGroup: FormGroup;
   public article: BehaviorSubject<Article | null> = new BehaviorSubject(null);
   private currentCourse: Course;
   private subscription: Subscription;
@@ -43,8 +43,8 @@ export class AddArticleFormComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.formArticle = this.createForm();
-    this.secondFormGroup = this.createSecondForm();
+    this.formDoi = this.createDoiForm();
+    this.formArticle = this.createArticleForm();
     this.subscription = this.store
       .select(getCurrentCourse)
       .subscribe(
@@ -57,9 +57,9 @@ export class AddArticleFormComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Création du formulaire pour l'ajout d'un article au parcours pédagogique.
+   * Création du formulaire pour la recherche d'un article à partir de son DOI.
    */
-  private createForm(): FormGroup {
+  private createDoiForm(): FormGroup {
     return this.fb.group({
       doi: [
         '',
@@ -72,33 +72,30 @@ export class AddArticleFormComponent implements OnInit, OnDestroy {
           updateOn: 'change',
         },
       ],
-      abstract: [
-        'TEST',
-        {
-          validators: [
-            Validators.required,
-          ],
-          asyncValidators: [],
-        },
-      ],
     });
   }
 
   /**
-   * Création du second formulaire pour l'ajout d'un article au parcours pédagogique.
+   * Création du formulaire d'ajout d'un article au parcours pédagogique.
    */
-  private createSecondForm(): FormGroup {
+  private createArticleForm(): FormGroup {
     return this.fb.group({
-      password: [
+      title: [
         '',
         {
-          validators: [
-            Validators.required,
-          ],
+          validators: [Validators.required],
           asyncValidators: [],
           updateOn: 'change',
         },
-      ]
+      ],
+      abstract: [
+        '',
+        {
+          validators: [Validators.required, Validators.minLength(100)],
+          asyncValidators: [],
+          updateOn: 'change',
+        },
+      ],
     });
   }
 
@@ -106,11 +103,15 @@ export class AddArticleFormComponent implements OnInit, OnDestroy {
    * Prévisualisation des données de l'article sélection par son DOI.
    */
   public preview(): void {
-    if (!this.formArticle.valid) {
+    if (!this.formDoi.valid) {
       return;
     }
     this.doiService.getArticleByDoi(this.doi.value).subscribe((article) => {
       this.article.next(article);
+      this.formArticle.setValue({
+        title: article.title,
+        abstract: article.abstract,
+      });
     });
   }
 
@@ -126,7 +127,7 @@ export class AddArticleFormComponent implements OnInit, OnDestroy {
    * L'article est ajouté ou mis à jour selon son statut en bdd.
    */
   public submit(): void {
-    if (!this.formArticle.valid) {
+    if (!this.formDoi.valid) {
       return;
     }
 
@@ -149,7 +150,7 @@ export class AddArticleFormComponent implements OnInit, OnDestroy {
    * Ajout de l'article en cours de validation.
    */
   private addArticle(): void {
-    if (!this.formArticle.valid) {
+    if (!this.formDoi.valid) {
       return;
     }
 
@@ -207,14 +208,14 @@ export class AddArticleFormComponent implements OnInit, OnDestroy {
   }
 
   get doi() {
-    return this.formArticle.get('doi');
+    return this.formDoi.get('doi');
   }
 
   get abstract() {
     return this.formArticle.get('abstract');
   }
 
-  get password(){
-    return this.secondFormGroup.get('password');
+  get title() {
+    return this.formArticle.get('title');
   }
 }

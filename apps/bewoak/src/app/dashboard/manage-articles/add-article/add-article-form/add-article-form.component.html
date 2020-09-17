@@ -1,5 +1,8 @@
 <div class="modal-body">
-    <form *ngIf="!article.value" [formGroup]="formArticle" role="form" (ngSubmit)="preview()" novalidate>
+    <ng-container *ngIf="article.value; then articleBlock else doiBlock"></ng-container>
+</div>
+<ng-template #doiBlock>
+    <form [formGroup]="formDoi" role="form" (ngSubmit)="preview()" novalidate>
         <div class="md-form">
             <input mdbInput id="doi" formControlName="doi" name="doi" class="form-control" type="text"
                 autocomplete="false" autocorrect="false">
@@ -9,45 +12,37 @@
                 10.1000/123456...).</mdb-error>
         </div>
         <div class="form-group form-row">
-            <button type="submit" mdbWavesEffect mdbBtn class="ml-auto" color="success" [disabled]="!formArticle.valid">
+            <button type="submit" mdbWavesEffect mdbBtn class="ml-auto" color="success" [disabled]="!formDoi.valid">
                 Visualiser
             </button>
         </div>
     </form>
-    <form *ngIf="article.value" [formGroup]="secondFormGroup" role="form" (ngSubmit)="submit()" novalidate>
-        <label for="title">Résultat : </label>
-        <div class="input-group input-group-sm mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="title">Title</span>
-            </div>
-            <input type="text" readonly class="form-control-plaintext form-control-sm px-1" aria-label="title"
-                aria-describedby="title" [value]="article.value.title">
-        </div>
-        <div class="input-group input-group-sm mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="abstract">Abstract</span>
-            </div>
-        </div>
-        <textarea row="5" formControlName="abstract" name="abstract" class="form-control-sm px-1" aria-label="abstract"
-            aria-describedby="abstract"></textarea>
-        <small *ngIf="abstract.errors && abstract.dirty" class="form-text text-muted">
-            <span [hidden]="!abstract.errors.required">
-                Veuillez renseigner un abstract pour cet article.
-            </span>
-        </small>
+</ng-template>
+<ng-template #articleBlock>
+    <form [formGroup]="formArticle" role="form" (ngSubmit)="submit()" novalidate>
         <div class="md-form">
-            <input type="password" class="form-control" mdbInput mdbValidate formControlName="password">
-            <label for="">Password</label>
-            <mdb-error *ngIf="password.invalid && (password.dirty || password.touched)">Input invalid</mdb-error>
-            <mdb-success *ngIf="password.valid && (password.dirty || password.touched)">Input valid</mdb-success>
+            <input mdbInput type="text" class="form-control" id="title" formControlName="title" autocomplete="false"
+                autocorrect="false">
+            <label for="title">Title</label>
+            <mdb-error *ngIf="title.errors && title.dirty && title.errors.required">Un titre est requis.</mdb-error>
+        </div>
+        <div class="md-form">
+            <textarea type="text" id="abstract" class="md-textarea md-textarea-auto form-control"
+                formControlName="abstract" autocomplete="false" autocorrect="false" mdbInput></textarea>
+            <label for="abstract">Abstract</label>
+            <mdb-error *ngIf="abstract.errors && abstract.dirty && abstract.errors.required">Un abstract est requis.
+            </mdb-error>
+            <mdb-error *ngIf="abstract.errors && abstract.dirty && abstract.errors.minlength">L'abstract doit contenir
+                au moins 100 caractères.</mdb-error>
         </div>
         <div class="form-group form-row">
             <button (click)="cancel()" mdbWavesEffect mdbBtn color="primary" class="mb-2">
-                Annuler
+                Reset
             </button>
-            <button (click)="submit()" mdbWavesEffect mdbBtn color="success" class="mb-2 ml-auto">
-                Valider
+            <button (click)="submit()" mdbWavesEffect mdbBtn color="success" class="mb-2 ml-auto"
+                [disabled]="!formArticle.valid">
+                Valid
             </button>
         </div>
     </form>
-</div>
+</ng-template>
