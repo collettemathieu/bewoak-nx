@@ -88,6 +88,22 @@ export class AddArticleFormComponent implements OnInit, OnDestroy {
           updateOn: 'change',
         },
       ],
+      authors: [
+        '',
+        {
+          validators: [Validators.required],
+          asyncValidators: [],
+          updateOn: 'change',
+        },
+      ],
+      journal: [
+        '',
+        {
+          validators: [Validators.required],
+          asyncValidators: [],
+          updateOn: 'change',
+        },
+      ],
       abstract: [
         '',
         {
@@ -110,6 +126,8 @@ export class AddArticleFormComponent implements OnInit, OnDestroy {
       this.article.next(article);
       this.formArticle.setValue({
         title: article.title,
+        authors: article.authors.join(', '),
+        journal: article.journal,
         abstract: article.abstract,
       });
     });
@@ -211,11 +229,19 @@ export class AddArticleFormComponent implements OnInit, OnDestroy {
     return this.formDoi.get('doi');
   }
 
-  get abstract() {
-    return this.formArticle.get('abstract');
-  }
-
   get title() {
     return this.formArticle.get('title');
+  }
+
+  get authors() {
+    return this.formArticle.get('authors');
+  }
+
+  get journal() {
+    return this.formArticle.get('journal');
+  }
+
+  get abstract() {
+    return this.formArticle.get('abstract');
   }
 }
