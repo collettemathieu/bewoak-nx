@@ -1,18 +1,16 @@
 <div class="container">
     <div class="row">
-        <div class="col">
+        <div class="col-md-2 mt-2">
             <bw-add-course></bw-add-course>
-        </div>   
-    </div>
-    <div class="row">
-        <div class="col">
-            <div *ngIf="(courses$ | async) as courses">
+        </div>
+        <div class="col-md-10 mt-3">
+            <ng-container *ngIf="(courses$ | async) as courses">
                 <div *ngIf="courses?.length; else elseBlock" class="row">
                     <div *ngFor="let course of courses" class="col-md-4">
                         <bw-course-user [course]="course" (removeCourse)="remove($event)"></bw-course-user>
                     </div>
                 </div>
-            </div>
+            </ng-container>
         </div>
     </div>
 </div>

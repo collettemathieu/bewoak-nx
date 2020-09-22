@@ -37,7 +37,7 @@ export class EditCourseComponent implements OnInit {
    * Edition des méta données du parcours pédagogique.
    */
   public editCourse() {
-    this.modalRef = this.modalService.show(AddCourseModalComponent, { class: 'modal-lg' });
+    this.modalRef = this.modalService.show(AddCourseModalComponent, { class: 'modal-lg', scroll: true });
     this.modalRef.content.title = 'Modifier le parcours pédagogique';
   }
 
@@ -45,7 +45,7 @@ export class EditCourseComponent implements OnInit {
    * Modal pour l'ajout d'un nouvel article.
    */
   public addArticle() {
-    this.modalRef = this.modalService.show(AddArticleModalComponent, { class: 'modal-lg' });
+    this.modalRef = this.modalService.show(AddArticleModalComponent, { class: 'modal-lg', scroll: true });
     this.modalRef.content.title = 'Ajouter un article au parcours';
   }
 

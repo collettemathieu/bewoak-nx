@@ -17,7 +17,7 @@ export class AddCourseComponent {
    * Modal pour l'ajout d'un nouveau parcours.
    */
   addCourse() {
-    this.modalRef = this.modalService.show(AddCourseModalComponent, { class: 'modal-lg' });
+    this.modalRef = this.modalService.show(AddCourseModalComponent, { class: 'modal-lg', scroll: true });
     this.modalRef.content.title = 'Nouveau parcours pédagogique';
   }
 
