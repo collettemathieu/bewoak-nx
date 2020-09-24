@@ -6,19 +6,16 @@ import { CrossRefInterface } from '../interfaces/cross-ref-interface';
 
 @Injectable()
 export class ApiCrossRefService {
-
   private static readonly STATUS_RESOLVED = 'resolved';
   private static readonly STATUS_UNRESOLVED = 'unresolved';
   private static readonly ERROR_PARSER = 'Error in scanning document';
   private options = {
     pid: '',
-    format: ''
+    format: '',
   };
   private http: HttpClient;
 
-  constructor(
-    private handler: HttpBackend
-  ) {
+  constructor(private handler: HttpBackend) {
     // Requête Http sans intercepteur
     this.http = new HttpClient(this.handler);
   }
@@ -28,40 +25,46 @@ export class ApiCrossRefService {
    * @param pattern Chaîne de caractère possédant l'identifiant DOI de l'article scientifique
    */
   public getArticleData(pattern: string): Observable<CrossRefInterface | null> {
+    pattern = pattern.trim();
+
     if (!this.idDOIValid(pattern)) {
       return of(null);
     }
 
     const doi = this.extractDOI(pattern);
-    const url = `${this.getBaseUrl()}pid=${this.options.pid}&format=${this.options.format}&doi=${doi}`;
+    const url = `${this.getBaseUrl()}pid=${this.options.pid}&format=${
+      this.options.format
+    }&doi=${doi}`;
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      Accept: 'text/xml'
+      Accept: 'text/xml',
     });
 
     return this.http.get(url, { headers, responseType: 'text' }).pipe(
-      switchMap(data => {
+      switchMap((data) => {
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(data, 'text/xml');
         const parseError = xmlDoc.getElementsByTagName('parsererror');
         if (parseError.length !== 0) {
           return throwError({
             code: 404,
-            statusText: ApiCrossRefService.ERROR_PARSER
+            statusText: ApiCrossRefService.ERROR_PARSER,
           });
         }
-        const status = xmlDoc.getElementsByTagName('query')[0].getAttribute('status');
+        const status = xmlDoc
+          .getElementsByTagName('query')[0]
+          .getAttribute('status');
         if (status === ApiCrossRefService.STATUS_RESOLVED) {
           return of(this.getDataFromCrossRef(xmlDoc));
         }
         if (status === ApiCrossRefService.STATUS_UNRESOLVED) {
           return throwError({
-            statusText: ApiCrossRefService.STATUS_UNRESOLVED
+            statusText: ApiCrossRefService.STATUS_UNRESOLVED,
           });
         }
         return of(null);
       }),
-      catchError(error => {
+      catchError((error) => {
         return throwError(error);
       })
     );
@@ -101,19 +104,25 @@ export class ApiCrossRefService {
     const authors: string[] = [];
     const listAuthors = Array.from(xmlDoc.getElementsByTagName('person_name'));
     for (const author of listAuthors) {
-      const name: string = author.getElementsByTagName('given_name')[0].childNodes[0].nodeValue;
-      const surname: string = author.getElementsByTagName('surname')[0].childNodes[0].nodeValue;
+      const name: string = author.getElementsByTagName('given_name')[0]
+        .childNodes[0].nodeValue;
+      const surname: string = author.getElementsByTagName('surname')[0]
+        .childNodes[0].nodeValue;
       authors.push(`${name} ${surname}`);
     }
 
     const abstract = '';
-    const url = xmlDoc.getElementsByTagName('resource')[0].childNodes[0].nodeValue;
+    const url = xmlDoc.getElementsByTagName('resource')[0].childNodes[0]
+      .nodeValue;
 
     return {
       title: xmlDoc.getElementsByTagName('title')[0].childNodes[0].nodeValue,
-      journal: xmlDoc.getElementsByTagName('full_title')[0].childNodes[0].nodeValue,
+      journal: xmlDoc.getElementsByTagName('full_title')[0].childNodes[0]
+        .nodeValue,
       authors,
-      year: +xmlDoc.getElementsByTagName('publication_date')[0].getElementsByTagName('year')[0].childNodes[0].nodeValue,
+      year: +xmlDoc
+        .getElementsByTagName('publication_date')[0]
+        .getElementsByTagName('year')[0].childNodes[0].nodeValue,
       abstract,
       url,
     };

@@ -4,15 +4,14 @@ import { Article } from '../../../shared/models/article';
 import { environment } from '../../../../environments/environment';
 import { switchMap, catchError } from 'rxjs/operators';
 import { ErrorService } from '../error.service';
-import { ApiCrossRefService } from '@bewoak-nx/api-cross-ref'
+import { ApiCrossRefService } from '@bewoak-nx/api-cross-ref';
 
 @Injectable()
 export class DoiService {
-
   constructor(
     private errorService: ErrorService,
     private crossRefService: ApiCrossRefService
-  ) { }
+  ) {}
 
   /**
    * Retourne l'article à partir de son DOI.
@@ -20,27 +19,29 @@ export class DoiService {
    */
   public getArticleByDoi(doi: string): Observable<Article | null> {
     this.crossRefService.setOptions({
-      pid: environment.apiCrossRef.pid
+      pid: environment.apiCrossRef.pid,
     });
     return this.crossRefService.getArticleData(doi).pipe(
-      switchMap(data => {
-        return of(new Article({
-          doi,
-          title: data.title,
-          authors: data.authors,
-          journal: data.journal,
-          year: data.year,
-          abstract: data.abstract,
-          url: data.url,
-        }));
+      switchMap((data) => {
+        return of(
+          new Article({
+            doi,
+            title: data.title,
+            authors: data.authors,
+            journal: data.journal,
+            year: data.year,
+            abstract: data.abstract,
+            url: data.url,
+          })
+        );
       }),
-      catchError(error => {
+      catchError((error) => {
         return this.errorService.handleError({
           error: {
             error: {
-              message: error.statusText
-            }
-          }
+              message: error.statusText,
+            },
+          },
         });
       })
     );

@@ -8,10 +8,9 @@ import { RandomService } from '../random.service';
 import { switchMap, catchError } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ArticleService {
-
   private http: HttpClient;
 
   constructor(
@@ -24,19 +23,21 @@ export class ArticleService {
     this.http = new HttpClient(this.handler);
   }
 
-
   /**
    * Retourne l'article s'il existe à partir de son DOI.
    * @param doi Identifiant de l'article.
    */
   public getArticleByDoi(doi: string): Observable<Article | null> {
-
     const url = `${environment.firestore.baseUrlDocument}:runQuery?key=${environment.firebase.apiKey}`;
-    const req = this.getStructureQuery({ fieldPath: 'doi', value: doi, op: 'EQUAL' });
+    const req = this.getStructureQuery({
+      fieldPath: 'doi',
+      value: doi,
+      op: 'EQUAL',
+    });
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
+        'Content-Type': 'application/json',
+      }),
     };
     return this.httpClient.post<Article>(url, req, httpOptions).pipe(
       switchMap((data: any) => {
@@ -51,26 +52,30 @@ export class ArticleService {
     );
   }
 
-
   /**
    * Retourne l'ensemble des articles par ordre d'apparition d'un parcours pédagogique.
    * @param id Id du parcours pédagogique.
    */
   public getCourseArticles(id: string): Observable<Article[]> {
-
     const url = `${environment.firestore.baseUrlDocument}:runQuery?key=${environment.firebase.apiKey}`;
-    const req = this.getStructureQuery({ fieldPath: 'courseIds', value: id, op: 'ARRAY_CONTAINS' });
+    const req = this.getStructureQuery({
+      fieldPath: 'courseIds',
+      value: id,
+      op: 'ARRAY_CONTAINS',
+    });
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
+        'Content-Type': 'application/json',
+      }),
     };
     return this.http.post<Article[]>(url, req, httpOptions).pipe(
       switchMap((data: any) => {
         const articles: Array<Article> = [];
-        data.forEach(element => {
+        data.forEach((element) => {
           if (element.document && typeof element.document !== 'undefined') {
-            articles.push(this.getArticleFromFirestore(element.document.fields));
+            articles.push(
+              this.getArticleFromFirestore(element.document.fields)
+            );
           }
         });
         return of(articles);
@@ -80,7 +85,6 @@ export class ArticleService {
       })
     );
   }
-
 
   /**
    * Ajout d'un nouvel article.
@@ -92,8 +96,8 @@ export class ArticleService {
     const dataArticle = this.getDataArticleForFirestore(article);
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
+        'Content-Type': 'application/json',
+      }),
     };
     return this.httpClient.post<Article>(url, dataArticle, httpOptions).pipe(
       switchMap((data: any) => {
@@ -105,7 +109,6 @@ export class ArticleService {
     );
   }
 
-
   /**
    * Modification d'un article.
    * @param article L'article à modifier.
@@ -116,8 +119,8 @@ export class ArticleService {
     const dataArticle = this.getDataArticleForFirestore(article);
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
+        'Content-Type': 'application/json',
+      }),
     };
 
     // Enregistrement en base.
@@ -147,22 +150,22 @@ export class ArticleService {
         year: { integerValue: article.year },
         authors: {
           arrayValue: {
-            values: this.getAuthorsDataForFirestore(article)
-          }
+            values: this.getAuthorsDataForFirestore(article),
+          },
         },
         courseIds: {
           arrayValue: {
-            values: this.getCourseIdsDataForFirestore(article)
-          }
+            values: this.getCourseIdsDataForFirestore(article),
+          },
         },
         orderByCourseId: {
           mapValue: {
-            fields: this.getOrderByCourseIdDataForFirestore(article)
-          }
+            fields: this.getOrderByCourseIdDataForFirestore(article),
+          },
         },
         dateAdd: { integerValue: article.dateAdd },
-        dateUpdate: { integerValue: article.dateUpdate }
-      }
+        dateUpdate: { integerValue: article.dateUpdate },
+      },
     };
   }
 
@@ -182,7 +185,9 @@ export class ArticleService {
       year: fields.year.integerValue,
       authors: this.getAuthorsDataFromFirestore(fields.authors),
       courseIds: this.getCourseIdsDataFromFirestore(fields.courseIds),
-      orderByCourseId: this.getOrderByCourseIdDataFromFirestore(fields.orderByCourseId),
+      orderByCourseId: this.getOrderByCourseIdDataFromFirestore(
+        fields.orderByCourseId
+      ),
       dateAdd: fields.dateAdd.integerValue,
       dateUpdate: fields.dateUpdate.integerValue,
     });
@@ -195,9 +200,9 @@ export class ArticleService {
    */
   private getCourseIdsDataForFirestore(article: Article): object {
     const courseIds = [];
-    article.courseIds.forEach(id => {
+    article.courseIds.forEach((id) => {
       courseIds.push({
-        stringValue: id
+        stringValue: id,
       });
     });
     return courseIds;
@@ -210,9 +215,9 @@ export class ArticleService {
    */
   private getAuthorsDataForFirestore(article: Article): object {
     const authors = [];
-    article.authors.forEach(author => {
+    article.authors.forEach((author) => {
       authors.push({
-        stringValue: author
+        stringValue: author,
       });
     });
     return authors;
@@ -228,8 +233,8 @@ export class ArticleService {
     for (const key in article.orderByCourseId) {
       if (article.orderByCourseId.hasOwnProperty(key)) {
         orderBycourseId[key] = {
-          integerValue: article.orderByCourseId[key]
-        }
+          integerValue: article.orderByCourseId[key],
+        };
       }
     }
     return orderBycourseId;
@@ -245,7 +250,7 @@ export class ArticleService {
     if (!ids.arrayValue.values) {
       return courseIds;
     }
-    ids.arrayValue.values.forEach(value => {
+    ids.arrayValue.values.forEach((value) => {
       courseIds.push(value.stringValue);
     });
     return courseIds;
@@ -261,7 +266,7 @@ export class ArticleService {
     if (!listAuthors.arrayValue.values) {
       return authors;
     }
-    listAuthors.arrayValue.values.forEach(value => {
+    listAuthors.arrayValue.values.forEach((value) => {
       authors.push(value.stringValue);
     });
     return authors;
@@ -272,7 +277,9 @@ export class ArticleService {
    * @param orders Ordre de l'article dans les parcours pédagogique formatés.
    * @return Un tableau des ordres de l'article par parcours pédagogique.
    */
-  private getOrderByCourseIdDataFromFirestore(orders: any): { [key: string]: number } {
+  private getOrderByCourseIdDataFromFirestore(
+    orders: any
+  ): { [key: string]: number } {
     const orderBycourseId = {};
     for (const key in orders.mapValue.fields) {
       if (orders.mapValue.fields.hasOwnProperty(key)) {
@@ -287,24 +294,30 @@ export class ArticleService {
    * @param field Le champ recherché avec sa valeur.
    * @return Une requête pour firestore.
    */
-  private getStructureQuery(field: { fieldPath: string, value: string, op: string }): object {
+  private getStructureQuery(field: {
+    fieldPath: string;
+    value: string;
+    op: string;
+  }): object {
     return {
       structuredQuery: {
-        from: [{
-          collectionId: 'articles'
-        }],
+        from: [
+          {
+            collectionId: 'articles',
+          },
+        ],
         where: {
           fieldFilter: {
             field: {
-              fieldPath: field.fieldPath
+              fieldPath: field.fieldPath,
             },
             op: field.op,
             value: {
-              stringValue: field.value
-            }
-          }
-        }
-      }
+              stringValue: field.value,
+            },
+          },
+        },
+      },
     };
   }
 }
