@@ -22,23 +22,23 @@
     <form [formGroup]="formArticle" role="form" (ngSubmit)="submit()" novalidate>
         <div class="md-form">
             <input mdbInput type="text" readonly class="form-control" id="title" formControlName="title"
-                autocomplete="false" autocorrect="false">
+                autocomplete="false" autocorrect="false" mdbTooltip="Vous ne pouvez pas modifier le titre de l'article." placement="left">
             <label for="title">Title</label>
-            <mdb-error *ngIf="title.errors && title.dirty && title.errors.required">Un titre est requis.</mdb-error>
         </div>
         <div class="md-form">
             <input mdbInput type="text" readonly class="form-control" id="authors" formControlName="authors"
-                autocomplete="false" autocorrect="false">
+                autocomplete="false" autocorrect="false" mdbTooltip="Vous ne pouvez pas modifier les auteurs de l'article." placement="left">
             <label for="authors">Authors</label>
-            <mdb-error *ngIf="authors.errors && authors.dirty && authors.errors.required">Un titre est requis.
-            </mdb-error>
         </div>
         <div class="md-form">
             <input mdbInput type="text" readonly class="form-control" id="journal" formControlName="journal"
-                autocomplete="false" autocorrect="false">
+                autocomplete="false" autocorrect="false" mdbTooltip="Vous ne pouvez pas modifier le nom du journal de l'article." placement="left">
             <label for="journal">Journal</label>
-            <mdb-error *ngIf="journal.errors && journal.dirty && journal.errors.required">Un journal est requis.
-            </mdb-error>
+        </div>
+        <div class="md-form">
+            <input mdbInput type="text" readonly class="form-control" id="year" formControlName="year"
+                autocomplete="false" autocorrect="false" mdbTooltip="Vous ne pouvez pas modifier le date de publication de l'article." placement="left">
+            <label for="year">Published in</label>
         </div>
         <div class="md-form">
             <textarea type="text" id="abstract" class="md-textarea md-textarea-auto form-control"
