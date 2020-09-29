@@ -66,7 +66,7 @@ export class ApiCrossRefService {
       }),
       catchError((error) => {
         return throwError(error);
-      })
+      }),
     );
   }
 

@@ -5,15 +5,14 @@ import { AddCourseModalComponent } from './add-course-modal/add-course-modal.com
 import { SharedModule } from '../../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
-
 @NgModule({
-  declarations: [AddCourseComponent, AddCourseFormComponent, AddCourseModalComponent],
-  imports: [
-    SharedModule,
-    ReactiveFormsModule
+  declarations: [
+    AddCourseComponent,
+    AddCourseFormComponent,
+    AddCourseModalComponent,
   ],
+  imports: [SharedModule, ReactiveFormsModule],
   exports: [AddCourseComponent],
-  entryComponents: [AddCourseModalComponent]
+  entryComponents: [AddCourseModalComponent],
 })
-export class AddCourseModule { }
+export class AddCourseModule {}

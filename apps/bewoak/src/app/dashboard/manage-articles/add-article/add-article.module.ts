@@ -4,14 +4,9 @@ import { AddArticleFormComponent } from './add-article-form/add-article-form.com
 import { SharedModule } from '../../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
-
 @NgModule({
   declarations: [AddArticleModalComponent, AddArticleFormComponent],
-  imports: [
-    SharedModule,
-    ReactiveFormsModule
-  ],
-  entryComponents: [AddArticleModalComponent]
+  imports: [SharedModule, ReactiveFormsModule],
+  entryComponents: [AddArticleModalComponent],
 })
-export class AddArticleModule { }
+export class AddArticleModule {}

@@ -11,10 +11,9 @@ import { getCurrentUser } from '../../store';
 @Component({
   selector: 'bw-add-user',
   templateUrl: './add-user.component.html',
-  styleUrls: ['./add-user.component.scss']
+  styleUrls: ['./add-user.component.scss'],
 })
 export class AddUserComponent implements OnInit, OnDestroy {
-
   public formIsSubmitted = false; // Après enregistrement, affiche les informations de l'utilisateur.
   public newUser: User = new User({});
   public passwordUser: string;
@@ -44,16 +43,16 @@ export class AddUserComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private store: Store,
     private router: Router,
-    private formUserService: FormUserService
-  ) { }
+    private formUserService: FormUserService,
+  ) {}
 
   ngOnInit() {
-    this.subscription = this.store.select(getCurrentUser).subscribe(
-      (user: User) => {
+    this.subscription = this.store
+      .select(getCurrentUser)
+      .subscribe((user: User) => {
         this.currentUser = user;
         this.addUserForm = this.createForm();
-      }
-    );
+      });
   }
 
   ngOnDestroy() {
@@ -83,7 +82,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
         firstname: this.firstname.value,
         lastname: this.lastname.value,
         email: this.email.value,
-        roles: ['USER', 'EXPERT']
+        roles: ['USER', 'EXPERT'],
       });
       if (this.currentUser.hasRole('ROOT')) {
         newUser.roles = this.roleControl.value;
@@ -92,13 +91,11 @@ export class AddUserComponent implements OnInit, OnDestroy {
       // Enregistrement de l'utilisateur dans le firebase.
       // Affichage des informations utilisateur si ok.
       // On reste sur le formulaire si ko.
-      this.authService.register(newUser).subscribe(
-        data => {
-          this.newUser = data.user;
-          this.passwordUser = data.password;
-          this.formIsSubmitted = true;
-        }
-      );
+      this.authService.register(newUser).subscribe((data) => {
+        this.newUser = data.user;
+        this.passwordUser = data.password;
+        this.formIsSubmitted = true;
+      });
     }
   }
 
@@ -124,5 +121,4 @@ export class AddUserComponent implements OnInit, OnDestroy {
   get roleControl() {
     return this.addUserForm.get('roleControl');
   }
-
 }

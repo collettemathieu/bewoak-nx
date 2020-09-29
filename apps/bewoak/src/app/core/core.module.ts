@@ -13,10 +13,15 @@ import { JwtAuthInterceptorService } from './services/user/jwt-auth--interceptor
 import { SettingsModule } from '../settings/settings.module';
 import { DashboardModule } from '../dashboard/dashboard.module';
 
-
-
 @NgModule({
-  declarations: [NavbarComponent, FooterComponent, PageNotFoundComponent, LoaderComponent, ToastrComponent, MessageComponent],
+  declarations: [
+    NavbarComponent,
+    FooterComponent,
+    PageNotFoundComponent,
+    LoaderComponent,
+    ToastrComponent,
+    MessageComponent,
+  ],
   imports: [
     SharedModule,
     HttpClientModule,
@@ -26,9 +31,19 @@ import { DashboardModule } from '../dashboard/dashboard.module';
     AdminModule,
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtAuthInterceptorService, multi: true }
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtAuthInterceptorService,
+      multi: true,
+    },
   ],
-  exports: [NavbarComponent, FooterComponent, PageNotFoundComponent, LoaderComponent, ToastrComponent]
+  exports: [
+    NavbarComponent,
+    FooterComponent,
+    PageNotFoundComponent,
+    LoaderComponent,
+    ToastrComponent,
+  ],
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {

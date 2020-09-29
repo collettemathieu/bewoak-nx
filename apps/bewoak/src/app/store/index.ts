@@ -10,16 +10,28 @@ export { State as StateUser } from './reducers/user';
 export { State as StateCourse } from './reducers/course';
 
 export const reducers = {
-    user: fromCurrentUser.reducer,
-    course: fromCourse.reducer,
-}
+  user: fromCurrentUser.reducer,
+  course: fromCourse.reducer,
+};
 export const effects = [CurrentUserEffects, CourseEffects];
-export const { LoadCurrentUserAction, UpdateCurrentUserAction, ResetCurrentUserAction } = fromUserActions;
+export const {
+  LoadCurrentUserAction,
+  UpdateCurrentUserAction,
+  ResetCurrentUserAction,
+} = fromUserActions;
 export const { LoadCourse, ResetCourseAction } = fromCourseActions;
 
 // Les sélecteurs pour le module Root
-export const getRootState = createFeatureSelector<fromCurrentUser.State>('user');
-export const getCurrentUser = createSelector(getRootState, state => state.currentUser);
+export const getRootState = createFeatureSelector<fromCurrentUser.State>(
+  'user',
+);
+export const getCurrentUser = createSelector(
+  getRootState,
+  (state) => state.currentUser,
+);
 
 export const getCourseState = createFeatureSelector<fromCourse.State>('course');
-export const getCourse = createSelector(getCourseState, state => state.course);
+export const getCourse = createSelector(
+  getCourseState,
+  (state) => state.course,
+);

@@ -7,13 +7,14 @@ import { SearchCoursesComponent } from './search-courses/search-courses.componen
 import { SearchCourseComponent } from './search-courses/search-course/search-course.component';
 import { CourseService } from '../../core/services/course/course.service';
 
-
 @NgModule({
-  declarations: [HomeComponent, SearchBarComponent, SearchCoursesComponent, SearchCourseComponent],
-  imports: [
-    SharedModule,
-    ReactiveFormsModule
+  declarations: [
+    HomeComponent,
+    SearchBarComponent,
+    SearchCoursesComponent,
+    SearchCourseComponent,
   ],
-  providers: [CourseService]
+  imports: [SharedModule, ReactiveFormsModule],
+  providers: [CourseService],
 })
-export class HomeModule { }
+export class HomeModule {}

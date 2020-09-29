@@ -4,11 +4,10 @@ import { AuthService } from './core/services/user/auth.service';
 @Component({
   selector: 'bw-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
     // Tente de se connecter automatiquement.

@@ -2,24 +2,20 @@ import { Action } from '@ngrx/store';
 import { Course } from '../../../shared/models/course';
 
 export enum SearchActionTypes {
-    Search = '[Courses] search',
-    SearchSuccess = '[Courses] search success'
+  Search = '[Courses] search',
+  SearchSuccess = '[Courses] search success',
 }
 
 export class SearchAction implements Action {
+  readonly type = SearchActionTypes.Search;
 
-    readonly type = SearchActionTypes.Search;
-
-    constructor(public payload: { searchQuery: string }) { }
+  constructor(public payload: { searchQuery: string }) {}
 }
 
 export class SearchSuccessAction implements Action {
+  readonly type = SearchActionTypes.SearchSuccess;
 
-    readonly type = SearchActionTypes.SearchSuccess;
-
-    constructor(public payload: { searchResults: Course[] }) {
-
-    }
+  constructor(public payload: { searchResults: Course[] }) {}
 }
 
 export type SearchActions = SearchAction | SearchSuccessAction;

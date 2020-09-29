@@ -4,7 +4,6 @@ import { AuthGuard } from '../core/guards/auth.guard';
 import { RoleUserGuard } from '../core/guards/role-user.guard';
 import { SettingsComponent } from './settings.component';
 
-
 const routes: Routes = [
   {
     path: 'settings',
@@ -14,18 +13,20 @@ const routes: Routes = [
     children: [
       {
         path: 'profile',
-        loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule)
+        loadChildren: () =>
+          import('./profile/profile.module').then((m) => m.ProfileModule),
       },
       {
         path: 'account',
-        loadChildren: () => import('./account/account.module').then(m => m.AccountModule)
-      }
-    ]
-  }
+        loadChildren: () =>
+          import('./account/account.module').then((m) => m.AccountModule),
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class SettingsRoutingModule { }
+export class SettingsRoutingModule {}

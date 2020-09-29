@@ -5,16 +5,15 @@ import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
 @Component({
   selector: 'bw-remove-course',
   templateUrl: './remove-course.component.html',
-  styleUrls: ['./remove-course.component.scss']
+  styleUrls: ['./remove-course.component.scss'],
 })
 export class RemoveCourseComponent {
-
   @Output()
   removeCourse: EventEmitter<Course> = new EventEmitter();
 
   public modalRef: MDBModalRef;
 
-  constructor(private modalService: MDBModalService) { }
+  constructor(private modalService: MDBModalService) {}
 
   /**
    * Ouverture de la fenêtre modale de confirmation de suppression du parcours.
@@ -38,5 +37,4 @@ export class RemoveCourseComponent {
     this.modalRef.hide();
     this.removeCourse.emit();
   }
-
 }

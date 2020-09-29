@@ -9,16 +9,15 @@ import { LoaderService } from '../loader.service';
 import { ToastrService } from '../toastr.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
-
   constructor(
     private httpClient: HttpClient,
     private loaderService: LoaderService,
     private toastrService: ToastrService,
-    private errorService: ErrorService
-  ) { }
+    private errorService: ErrorService,
+  ) {}
 
   /**
    * Méthode pour récupérer un utilisateur depuis le firestore en fonction de son
@@ -31,8 +30,8 @@ export class UserService {
     const req = this.getStructureQuery(userId);
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
+        'Content-Type': 'application/json',
+      }),
     };
     return this.httpClient.post(url, req, httpOptions).pipe(
       switchMap((data: any) => {
@@ -40,7 +39,7 @@ export class UserService {
       }),
       catchError((error) => {
         return this.errorService.handleError(error);
-      })
+      }),
     );
   }
 
@@ -54,8 +53,8 @@ export class UserService {
     const dataUser = this.getDataUserForFirestore(user);
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
+        'Content-Type': 'application/json',
+      }),
     };
     return this.httpClient.post<User>(url, dataUser, httpOptions).pipe(
       switchMap((data: any) => {
@@ -63,7 +62,7 @@ export class UserService {
       }),
       catchError((error) => {
         return this.errorService.handleError(error);
-      })
+      }),
     );
   }
 
@@ -79,8 +78,8 @@ export class UserService {
     const dataUser = this.getDataUserForFirestore(user);
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
+        'Content-Type': 'application/json',
+      }),
     };
 
     // Enregistrement en base.
@@ -88,14 +87,16 @@ export class UserService {
       switchMap((data: any) => {
         return of(this.getUserFromFirestore(data.fields));
       }),
-      tap(_ => this.toastrService.showMessage({
-        type: 'success',
-        message: 'Votre profil a bien été enregistré'
-      })),
+      tap((_) =>
+        this.toastrService.showMessage({
+          type: 'success',
+          message: 'Votre profil a bien été enregistré',
+        }),
+      ),
       catchError((error) => {
         return this.errorService.handleError(error);
       }),
-      finalize(() => this.loaderService.setLoading(false))
+      finalize(() => this.loaderService.setLoading(false)),
     );
   }
 
@@ -113,14 +114,14 @@ export class UserService {
         email: { stringValue: user.email },
         roles: {
           arrayValue: {
-            values: this.getRolesDataForFirestore(user)
-          }
+            values: this.getRolesDataForFirestore(user),
+          },
         },
         avatarUrl: { stringValue: user.avatarUrl },
         jobBackground: { stringValue: user.jobBackground },
         dateAdd: { integerValue: user.dateAdd },
-        dateUpdate: { integerValue: user.dateUpdate }
-      }
+        dateUpdate: { integerValue: user.dateUpdate },
+      },
     };
   }
 
@@ -150,9 +151,9 @@ export class UserService {
    */
   private getRolesDataForFirestore(user: User): object {
     const rolesUser = [];
-    user.roles.forEach(role => {
+    user.roles.forEach((role) => {
       rolesUser.push({
-        stringValue: role
+        stringValue: role,
       });
     });
     return rolesUser;
@@ -163,9 +164,11 @@ export class UserService {
    * @param roles Roles de l'utilisateur courant.
    * @return Un tableau des rôles de l'utilisateur.
    */
-  private getRolesDataFromFirestore(roles: any): Array<'USER' | 'EXPERT' | 'ADMIN'> {
+  private getRolesDataFromFirestore(
+    roles: any,
+  ): Array<'USER' | 'EXPERT' | 'ADMIN'> {
     const rolesUser = [];
-    roles.values.forEach(value => {
+    roles.values.forEach((value) => {
       rolesUser.push(value.stringValue);
     });
     return rolesUser;
@@ -179,21 +182,23 @@ export class UserService {
   private getStructureQuery(userId: string): object {
     return {
       structuredQuery: {
-        from: [{
-          collectionId: 'users'
-        }],
+        from: [
+          {
+            collectionId: 'users',
+          },
+        ],
         where: {
           fieldFilter: {
             field: {
-              fieldPath: 'id'
+              fieldPath: 'id',
             },
             op: 'EQUAL',
             value: {
-              stringValue: userId
-            }
-          }
-        }
-      }
+              stringValue: userId,
+            },
+          },
+        },
+      },
     };
   }
 }

@@ -6,17 +6,16 @@ import { AuthService } from '../../core/services/user/auth.service';
 @Component({
   selector: 'bw-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-
   public loginForm: FormGroup;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private authService: AuthService
-  ) { }
+    private authService: AuthService,
+  ) {}
 
   ngOnInit() {
     this.loginForm = this.createLoginForm();
@@ -28,7 +27,7 @@ export class LoginComponent implements OnInit {
   private createLoginForm(): FormGroup {
     return this.fb.group({
       email: ['', [Validators.email, Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
 
@@ -38,14 +37,17 @@ export class LoginComponent implements OnInit {
   public submitForm(): void {
     if (this.loginForm.valid) {
       this.authService.login(this.email.value, this.password.value).subscribe(
-        _ => this.router.navigate(['/home']),
-        _ => this.loginForm.reset()
+        (_) => this.router.navigate(['/home']),
+        (_) => this.loginForm.reset(),
       );
     }
   }
 
-  get email() { return this.loginForm.get('email'); }
+  get email() {
+    return this.loginForm.get('email');
+  }
 
-  get password() { return this.loginForm.get('password'); }
-
+  get password() {
+    return this.loginForm.get('password');
+  }
 }

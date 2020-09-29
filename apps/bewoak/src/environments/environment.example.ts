@@ -12,15 +12,15 @@ export const environment = {
     storageBucket: '',
     messagingSenderId: '',
     auth: {
-      baseUrl: ''
-    }
+      baseUrl: '',
+    },
   },
   firestore: {
     baseUrlDocument: '',
   },
   apiCrossRef: {
-    pid: ''
-  }
+    pid: '',
+  },
 };
 
 /*

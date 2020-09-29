@@ -13,14 +13,15 @@ const routes: Routes = [
     children: [
       {
         path: 'addUser',
-        loadChildren: () => import('./add-user/add-user.module').then(m => m.AddUserModule)
-      }
-    ]
-  }
+        loadChildren: () =>
+          import('./add-user/add-user.module').then((m) => m.AddUserModule),
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AdminRoutingModule { }
+export class AdminRoutingModule {}

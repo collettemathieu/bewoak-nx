@@ -2,11 +2,10 @@ import { Injectable } from '@angular/core';
 import * as generator from 'generate-password-browser';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RandomService {
-
-  constructor() { }
+  constructor() {}
 
   /**
    * Génération d'un mot de passe aléatoire.
@@ -14,7 +13,7 @@ export class RandomService {
   generatePassword(): string {
     return generator.generate({
       length: 10,
-      numbers: true
+      numbers: true,
     });
   }
 
@@ -25,7 +24,7 @@ export class RandomService {
     return generator.generate({
       length: 20,
       numbers: true,
-      uppercase: true
+      uppercase: true,
     });
   }
 }

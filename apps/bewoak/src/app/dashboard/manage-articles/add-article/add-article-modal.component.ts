@@ -4,13 +4,12 @@ import { MDBModalRef } from 'angular-bootstrap-md';
 @Component({
   selector: 'bw-add-article-modal',
   templateUrl: './add-article-modal.component.html',
-  styleUrls: ['./add-article-modal.component.scss']
+  styleUrls: ['./add-article-modal.component.scss'],
 })
 export class AddArticleModalComponent {
-
   public title: string;
 
-  constructor(private bsModelRef: MDBModalRef) { }
+  constructor(private bsModelRef: MDBModalRef) {}
 
   /**
    * Fermeture de la fenêtre modale.

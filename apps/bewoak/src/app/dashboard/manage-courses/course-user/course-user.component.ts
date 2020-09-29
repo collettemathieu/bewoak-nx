@@ -5,19 +5,16 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'bw-course-user',
   templateUrl: './course-user.component.html',
-  styleUrls: ['./course-user.component.scss']
+  styleUrls: ['./course-user.component.scss'],
 })
 export class CourseUserComponent {
-
   @Input()
   course: Course;
 
   @Output()
   removeCourse: EventEmitter<Course> = new EventEmitter();
 
-  constructor(
-    private router: Router,
-  ) { }
+  constructor(private router: Router) {}
 
   /**
    * Redirection vers la page d'édition du parcours pédagogique.

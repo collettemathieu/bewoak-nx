@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FormUserService {
-
   private form: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
-
+  constructor(private fb: FormBuilder) {}
 
   /**
    * Retourne le formGroup pour l'entité User en fonction des contrôles demandés.
@@ -42,7 +45,7 @@ export class FormUserService {
   private addFirstNameControl() {
     const control = new FormControl('', {
       validators: [Validators.required, Validators.minLength(3)],
-      updateOn: 'blur'
+      updateOn: 'blur',
     });
     this.form.addControl('firstname', control);
   }
@@ -53,14 +56,14 @@ export class FormUserService {
   private addLastNameControl() {
     const control = new FormControl('', {
       validators: [Validators.required, Validators.minLength(3)],
-      updateOn: 'blur'
+      updateOn: 'blur',
     });
     this.form.addControl('lastname', control);
   }
 
   private addJobBackgroundControl() {
     const control = new FormControl('', {
-      validators: [Validators.required, Validators.minLength(5)]
+      validators: [Validators.required, Validators.minLength(5)],
     });
     this.form.addControl('jobBackground', control);
   }
@@ -68,7 +71,7 @@ export class FormUserService {
   private addEmailControl() {
     const control = new FormControl('', {
       validators: [Validators.required, Validators.email],
-      updateOn: 'blur'
+      updateOn: 'blur',
     });
     this.form.addControl('email', control);
   }
@@ -76,7 +79,7 @@ export class FormUserService {
   private addRolesControl() {
     const control = new FormControl('', {
       validators: [Validators.required],
-      updateOn: 'blur'
+      updateOn: 'blur',
     });
     this.form.addControl('roleControl', control);
   }

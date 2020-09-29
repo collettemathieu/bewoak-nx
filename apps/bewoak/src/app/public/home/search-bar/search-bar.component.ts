@@ -6,16 +6,12 @@ import { SearchAction } from '../../store';
 @Component({
   selector: 'bw-search-bar',
   templateUrl: './search-bar.component.html',
-  styleUrls: ['./search-bar.component.scss']
+  styleUrls: ['./search-bar.component.scss'],
 })
 export class SearchBarComponent implements OnInit {
-
   public searchForm: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private store: Store
-  ) { }
+  constructor(private fb: FormBuilder, private store: Store) {}
 
   ngOnInit() {
     this.searchForm = this.createForm();
@@ -26,7 +22,7 @@ export class SearchBarComponent implements OnInit {
    */
   private createForm(): FormGroup {
     return this.fb.group({
-      search: ['']
+      search: [''],
     });
   }
 
@@ -40,5 +36,4 @@ export class SearchBarComponent implements OnInit {
   get search() {
     return this.searchForm.get('search');
   }
-
 }

@@ -41,7 +41,7 @@ export class AddArticleFormComponent implements OnInit, OnDestroy {
     private articleService: ArticleService,
     private store: Store<State>,
     private doiService: DoiService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
   ) {}
 
   ngOnInit() {
@@ -50,7 +50,7 @@ export class AddArticleFormComponent implements OnInit, OnDestroy {
     this.subscription = this.store
       .select(getCurrentCourse)
       .subscribe(
-        (currentCourse: Course) => (this.currentCourse = currentCourse)
+        (currentCourse: Course) => (this.currentCourse = currentCourse),
       );
   }
 
@@ -143,9 +143,9 @@ export class AddArticleFormComponent implements OnInit, OnDestroy {
               switchMap((oldArticle: Article | null) => {
                 this.isNewArticle = !!!oldArticle;
                 return of(this.isNewArticle ? article : oldArticle);
-              })
-            )
-        )
+              }),
+            ),
+        ),
       )
       .subscribe((article: Article) => {
         this.article.next(article);
@@ -208,7 +208,7 @@ export class AddArticleFormComponent implements OnInit, OnDestroy {
 
     this.articleService.add(article).subscribe((_) => {
       this.store.dispatch(
-        new RefreshArticlesInCurrentCourse({ course: this.currentCourse })
+        new RefreshArticlesInCurrentCourse({ course: this.currentCourse }),
       );
       // Fermeture de la fenêtre modale.
       this.closeModalArticle.emit(true);
@@ -242,7 +242,7 @@ export class AddArticleFormComponent implements OnInit, OnDestroy {
 
     this.articleService.update(article).subscribe((_) => {
       this.store.dispatch(
-        new RefreshArticlesInCurrentCourse({ course: this.currentCourse })
+        new RefreshArticlesInCurrentCourse({ course: this.currentCourse }),
       );
       // Fermeture de la fenêtre modale.
       this.closeModalArticle.emit(true);

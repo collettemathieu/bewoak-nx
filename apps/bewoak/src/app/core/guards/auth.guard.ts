@@ -4,14 +4,10 @@ import { Observable, of } from 'rxjs';
 import { AuthService } from '../services/user/auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthGuard implements CanActivate, CanActivateChild {
-
-  constructor(
-    private router: Router,
-    private authService: AuthService
-  ) { }
+  constructor(private router: Router, private authService: AuthService) {}
 
   canActivate(): Observable<boolean> {
     const isAuth: boolean = this.authService.isAuthenticated();
@@ -25,5 +21,4 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   canActivateChild(): Observable<boolean> {
     return this.canActivate();
   }
-
 }

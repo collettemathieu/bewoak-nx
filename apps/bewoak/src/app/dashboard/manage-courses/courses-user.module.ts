@@ -7,14 +7,17 @@ import { AddCourseModule } from './add-course/add-course.module';
 import { RemoveCourseComponent } from './remove-course/remove-course.component';
 import { EditCourseModule } from './edit-course/edit-course.module';
 
-
 @NgModule({
-  declarations: [CoursesUserComponent, CourseUserComponent, RemoveCourseComponent],
+  declarations: [
+    CoursesUserComponent,
+    CourseUserComponent,
+    RemoveCourseComponent,
+  ],
   imports: [
     SharedModule,
     CoursesUserRoutingModule,
     AddCourseModule,
-    EditCourseModule
-  ]
+    EditCourseModule,
+  ],
 })
-export class CoursesUserModule { }
+export class CoursesUserModule {}

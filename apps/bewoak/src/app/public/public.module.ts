@@ -14,7 +14,7 @@ import { EffectsModule } from '@ngrx/effects';
     PublicRoutingModule,
     HomeModule,
     StoreModule.forFeature('publicPage', reducers),
-    EffectsModule.forFeature(effects)
-  ]
+    EffectsModule.forFeature(effects),
+  ],
 })
-export class PublicModule { }
+export class PublicModule {}

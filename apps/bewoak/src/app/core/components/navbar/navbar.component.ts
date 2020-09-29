@@ -9,11 +9,9 @@ import { getCurrentUser } from '../../../store';
 @Component({
   selector: 'bw-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-
-
   public user: User;
   public homePath = 'home';
   public dashboardPath = 'dashboard';
@@ -28,13 +26,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private store: Store,
-    private authService: AuthService
-  ) { }
+    private authService: AuthService,
+  ) {}
 
   ngOnInit() {
-    this.subscription = this.store.select(getCurrentUser).subscribe(
-      user => this.user = user
-    );
+    this.subscription = this.store
+      .select(getCurrentUser)
+      .subscribe((user) => (this.user = user));
   }
 
   ngOnDestroy() {
@@ -47,7 +45,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
    */
   public getClassNav(): string {
     let classBarNav = 'navbar navbar-expand-lg navbar-dark stylish-color';
-    return this.isActive(this.homePath) ? classBarNav += ' z-depth-0' : classBarNav;
+    return this.isActive(this.homePath)
+      ? (classBarNav += ' z-depth-0')
+      : classBarNav;
   }
 
   /**
@@ -72,5 +72,4 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public logOut(): void {
     this.authService.logout();
   }
-
 }

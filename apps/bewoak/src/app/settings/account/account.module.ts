@@ -6,13 +6,8 @@ import { SharedModule } from '../../shared/shared.module';
 import { AccountFormComponent } from './account-form/account-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
 @NgModule({
   declarations: [AccountComponent, AccountFormComponent],
-  imports: [
-    SharedModule,
-    ReactiveFormsModule,
-    AccountRoutingModule
-  ]
+  imports: [SharedModule, ReactiveFormsModule, AccountRoutingModule],
 })
-export class AccountModule { }
+export class AccountModule {}

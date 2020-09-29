@@ -5,33 +5,31 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools'
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { reducers, effects } from './store';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     CoreModule,
-    StoreModule.forRoot({...reducers, router: routerReducer}),
+    StoreModule.forRoot({ ...reducers, router: routerReducer }),
     StoreRouterConnectingModule.forRoot({
-      stateKey: 'router'
+      stateKey: 'router',
     }),
     EffectsModule.forRoot(effects),
     StoreDevtoolsModule.instrument({
       name: 'Bewoak DevTools',
       maxAge: 25,
-      logOnly: environment.production
+      logOnly: environment.production,
     }),
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

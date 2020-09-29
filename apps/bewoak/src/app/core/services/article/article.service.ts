@@ -17,7 +17,7 @@ export class ArticleService {
     private httpClient: HttpClient,
     private handler: HttpBackend,
     private errorService: ErrorService,
-    private randomService: RandomService
+    private randomService: RandomService,
   ) {
     // Requête Http sans intercepteur.
     this.http = new HttpClient(this.handler);
@@ -48,7 +48,7 @@ export class ArticleService {
       }),
       catchError((error) => {
         return this.errorService.handleError(error);
-      })
+      }),
     );
   }
 
@@ -74,7 +74,7 @@ export class ArticleService {
         data.forEach((element) => {
           if (element.document && typeof element.document !== 'undefined') {
             articles.push(
-              this.getArticleFromFirestore(element.document.fields)
+              this.getArticleFromFirestore(element.document.fields),
             );
           }
         });
@@ -82,7 +82,7 @@ export class ArticleService {
       }),
       catchError((error) => {
         return this.errorService.handleError(error);
-      })
+      }),
     );
   }
 
@@ -105,7 +105,7 @@ export class ArticleService {
       }),
       catchError((error) => {
         return this.errorService.handleError(error);
-      })
+      }),
     );
   }
 
@@ -130,7 +130,7 @@ export class ArticleService {
       }),
       catchError((error) => {
         return this.errorService.handleError(error);
-      })
+      }),
     );
   }
 
@@ -186,7 +186,7 @@ export class ArticleService {
       authors: this.getAuthorsDataFromFirestore(fields.authors),
       courseIds: this.getCourseIdsDataFromFirestore(fields.courseIds),
       orderByCourseId: this.getOrderByCourseIdDataFromFirestore(
-        fields.orderByCourseId
+        fields.orderByCourseId,
       ),
       dateAdd: fields.dateAdd.integerValue,
       dateUpdate: fields.dateUpdate.integerValue,
@@ -278,7 +278,7 @@ export class ArticleService {
    * @return Un tableau des ordres de l'article par parcours pédagogique.
    */
   private getOrderByCourseIdDataFromFirestore(
-    orders: any
+    orders: any,
   ): { [key: string]: number } {
     const orderBycourseId = {};
     for (const key in orders.mapValue.fields) {

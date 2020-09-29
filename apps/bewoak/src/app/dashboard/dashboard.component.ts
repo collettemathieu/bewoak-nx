@@ -8,18 +8,19 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'bw-dashboard',
   templateUrl: './dashboard.component.html',
-  styles: []
+  styles: [],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-
   private subscription: Subscription;
 
-  constructor(private store: Store<State>) { }
+  constructor(private store: Store<State>) {}
 
   ngOnInit() {
-    this.subscription = this.store.select(getCurrentUser).subscribe(
-      (user: User) => this.store.dispatch(new LoadUserCourses({ userId: user.id }))
-    );
+    this.subscription = this.store
+      .select(getCurrentUser)
+      .subscribe((user: User) =>
+        this.store.dispatch(new LoadUserCourses({ userId: user.id })),
+      );
   }
 
   ngOnDestroy() {

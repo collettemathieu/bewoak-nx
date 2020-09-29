@@ -3,14 +3,13 @@ import { BehaviorSubject, Observable, timer } from 'rxjs';
 import { Toastr } from '../../shared/interface/toastr';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ToastrService {
-
   private toastr: BehaviorSubject<Toastr | null> = new BehaviorSubject(null);
   public readonly toastr$: Observable<Toastr | null> = this.toastr.asObservable();
 
-  constructor() { }
+  constructor() {}
 
   /**
    * Affiche un message d'avertissement à l'utilisateur.
@@ -38,5 +37,4 @@ export class ToastrService {
     // after the decimal.
     return '_' + Math.random().toString(36).substr(2, 9);
   }
-
 }

@@ -19,7 +19,7 @@ export class CourseComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private store: Store,
-    private modalService: MDBModalService
+    private modalService: MDBModalService,
   ) {}
 
   ngOnInit(): void {

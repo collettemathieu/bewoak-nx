@@ -13,7 +13,6 @@ import { ArticleService } from '../article/article.service';
 
 @Injectable()
 export class CourseService {
-
   private http: HttpClient;
 
   constructor(
@@ -23,7 +22,7 @@ export class CourseService {
     private handler: HttpBackend,
     private articleService: ArticleService,
     private loaderService: LoaderService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
   ) {
     // Requête Http sans intercepteur.
     this.http = new HttpClient(this.handler);
@@ -36,16 +35,19 @@ export class CourseService {
   public getCourses(search: string): Observable<Course[]> {
     this.loaderService.setLoading(true);
     const url = `${environment.firestore.baseUrlDocument}:runQuery?key=${environment.firebase.apiKey}`;
-    const req = this.getStructureQueryForSearching({ fieldPath: 'name', value: search });
+    const req = this.getStructureQueryForSearching({
+      fieldPath: 'name',
+      value: search,
+    });
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
+        'Content-Type': 'application/json',
+      }),
     };
     return this.http.post(url, req, httpOptions).pipe(
       switchMap((data: any) => {
         const courses: Course[] = [];
-        data.forEach(element => {
+        data.forEach((element) => {
           if (typeof element.document !== 'undefined') {
             courses.push(this.getCourseFromFirestore(element.document.fields));
           }
@@ -57,7 +59,7 @@ export class CourseService {
       }),
       finalize(() => {
         this.loaderService.setLoading(false);
-      })
+      }),
     );
   }
 
@@ -71,13 +73,15 @@ export class CourseService {
     const req = this.getStructureQuery({ fieldPath: 'id', value: id });
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
+        'Content-Type': 'application/json',
+      }),
     };
 
     return this.http.post(url, req, httpOptions).pipe(
       switchMap((data: any) => {
-        const course: Course = this.getCourseFromFirestore(data[0].document.fields);
+        const course: Course = this.getCourseFromFirestore(
+          data[0].document.fields,
+        );
         return this.refreshArticlesInCourse(course);
       }),
       catchError((error) => {
@@ -85,7 +89,7 @@ export class CourseService {
       }),
       finalize(() => {
         this.loaderService.setLoading(false);
-      })
+      }),
     );
   }
 
@@ -99,13 +103,13 @@ export class CourseService {
     const req = this.getStructureQuery({ fieldPath: 'userId', value: userId });
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
+        'Content-Type': 'application/json',
+      }),
     };
     return this.httpClient.post(url, req, httpOptions).pipe(
       switchMap((data: any) => {
         const courses: Course[] = [];
-        data.forEach(element => {
+        data.forEach((element) => {
           if (typeof element.document !== 'undefined') {
             courses.push(this.getCourseFromFirestore(element.document.fields));
           }
@@ -117,10 +121,9 @@ export class CourseService {
       }),
       finalize(() => {
         this.loaderService.setLoading(false);
-      })
+      }),
     );
   }
-
 
   /**
    * Enregistrer un nouveau parcours pédagogique.
@@ -137,24 +140,24 @@ export class CourseService {
       level: course.level,
       userId: course.userId,
       dateAdd: course.dateAdd,
-      dateUpdate: course.dateUpdate
+      dateUpdate: course.dateUpdate,
     });
     const url = `${environment.firestore.baseUrlDocument}courses?key=${environment.firebase.apiKey}&documentId=${id}`;
     const dataCourse = this.getDataCourseForFirestore(newCourse);
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
+        'Content-Type': 'application/json',
+      }),
     };
     return this.httpClient.post<Course>(url, dataCourse, httpOptions).pipe(
       switchMap((data: any) => {
         return of(this.getCourseFromFirestore(data.fields));
       }),
-      tap(_ => {
+      tap((_) => {
         // Envoi d'un message à l'utilisateur.
         this.toastrService.showMessage({
           type: 'success',
-          message: 'Le parcours pédagogique a bien été enregistré.'
+          message: 'Le parcours pédagogique a bien été enregistré.',
         });
       }),
       catchError((error) => {
@@ -162,7 +165,7 @@ export class CourseService {
       }),
       finalize(() => {
         this.loaderService.setLoading(false);
-      })
+      }),
     );
   }
 
@@ -176,28 +179,27 @@ export class CourseService {
     const dataCourse = this.getDataCourseForFirestore(course);
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
+        'Content-Type': 'application/json',
+      }),
     };
     return this.httpClient.patch<Course>(url, dataCourse, httpOptions).pipe(
-      switchMap(_ => {
+      switchMap((_) => {
         return of(course);
       }),
       catchError((error) => {
         return this.errorService.handleError(error);
       }),
-      tap(_ => {
+      tap((_) => {
         this.toastrService.showMessage({
           type: 'success',
-          message: 'Le parcours pédagogique a bien été modifié.'
+          message: 'Le parcours pédagogique a bien été modifié.',
         });
       }),
       finalize(() => {
         this.loaderService.setLoading(false);
-      })
+      }),
     );
   }
-
 
   /**
    * Suppression d'un parcours pédagogique.
@@ -208,11 +210,11 @@ export class CourseService {
     const url = `${environment.firestore.baseUrlDocument}courses/${course.id}?key=${environment.firebase.apiKey}`;
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
+        'Content-Type': 'application/json',
+      }),
     };
     return this.httpClient.delete(url, httpOptions).pipe(
-      switchMap(_ => {
+      switchMap((_) => {
         return of(course);
       }),
       catchError((error) => {
@@ -220,10 +222,9 @@ export class CourseService {
       }),
       finalize(() => {
         this.loaderService.setLoading(false);
-      })
+      }),
     );
   }
-
 
   /**
    * Rafraîchit les articles du parcours pédagogique.
@@ -231,24 +232,23 @@ export class CourseService {
    */
   public refreshArticlesInCourse(course: Course): Observable<Course> {
     return this.articleService.getCourseArticles(course.id).pipe(
-      switchMap(articles => {
+      switchMap((articles) => {
         const freshArticles: Article[] = [];
-        this.sortByOrder(articles, course.id).forEach(options => {
+        this.sortByOrder(articles, course.id).forEach((options) => {
           freshArticles.push(new Article(options));
         });
 
         const freshCourse = Object.assign({}, course, {
-          articles: freshArticles
+          articles: freshArticles,
         });
 
         return of(freshCourse);
       }),
       catchError((error) => {
         return this.errorService.handleError(error);
-      })
+      }),
     );
   }
-
 
   /**
    * Retourne si le nom du parcours pédagogique est disponible.
@@ -259,8 +259,8 @@ export class CourseService {
     const req = this.getStructureQuery({ fieldPath: 'name', value: name });
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
+        'Content-Type': 'application/json',
+      }),
     };
 
     return this.httpClient.post(url, req, httpOptions).pipe(
@@ -272,7 +272,7 @@ export class CourseService {
       }),
       catchError((error) => {
         return this.errorService.handleError(error);
-      })
+      }),
     );
   }
 
@@ -287,8 +287,8 @@ export class CourseService {
         name: { stringValue: course.name },
         keywords: {
           arrayValue: {
-            values: this.getKeywordsDataForFirestore(course)
-          }
+            values: this.getKeywordsDataForFirestore(course),
+          },
         },
         description: { stringValue: course.description },
         url: { stringValue: course.url },
@@ -297,8 +297,8 @@ export class CourseService {
         level: { stringValue: course.level },
         userId: { stringValue: course.userId },
         dateAdd: { integerValue: course.dateAdd },
-        dateUpdate: { integerValue: course.dateUpdate }
-      }
+        dateUpdate: { integerValue: course.dateUpdate },
+      },
     };
   }
 
@@ -319,7 +319,7 @@ export class CourseService {
       level: fields.level.stringValue,
       userId: fields.userId.stringValue,
       dateAdd: fields.dateAdd.integerValue,
-      dateUpdate: fields.dateUpdate.integerValue
+      dateUpdate: fields.dateUpdate.integerValue,
     });
   }
 
@@ -332,7 +332,7 @@ export class CourseService {
     const keywords = [];
     course.keywords.forEach((keyword: string) => {
       keywords.push({
-        stringValue: keyword
+        stringValue: keyword,
       });
     });
     return keywords;
@@ -367,24 +367,29 @@ export class CourseService {
    * @param field Le champ recherché avec sa valeur.
    * @return Une requête pour firestore.
    */
-  private getStructureQuery(field: { fieldPath: string, value: string }): object {
+  private getStructureQuery(field: {
+    fieldPath: string;
+    value: string;
+  }): object {
     return {
       structuredQuery: {
-        from: [{
-          collectionId: 'courses'
-        }],
+        from: [
+          {
+            collectionId: 'courses',
+          },
+        ],
         where: {
           fieldFilter: {
             field: {
-              fieldPath: field.fieldPath
+              fieldPath: field.fieldPath,
             },
             op: 'EQUAL',
             value: {
-              stringValue: field.value
-            }
-          }
-        }
-      }
+              stringValue: field.value,
+            },
+          },
+        },
+      },
     };
   }
 
@@ -394,24 +399,29 @@ export class CourseService {
    * @param field Le champ recherché avec sa valeur.
    * @return Une requête pour firestore.
    */
-  private getStructureQueryForSearching(field: { fieldPath: string, value: string }): object {
+  private getStructureQueryForSearching(field: {
+    fieldPath: string;
+    value: string;
+  }): object {
     return {
       structuredQuery: {
-        from: [{
-          collectionId: 'courses'
-        }],
+        from: [
+          {
+            collectionId: 'courses',
+          },
+        ],
         where: {
           fieldFilter: {
             field: {
-              fieldPath: 'keywords'
+              fieldPath: 'keywords',
             },
             op: 'ARRAY_CONTAINS',
             value: {
-              stringValue: field.value
-            }
-          }
-        }
-      }
+              stringValue: field.value,
+            },
+          },
+        },
+      },
     };
   }
 }

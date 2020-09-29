@@ -8,16 +8,14 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'bw-search-courses',
   templateUrl: './search-courses.component.html',
-  styleUrls: ['./search-courses.component.scss']
+  styleUrls: ['./search-courses.component.scss'],
 })
 export class SearchCoursesComponent implements OnInit {
-
   public courses$: Observable<Course[]>;
 
-  constructor(private store: Store<State>, private router: Router) { }
+  constructor(private store: Store<State>, private router: Router) {}
 
   ngOnInit() {
     this.courses$ = this.store.select(getSearchResults);
   }
-
 }

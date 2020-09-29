@@ -12,15 +12,16 @@ export const environment = {
     storageBucket: '',
     messagingSenderId: '',
     auth: {
-      baseUrl: 'https://identitytoolkit.googleapis.com/v1/'
-    }
+      baseUrl: 'https://identitytoolkit.googleapis.com/v1/',
+    },
   },
   firestore: {
-    baseUrlDocument: 'https://firestore.googleapis.com/v1/projects/my-bewoak/databases/(default)/documents/',
+    baseUrlDocument:
+      'https://firestore.googleapis.com/v1/projects/my-bewoak/databases/(default)/documents/',
   },
   apiCrossRef: {
-    pid: 'collettemathieu@noolib.com'
-  }
+    pid: 'collettemathieu@noolib.com',
+  },
 };
 
 /*

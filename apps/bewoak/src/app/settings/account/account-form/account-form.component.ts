@@ -8,23 +8,22 @@ import { getCurrentUser } from '../../../store';
 @Component({
   selector: 'bw-account-form',
   templateUrl: './account-form.component.html',
-  styleUrls: ['./account-form.component.scss']
+  styleUrls: ['./account-form.component.scss'],
 })
 export class AccountFormComponent implements OnInit, OnDestroy {
-
   public formAccount: FormGroup;
   public user: User;
   private subscription: Subscription;
 
-  constructor(private fb: FormBuilder, private store: Store) { }
+  constructor(private fb: FormBuilder, private store: Store) {}
 
   ngOnInit() {
-    this.subscription = this.store.select(getCurrentUser).subscribe(
-      (user: User) => {
+    this.subscription = this.store
+      .select(getCurrentUser)
+      .subscribe((user: User) => {
         this.user = user;
         this.formAccount = this.createForm();
-      }
-    );
+      });
   }
 
   ngOnDestroy() {
@@ -37,5 +36,4 @@ export class AccountFormComponent implements OnInit, OnDestroy {
   private createForm(): FormGroup {
     return this.fb.group({});
   }
-
 }

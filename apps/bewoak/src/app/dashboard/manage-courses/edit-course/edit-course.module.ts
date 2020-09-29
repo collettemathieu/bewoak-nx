@@ -5,14 +5,13 @@ import { EditCourseRoutingModule } from './edit-course-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ManageArticlesModule } from '../../manage-articles/manage-articles.module';
 
-
 @NgModule({
   declarations: [EditCourseComponent],
   imports: [
     SharedModule,
     ReactiveFormsModule,
     ManageArticlesModule,
-    EditCourseRoutingModule
-  ]
+    EditCourseRoutingModule,
+  ],
 })
-export class EditCourseModule { }
+export class EditCourseModule {}

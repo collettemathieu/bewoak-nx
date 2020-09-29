@@ -4,13 +4,12 @@ import { MDBModalRef } from 'angular-bootstrap-md';
 @Component({
   selector: 'bw-add-course-modal',
   templateUrl: './add-course-modal.component.html',
-  styleUrls: ['./add-course-modal.component.scss']
+  styleUrls: ['./add-course-modal.component.scss'],
 })
 export class AddCourseModalComponent {
-
   public title: string;
 
-  constructor(private modalRef: MDBModalRef) { }
+  constructor(private modalRef: MDBModalRef) {}
 
   /**
    * Fermeture de la fenêtre modale.
@@ -28,5 +27,4 @@ export class AddCourseModalComponent {
       this.closeModal();
     }
   }
-
 }

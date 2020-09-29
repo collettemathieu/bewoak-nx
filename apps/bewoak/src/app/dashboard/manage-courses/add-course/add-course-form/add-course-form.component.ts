@@ -1,37 +1,47 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  OnDestroy,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Course } from '../../../../shared/models/course';
 import { User } from '../../../../shared/models/user';
 import { CheckCourseNameValidator } from '../../../../shared/validators/check-course-name.validator';
 import { Subscription } from 'rxjs';
 import { Store, State } from '@ngrx/store';
-import { State as CourseState, AddUserCourse, UpdateCurrentCourse, getCurrentCourse } from '../../../store';
+import {
+  State as CourseState,
+  AddUserCourse,
+  UpdateCurrentCourse,
+  getCurrentCourse,
+} from '../../../store';
 import { getCurrentUser } from 'apps/bewoak/src/app/store';
 
 @Component({
   selector: 'bw-add-course-form',
   templateUrl: './add-course-form.component.html',
-  styleUrls: ['./add-course-form.component.scss']
+  styleUrls: ['./add-course-form.component.scss'],
 })
 export class AddCourseFormComponent implements OnInit, OnDestroy {
-
   @Output()
   private closeModalParent: EventEmitter<boolean> = new EventEmitter(false);
   public formCourse: FormGroup;
   // Options des difficultés du parcours pédagogique.
-  public levels: { id: number, name: string }[] = [
+  public levels: { id: number; name: string }[] = [
     {
       id: 1,
-      name: 'Débutant'
+      name: 'Débutant',
     },
     {
       id: 2,
-      name: 'Intermédiaire'
+      name: 'Intermédiaire',
     },
     {
       id: 3,
-      name: 'Expert'
-    }
+      name: 'Expert',
+    },
   ];
   // Configuration du selecteur du formulaire.
   public config = {
@@ -46,19 +56,20 @@ export class AddCourseFormComponent implements OnInit, OnDestroy {
   private course: Course;
   private subscriptions: Subscription = new Subscription();
 
-
   constructor(
     private fb: FormBuilder,
     private checkCourseNameValidator: CheckCourseNameValidator,
     private store: Store<CourseState>,
-    private state: State<CourseState>
-  ) { }
+    private state: State<CourseState>,
+  ) {}
 
   ngOnInit() {
     this.course = this.state.value.dashBoardPage.currentCourse.course;
-    this.subscriptions.add(this.store.select(getCurrentUser).subscribe(
-      (user: User) => this.user = user
-    ));
+    this.subscriptions.add(
+      this.store
+        .select(getCurrentUser)
+        .subscribe((user: User) => (this.user = user)),
+    );
     this.formCourse = this.createForm();
     this.initForm();
   }
@@ -72,20 +83,37 @@ export class AddCourseFormComponent implements OnInit, OnDestroy {
    */
   private createForm(): FormGroup {
     return this.fb.group({
-      name: ['', {
-        validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
-        asyncValidators: [this.checkCourseNameValidator],
-        updateOn: 'change'
-      }],
-      description: ['', {
-        validators: [Validators.required, Validators.minLength(10)],
-        updateOn: 'change'
-      }],
-      keywords: ['', {
-        validators: [Validators.required, Validators.minLength(3), Validators.pattern('^([a-z\-]+(, )?)+$')],
-        updateOn: 'change'
-      }],
-      levelControl: ['', [Validators.required]]
+      name: [
+        '',
+        {
+          validators: [
+            Validators.required,
+            Validators.minLength(3),
+            Validators.maxLength(100),
+          ],
+          asyncValidators: [this.checkCourseNameValidator],
+          updateOn: 'change',
+        },
+      ],
+      description: [
+        '',
+        {
+          validators: [Validators.required, Validators.minLength(10)],
+          updateOn: 'change',
+        },
+      ],
+      keywords: [
+        '',
+        {
+          validators: [
+            Validators.required,
+            Validators.minLength(3),
+            Validators.pattern('^([a-z-]+(, )?)+$'),
+          ],
+          updateOn: 'change',
+        },
+      ],
+      levelControl: ['', [Validators.required]],
     });
   }
 
@@ -94,12 +122,14 @@ export class AddCourseFormComponent implements OnInit, OnDestroy {
    */
   private initForm(): void {
     if (this.course) {
-      const currentLevel = this.levels.filter(level => level.name === this.course.level)[0];
+      const currentLevel = this.levels.filter(
+        (level) => level.name === this.course.level,
+      )[0];
       this.formCourse.setValue({
         name: this.course.name,
         description: this.course.description,
         keywords: this.getKeywordsFromArray(this.course.keywords),
-        levelControl: currentLevel
+        levelControl: currentLevel,
       });
     }
   }
@@ -117,13 +147,17 @@ export class AddCourseFormComponent implements OnInit, OnDestroy {
 
     // Parcours pédagogique existant.
     if (this.course) {
-      const freshCourse = Object.assign(Object.create(Object.getPrototypeOf(this.course)), this.course, {
-        name: this.name.value,
-        keywords: this.getKeywordsFromString(this.keywords.value),
-        description: this.description.value,
-        level: this.levelControl.value.name,
-        dateUpdate: Date.now(),
-      });
+      const freshCourse = Object.assign(
+        Object.create(Object.getPrototypeOf(this.course)),
+        this.course,
+        {
+          name: this.name.value,
+          keywords: this.getKeywordsFromString(this.keywords.value),
+          description: this.description.value,
+          level: this.levelControl.value.name,
+          dateUpdate: Date.now(),
+        },
+      );
       console.log(freshCourse);
       this.store.dispatch(new UpdateCurrentCourse({ course: freshCourse }));
       return;
@@ -137,7 +171,7 @@ export class AddCourseFormComponent implements OnInit, OnDestroy {
       level: this.levelControl.value.name,
       userId: this.user.id,
       dateAdd: Date.now(),
-      dateUpdate: Date.now()
+      dateUpdate: Date.now(),
     });
     this.store.dispatch(new AddUserCourse({ course }));
   }
@@ -156,11 +190,19 @@ export class AddCourseFormComponent implements OnInit, OnDestroy {
    */
   private getKeywordsFromString(keywords: string): Array<string> {
     const result = keywords.split(', ');
-    return result.filter(keyword => keyword.length > 0);
+    return result.filter((keyword) => keyword.length > 0);
   }
 
-  get name() { return this.formCourse.get('name'); }
-  get description() { return this.formCourse.get('description'); }
-  get keywords() { return this.formCourse.get('keywords'); }
-  get levelControl() { return this.formCourse.get('levelControl'); }
+  get name() {
+    return this.formCourse.get('name');
+  }
+  get description() {
+    return this.formCourse.get('description');
+  }
+  get keywords() {
+    return this.formCourse.get('keywords');
+  }
+  get levelControl() {
+    return this.formCourse.get('levelControl');
+  }
 }

@@ -5,13 +5,13 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'bw-search-course',
   templateUrl: './search-course.component.html',
-  styleUrls: ['./search-course.component.scss']
+  styleUrls: ['./search-course.component.scss'],
 })
 export class SearchCourseComponent {
   @Input()
   public course: Course;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
   public navigateToCourse(): void {
     this.router.navigate(['course', this.course.id]);

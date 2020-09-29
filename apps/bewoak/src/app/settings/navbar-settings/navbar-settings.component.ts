@@ -4,14 +4,13 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'bw-navbar-settings',
   templateUrl: './navbar-settings.component.html',
-  styleUrls: ['./navbar-settings.component.scss']
+  styleUrls: ['./navbar-settings.component.scss'],
 })
 export class NavbarSettingsComponent {
-
   public profilePath = 'settings/profile';
   public accountPath = 'settings/account';
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
   /**
    * Retourne si la lien demandée est le lien actif.
@@ -28,5 +27,4 @@ export class NavbarSettingsComponent {
   public navigate(path: string): void {
     this.router.navigate([path]);
   }
-
 }

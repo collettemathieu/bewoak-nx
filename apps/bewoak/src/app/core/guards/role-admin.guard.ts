@@ -8,15 +8,14 @@ import { User } from '../../shared/models/user';
 import { switchMap } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RoleAdminGuard implements CanActivate, CanActivateChild {
-
   constructor(
     private router: Router,
     private store: Store,
-    private authService: AuthService
-  ) { }
+    private authService: AuthService,
+  ) {}
 
   canActivate(): Observable<boolean> {
     if (!this.authService.isAuthenticated()) {
@@ -29,7 +28,7 @@ export class RoleAdminGuard implements CanActivate, CanActivateChild {
           this.router.navigate(['home']);
         }
         return of(hasRole);
-      })
+      }),
     );
   }
 

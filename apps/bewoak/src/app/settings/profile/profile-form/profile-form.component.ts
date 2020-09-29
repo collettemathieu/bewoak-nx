@@ -9,38 +9,32 @@ import { UpdateCurrentUserAction, getCurrentUser } from '../../../store';
 @Component({
   selector: 'bw-profile-form',
   templateUrl: './profile-form.component.html',
-  styleUrls: ['./profile-form.component.scss']
+  styleUrls: ['./profile-form.component.scss'],
 })
 export class ProfileFormComponent implements OnInit, OnDestroy {
-
   public formProfile: FormGroup;
   public roles: string;
   private user: User;
   private subscription: Subscription;
 
-  constructor(
-    private store: Store,
-    private formUserService: FormUserService
-  ) { }
+  constructor(private store: Store, private formUserService: FormUserService) {}
 
   /**
    * Si l'utilisateur est connecté, création et insertion des données
    * utilisateur dans le formulaire de profil.
    */
   ngOnInit() {
-    this.subscription = this.store.select(getCurrentUser).subscribe(
-      user => {
-        this.user = user;
-        if (user) {
-          // Affichage des rôles de l'utiliateur (pour information).
-          this.roles = this.getRolesFromUser(user);
-          // Création du formulaire de profil.
-          this.formProfile = this.createForm();
-          // Insertion des données utilisateur.
-          this.formProfile.setValue(this.getDataForFormProfile(user));
-        }
+    this.subscription = this.store.select(getCurrentUser).subscribe((user) => {
+      this.user = user;
+      if (user) {
+        // Affichage des rôles de l'utiliateur (pour information).
+        this.roles = this.getRolesFromUser(user);
+        // Création du formulaire de profil.
+        this.formProfile = this.createForm();
+        // Insertion des données utilisateur.
+        this.formProfile.setValue(this.getDataForFormProfile(user));
       }
-    );
+    });
   }
 
   ngOnDestroy() {
@@ -52,7 +46,10 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
    */
   public submit(): void {
     if (this.formProfile.valid) {
-      const user = Object.assign(Object.create(Object.getPrototypeOf(this.user)), this.user)
+      const user = Object.assign(
+        Object.create(Object.getPrototypeOf(this.user)),
+        this.user,
+      );
       user.firstname = this.firstname.value;
       user.lastname = this.lastname.value;
       user.jobBackground = this.jobBackground.value;
@@ -80,7 +77,7 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
     return {
       firstname: user.firstname,
       lastname: user.lastname,
-      jobBackground: user.jobBackground
+      jobBackground: user.jobBackground,
     };
   }
 
@@ -127,5 +124,4 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
   get jobBackground() {
     return this.formProfile.get('jobBackground');
   }
-
 }

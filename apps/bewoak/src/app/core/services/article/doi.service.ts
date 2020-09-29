@@ -10,7 +10,7 @@ import { ApiCrossRefService } from '@bewoak-nx/api-cross-ref';
 export class DoiService {
   constructor(
     private errorService: ErrorService,
-    private crossRefService: ApiCrossRefService
+    private crossRefService: ApiCrossRefService,
   ) {}
 
   /**
@@ -32,7 +32,7 @@ export class DoiService {
             year: data.year,
             abstract: data.abstract,
             url: data.url,
-          })
+          }),
         );
       }),
       catchError((error) => {
@@ -43,7 +43,7 @@ export class DoiService {
             },
           },
         });
-      })
+      }),
     );
   }
 

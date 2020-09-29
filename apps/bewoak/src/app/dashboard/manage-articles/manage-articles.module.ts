@@ -9,17 +9,15 @@ import { DoiService } from '../../core/services/article/doi.service';
 import { RemoveArticleComponent } from './remove-article/remove-article.component';
 import { AddArticleModule } from './add-article/add-article.module';
 
-
 @NgModule({
   declarations: [ViewArticleComponent, RemoveArticleComponent],
   imports: [
     SharedModule,
     ReactiveFormsModule,
     ManageArticlesRoutingModule,
-    AddArticleModule
+    AddArticleModule,
   ],
   providers: [ApiCrossRefService, DoiService],
   exports: [ViewArticleComponent, RemoveArticleComponent],
-
 })
-export class ManageArticlesModule { }
+export class ManageArticlesModule {}

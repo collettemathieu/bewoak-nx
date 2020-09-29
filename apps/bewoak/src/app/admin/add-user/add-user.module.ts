@@ -5,13 +5,8 @@ import { AddUserComponent } from './add-user.component';
 import { SharedModule } from '../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
 @NgModule({
   declarations: [AddUserComponent],
-  imports: [
-    SharedModule,
-    ReactiveFormsModule,
-    AddUserRoutingModule
-  ]
+  imports: [SharedModule, ReactiveFormsModule, AddUserRoutingModule],
 })
-export class AddUserModule { }
+export class AddUserModule {}

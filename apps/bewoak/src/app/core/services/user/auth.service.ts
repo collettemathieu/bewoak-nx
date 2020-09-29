@@ -12,7 +12,11 @@ import { Router } from '@angular/router';
 import { RandomService } from '../random.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Store } from '@ngrx/store';
-import { LoadCurrentUserAction, ResetCurrentUserAction, ResetCourseAction } from '../../../store';
+import {
+  LoadCurrentUserAction,
+  ResetCurrentUserAction,
+  ResetCourseAction,
+} from '../../../store';
 
 /**
  * Temps de connexion de l'utilisateur en ms.
@@ -20,10 +24,9 @@ import { LoadCurrentUserAction, ResetCurrentUserAction, ResetCourseAction } from
 const connectingTime = 3600;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   private http: HttpClient;
   private helper: JwtHelperService;
 
@@ -35,7 +38,7 @@ export class AuthService {
     private toastrService: ToastrService,
     private errorService: ErrorService,
     private loaderService: LoaderService,
-    private randomService: RandomService
+    private randomService: RandomService,
   ) {
     // Requête Http sans intercepteur.
     this.http = new HttpClient(this.handler);
@@ -48,7 +51,6 @@ export class AuthService {
    * @param password Mot de passe de l'utilisateur.
    */
   public login(email: string, password: string): Observable<User | null> {
-
     // Mise en attente.
     this.loaderService.setLoading(true);
 
@@ -56,46 +58,48 @@ export class AuthService {
     const requestData = {
       email,
       password,
-      returnSecureToken: true
+      returnSecureToken: true,
     };
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
+        'Content-Type': 'application/json',
+      }),
     };
     const url = `${environment.firebase.auth.baseUrl}accounts:signInWithPassword?key=${environment.firebase.apiKey}`;
 
     // Envoi requête.
-    return this.http.post<Observable<User | null>>(url, requestData, httpOptions).pipe(
-      switchMap((data: any) => {
-        const userId: string = data.localId;
-        const jwt: string = data.idToken;
-        // Sauvegarde des données dans le localStorage.
-        this.saveAuthData(userId, jwt);
-        // Récupération des données utilisateur.
-        return this.userService.getUser(userId);
-      }),
-      tap(user => this.store.dispatch(new LoadCurrentUserAction({ user }))),
-      tap(_ => this.logOutTimer(connectingTime)),
-      tap(user => {
-        // Envoi d'un message.
-        this.toastrService.showMessage({
-          type: 'success',
-          message: `Bienvenue ${user.firstname}.`
-        });
-        this.router.navigate(['home']);
-      }),
-      catchError((error) => {
-        // Fin mise en attente.
-        this.loaderService.setLoading(false);
-        // Envoi d'un message d'erreur.
-        return this.errorService.handleError(error);
-      }),
-      finalize(() => {
-        // Fin mise en attente.
-        this.loaderService.setLoading(false);
-      })
-    );
+    return this.http
+      .post<Observable<User | null>>(url, requestData, httpOptions)
+      .pipe(
+        switchMap((data: any) => {
+          const userId: string = data.localId;
+          const jwt: string = data.idToken;
+          // Sauvegarde des données dans le localStorage.
+          this.saveAuthData(userId, jwt);
+          // Récupération des données utilisateur.
+          return this.userService.getUser(userId);
+        }),
+        tap((user) => this.store.dispatch(new LoadCurrentUserAction({ user }))),
+        tap((_) => this.logOutTimer(connectingTime)),
+        tap((user) => {
+          // Envoi d'un message.
+          this.toastrService.showMessage({
+            type: 'success',
+            message: `Bienvenue ${user.firstname}.`,
+          });
+          this.router.navigate(['home']);
+        }),
+        catchError((error) => {
+          // Fin mise en attente.
+          this.loaderService.setLoading(false);
+          // Envoi d'un message d'erreur.
+          return this.errorService.handleError(error);
+        }),
+        finalize(() => {
+          // Fin mise en attente.
+          this.loaderService.setLoading(false);
+        }),
+      );
   }
 
   /**
@@ -110,11 +114,9 @@ export class AuthService {
       return;
     }
 
-    this.userService.getUser(userId).subscribe(
-      user => {
-        this.store.dispatch(new LoadCurrentUserAction({ user }));
-      }
-    );
+    this.userService.getUser(userId).subscribe((user) => {
+      this.store.dispatch(new LoadCurrentUserAction({ user }));
+    });
   }
 
   public isAuthenticated(): boolean {
@@ -128,7 +130,9 @@ export class AuthService {
    * Méthode permettant l'enregistrement de l'utilisateur sur firebase.
    * @param options Données de l'utilisateur.
    */
-  public register(newUser: User): Observable<{ user: User, password: string } | null> {
+  public register(
+    newUser: User,
+  ): Observable<{ user: User; password: string } | null> {
     // Mise en attente
     this.loaderService.setLoading(true);
 
@@ -137,12 +141,12 @@ export class AuthService {
     const requestData = {
       email: newUser.email,
       password: this.randomService.generatePassword(),
-      returnSecureToken: true
+      returnSecureToken: true,
     };
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
+        'Content-Type': 'application/json',
+      }),
     };
 
     // Envoi requête.
@@ -154,14 +158,14 @@ export class AuthService {
         this.userService.save(newUser).subscribe();
         return of({
           user: newUser,
-          password: requestData.password
+          password: requestData.password,
         });
       }),
-      tap(_ => {
+      tap((_) => {
         // Envoi d'un message.
         this.toastrService.showMessage({
           type: 'success',
-          message: 'L\'utilisateur a bien été enregistré'
+          message: "L'utilisateur a bien été enregistré",
         });
       }),
       catchError((error) => {
@@ -173,10 +177,9 @@ export class AuthService {
       finalize(() => {
         // Fin mise en attente.
         this.loaderService.setLoading(false);
-      })
+      }),
     );
   }
-
 
   /**
    * Méthode permettant la déconnexion de l'utilisateur.
@@ -188,32 +191,27 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-
   /**
    * Méthode permettant de récupérer les informations du local storage.
    */
   public getDataFromLocalStorage(): {
-    id: string,
-    token: string
+    id: string;
+    token: string;
   } {
     const userId: string = localStorage.getItem('userId') || '';
     const jwt: string = localStorage.getItem('token') || '';
 
     return {
       id: userId,
-      token: jwt
+      token: jwt,
     };
   }
-
 
   /**
    * Méthode permettant de modifier les informations du local storage.
    * @param data Données à mettre dans le storage du navigateur.
    */
-  private setDataFromLocalStorage(data: {
-    id: string,
-    token: string
-  }): void {
+  private setDataFromLocalStorage(data: { id: string; token: string }): void {
     localStorage.setItem('token', data.token);
     localStorage.setItem('userId', data.id);
   }
@@ -231,11 +229,9 @@ export class AuthService {
    * @param timer Temps avant déconnexion.
    */
   private logOutTimer(timer: number): void {
-    of(true).pipe(
-      delay(timer * 1000)
-    ).subscribe(
-      _ => this.logout()
-    );
+    of(true)
+      .pipe(delay(timer * 1000))
+      .subscribe((_) => this.logout());
   }
 
   /**
@@ -246,8 +242,7 @@ export class AuthService {
   private saveAuthData(userId: string, jwt: string): void {
     this.setDataFromLocalStorage({
       id: userId,
-      token: jwt
+      token: jwt,
     });
   }
-
 }

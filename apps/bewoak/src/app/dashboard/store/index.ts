@@ -7,21 +7,38 @@ import * as fromCurrentCourseActions from './actions/currentCourse';
 import { CurrentCourseEffects } from './effects/currentCourse';
 
 export interface DashBoardState {
-    userCourses: fromUserCourses.State,
-    currentCourse: fromCurrentCourse.State
+  userCourses: fromUserCourses.State;
+  currentCourse: fromCurrentCourse.State;
 }
 export interface State {
-    dashBoardPage: DashBoardState
+  dashBoardPage: DashBoardState;
 }
 export const reducers = {
-    userCourses: fromUserCourses.reducer,
-    currentCourse: fromCurrentCourse.reducer
-}
+  userCourses: fromUserCourses.reducer,
+  currentCourse: fromCurrentCourse.reducer,
+};
 export const effects = [UserCoursesEffects, CurrentCourseEffects];
-export const { LoadUserCourses, AddUserCourse, RemoveUserCourse } = fromUserCoursesActions;
-export const { LoadCurrentCourse, UpdateCurrentCourse, RefreshArticlesInCurrentCourse, ResetCurrentCourse } = fromCurrentCourseActions;
+export const {
+  LoadUserCourses,
+  AddUserCourse,
+  RemoveUserCourse,
+} = fromUserCoursesActions;
+export const {
+  LoadCurrentCourse,
+  UpdateCurrentCourse,
+  RefreshArticlesInCurrentCourse,
+  ResetCurrentCourse,
+} = fromCurrentCourseActions;
 
 // Les sélecteurs pour le module DashBoard
-export const getPublicState = createFeatureSelector<DashBoardState>('dashBoardPage');
-export const getUserCourses = createSelector(getPublicState, state => state.userCourses.userCourses);
-export const getCurrentCourse = createSelector(getPublicState, state => state.currentCourse.course);
+export const getPublicState = createFeatureSelector<DashBoardState>(
+  'dashBoardPage',
+);
+export const getUserCourses = createSelector(
+  getPublicState,
+  (state) => state.userCourses.userCourses,
+);
+export const getCurrentCourse = createSelector(
+  getPublicState,
+  (state) => state.currentCourse.course,
+);

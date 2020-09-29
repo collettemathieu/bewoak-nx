@@ -19,11 +19,8 @@ registerLocaleData(localeFr, 'fr-FR');
     DashboardRoutingModule,
     ReactiveFormsModule,
     StoreModule.forFeature('dashBoardPage', reducers),
-    EffectsModule.forFeature(effects)
+    EffectsModule.forFeature(effects),
   ],
-  providers: [
-    CourseService,
-    { provide: LOCALE_ID, useValue: 'fr-FR' }
-  ]
+  providers: [CourseService, { provide: LOCALE_ID, useValue: 'fr-FR' }],
 })
-export class DashboardModule { }
+export class DashboardModule {}

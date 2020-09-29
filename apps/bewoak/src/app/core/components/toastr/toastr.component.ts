@@ -10,35 +10,32 @@ const lifeTime = 7000;
 @Component({
   selector: 'bw-toastr',
   templateUrl: './toastr.component.html',
-  styleUrls: ['./toastr.component.scss']
+  styleUrls: ['./toastr.component.scss'],
 })
 export class ToastrComponent implements OnInit, OnDestroy {
-
   public toastrs: Toastr[] = [];
   private subscription: Subscription;
 
-  constructor(private toastrService: ToastrService) { }
+  constructor(private toastrService: ToastrService) {}
 
   ngOnInit() {
     // On s'abonne au service d'envoi de message.
-    this.subscription = this.toastrService.toastr$.subscribe(
-      toastr => {
-        // On ignore les messages vides.
-        if (toastr === null) {
-          return;
-        }
-        // On applique à chaque toastr un temps d'apparition.
-        timer(0, lifeTime).pipe(take(2)).subscribe(
-          index => {
-            if (index === 0) {
-              this.toastrs.push(toastr);
-            } else {
-              this.closeToastr(toastr);
-            }
-          }
-        );
+    this.subscription = this.toastrService.toastr$.subscribe((toastr) => {
+      // On ignore les messages vides.
+      if (toastr === null) {
+        return;
       }
-    );
+      // On applique à chaque toastr un temps d'apparition.
+      timer(0, lifeTime)
+        .pipe(take(2))
+        .subscribe((index) => {
+          if (index === 0) {
+            this.toastrs.push(toastr);
+          } else {
+            this.closeToastr(toastr);
+          }
+        });
+    });
   }
 
   ngOnDestroy() {
@@ -50,7 +47,7 @@ export class ToastrComponent implements OnInit, OnDestroy {
    */
   closeToastr(toastr: Toastr) {
     // On récupère l'index du toastr
-    const index = this.toastrs.findIndex(t => {
+    const index = this.toastrs.findIndex((t) => {
       return t === toastr;
     });
     // On l'écarte du tableau

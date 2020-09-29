@@ -2,19 +2,20 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoaderService {
-
   private isLoading: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  public readonly $isLoading: Observable<boolean> = this.isLoading.asObservable();
+  public readonly $isLoading: Observable<
+    boolean
+  > = this.isLoading.asObservable();
 
-  constructor() { }
+  constructor() {}
 
- /**
-  * Active ou désactive le loader sur la page.
-  * @param bool isLoading
-  */
+  /**
+   * Active ou désactive le loader sur la page.
+   * @param bool isLoading
+   */
   public setLoading(isLoading: boolean): void {
     this.isLoading.next(isLoading);
   }
