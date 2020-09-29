@@ -1,0 +1,51 @@
+<ng-container *ngIf="course$ | async as course">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Caractéristiques</h4>
+    <button
+      type="button"
+      class="close pull-right"
+      aria-label="Close"
+      (click)="closeModal()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col px-5 pt-2 pb-3">
+        <div class="row">
+          <div class="mx-4 my-3">
+            <div class="view overlay">
+              <img
+                src="https://mdbootstrap.com/img/Photos/Others/laptop-sm.jpg"
+                class="img-fluid"
+                alt="Course image"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col text-md-left mx-2 mt-3">
+            <a href="#!" class="green-text">
+              <h6 class="h6 pb-1">
+                <mdb-icon fas icon="desktop" class="pr-1"></mdb-icon> Parcours
+                pédagogique
+              </h6>
+            </a>
+
+            <h4 class="h4 mb-4">{{ course.name }}</h4>
+
+            <p class="font-weight-normal text-justify">
+              {{ course.description }}
+            </p>
+            <p class="font-weight-normal">
+              par <a><strong>Carine Fox</strong></a
+              >, mise à jour le {{ course.dateUpdate | date: 'dd/MM/yyyy' }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

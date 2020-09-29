@@ -1,7 +1,7 @@
 <ng-container *ngIf="course$ | async as course">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="jumbotron col-md-3 text-center hoverable mt-4 px-2 pt-2 pb-3">
+      <div class="jumbotron col-md-3 text-center hoverable mt-5 px-2 pt-2 pb-3" (click)="detailCourse()">
         <div class="row">
           <div class="mx-4 my-3">
             <div class="view overlay">
@@ -15,18 +15,7 @@
         </div>
         <div class="row">
           <div class="col text-md-left mx-2 mt-3">
-            <a href="#!" class="green-text">
-              <h6 class="h6 pb-1">
-                <mdb-icon fas icon="desktop" class="pr-1"></mdb-icon> Parcours
-                pédagogique
-              </h6>
-            </a>
-
             <h4 class="h4 mb-4">{{ course.name }}</h4>
-
-            <p class="font-weight-normal text-justify">
-              {{ course.description }}
-            </p>
             <p class="font-weight-normal">
               par <a><strong>Carine Fox</strong></a
               >, mise à jour le {{ course.dateUpdate | date: 'dd/MM/yyyy' }}
@@ -54,7 +43,7 @@
               </a>
               <div class="step-content">
                 <mdb-card class="w-100">
-                  <mdb-card-body class="hoverable">
+                  <mdb-card-body>
                     <mdb-card-title>
                       <h5>{{ article.title }}</h5>
                       <h6 class="text-muted mb-2">

@@ -1,7 +1,13 @@
-.jumbotron{
+.jumbotron {
   height: fit-content;
+  cursor: pointer;
+
+  img{
+    cursor: pointer;
+  }
 }
 
-.row{
+.stepper {
+  margin: 0;
   cursor: default;
 }
