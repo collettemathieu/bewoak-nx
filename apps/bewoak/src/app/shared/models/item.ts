@@ -1,7 +1,7 @@
 import { Chapter } from './chapter';
 
-type typeArticle = 'book' | 'article' | 'video' | 'other';
-type typeLevel =
+export type typeItem = 'book' | 'article' | 'video' | 'other';
+export type typeLevel =
   | 'bac'
   | 'bac+1'
   | 'bac+2'
@@ -10,26 +10,26 @@ type typeLevel =
   | 'bac+5'
   | 'bac+>5';
 
-export class Article {
+export class Item {
   id: string;
   title: string;
   abstract: string;
   journal: string;
   year: number;
-  url: string; // Lien url de l'article.
+  url: string; // Lien url de l'item.
   authors: string[];
   doi: string;
-  courseIds: Array<string>; // Id des parcours dans lequel l'article apparaît.
-  orderByCourseId: { [key: string]: number }; // Ordre d'apparition de l'article par Id de parcours.
+  courseIds: Array<string>; // Id des parcours dans lequel l'item apparaît.
+  orderByCourseId: { [key: string]: number }; // Ordre d'apparition de l'item par Id de parcours.
   avatarUrl: string;
-  dateAdd: number; // Date d'ajout de l'article en base.
-  dateUpdate: number; // Date de modification de l'article en base.
-  releaseDate: number; // Date de publication de l'article.
-  type: typeArticle;
+  dateAdd: number; // Date d'ajout de l'item en base.
+  dateUpdate: number; // Date de modification de l'item en base.
+  releaseDate: number; // Date de publication de l'item.
+  type: typeItem;
   keywords: string;
   trainingTime: number; // Temps moyen d'apprentissage.
-  thematic: string; // Thématique de l'article.
-  chapters: Chapter[]; // Liste des chapitres de l'article.
+  thematic: string; // Thématique de l'item.
+  chapters: Chapter[]; // Liste des chapitres de l'item.
   level: typeLevel; // Niveau d'apprentissage.
   complexity: number; // Complexité d'apprentissage.
 
@@ -37,8 +37,8 @@ export class Article {
     id?: string;
     doi?: string;
     title: string;
-    abstract: string;
-    journal: string;
+    abstract?: string;
+    journal?: string;
     year: number;
     url: string;
     authors: string[];
@@ -48,7 +48,7 @@ export class Article {
     dateAdd?: number;
     dateUpdate?: number;
     releaseDate?: number;
-    type?: typeArticle;
+    type: typeItem;
     keywords?: string;
     trainingTime?: number;
     thematic?: string;

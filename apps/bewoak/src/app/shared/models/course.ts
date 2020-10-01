@@ -1,12 +1,12 @@
-import { Article } from './article';
+import { Item } from './item';
 
-type typeCourseLevel = 'Débutant' | 'Intermédiaire' | 'Expert';
+export type typeCourseLevel = 'Débutant' | 'Intermédiaire' | 'Expert';
 
 export class Course {
   readonly id: string;
   name: string;
   description: string;
-  articles: Article[];
+  items: Item[]; // Articles, vidéos, livres, ... du parcours pédagogique.
   keywords: string[];
   url: string;
   avatar: string;
@@ -20,7 +20,7 @@ export class Course {
     id?: string;
     name: string;
     description: string;
-    articles?: Article[];
+    items?: Item[];
     keywords: string[];
     url?: string;
     avatar?: string;
@@ -33,7 +33,7 @@ export class Course {
     this.id = options.id || '';
     this.name = options.name || '';
     this.description = options.description || '';
-    this.articles = options.articles || [];
+    this.items = options.items || [];
     this.keywords = options.keywords || [];
     this.url = options.url || '';
     this.avatar = options.avatar || '';

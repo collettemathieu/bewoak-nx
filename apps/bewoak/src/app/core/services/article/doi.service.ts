@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Article } from '../../../shared/models/article';
+import { Item } from '../../../shared/models/item';
 import { environment } from '../../../../environments/environment';
 import { switchMap, catchError } from 'rxjs/operators';
 import { ErrorService } from '../error.service';
@@ -17,14 +17,14 @@ export class DoiService {
    * Retourne l'article à partir de son DOI.
    * @param id Identifiant DOI de l'article.
    */
-  public getArticleByDoi(doi: string): Observable<Article | null> {
+  public getArticleByDoi(doi: string): Observable<Item | null> {
     this.crossRefService.setOptions({
       pid: environment.apiCrossRef.pid,
     });
     return this.crossRefService.getArticleData(doi).pipe(
       switchMap((data) => {
         return of(
-          new Article({
+          new Item({
             doi,
             title: data.title,
             authors: data.authors,
@@ -32,6 +32,7 @@ export class DoiService {
             year: data.year,
             abstract: data.abstract,
             url: data.url,
+            type: 'article',
           }),
         );
       }),
@@ -52,6 +53,6 @@ export class DoiService {
    * @param doi L'identifiant de l'article.
    */
   public extractDoi(doi: string): string {
-    return this.crossRefService.extractDOI(doi);
+    return this.crossRefService.extractDOI(doi.trim());
   }
 }

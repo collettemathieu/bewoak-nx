@@ -165,7 +165,7 @@ export class AuthService {
         // Envoi d'un message.
         this.toastrService.showMessage({
           type: 'success',
-          message: 'L\'utilisateur a bien été enregistré',
+          message: "L'utilisateur a bien été enregistré",
         });
       }),
       catchError((error) => {

@@ -4,7 +4,7 @@ import { CoursesUserComponent } from './courses-user.component';
 import { EditCourseComponent } from './edit-course/edit-course.component';
 
 const routes: Routes = [
-  { path: 'manageCourse', component: CoursesUserComponent },
+  { path: 'manageCourses', component: CoursesUserComponent },
   { path: 'editCourse/:id', component: EditCourseComponent },
 ];
 

@@ -41,7 +41,7 @@ export function reducer(
         loading: false,
         course: action.payload.course,
       };
-    case CurrentCourseActionTypes.RefreshArticles:
+    case CurrentCourseActionTypes.RefreshItems:
       return {
         ...state,
         loading: true,

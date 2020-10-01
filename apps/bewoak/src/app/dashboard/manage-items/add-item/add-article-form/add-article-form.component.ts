@@ -8,7 +8,7 @@ import {
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ArticleService } from '../../../../core/services/article/article.service';
 import { Course } from '../../../../shared/models/course';
-import { Article } from '../../../../shared/models/article';
+import { Item } from '../../../../shared/models/item';
 import { BehaviorSubject, of, Subscription } from 'rxjs';
 import { DoiService } from '../../../../core/services/article/doi.service';
 import { ToastrService } from '../../../../core/services/toastr.service';
@@ -16,7 +16,7 @@ import { Store } from '@ngrx/store';
 import {
   State,
   getCurrentCourse,
-  RefreshArticlesInCurrentCourse,
+  RefreshItemsInCurrentCourse,
 } from '../../../store';
 import { switchMap } from 'rxjs/operators';
 
@@ -28,7 +28,7 @@ import { switchMap } from 'rxjs/operators';
 export class AddArticleFormComponent implements OnInit, OnDestroy {
   public formDoi: FormGroup;
   public formArticle: FormGroup;
-  public article: BehaviorSubject<Article | null> = new BehaviorSubject(null);
+  public article: BehaviorSubject<Item | null> = new BehaviorSubject(null);
   private currentCourse: Course;
   private isNewArticle = true;
   private subscription: Subscription;
@@ -132,22 +132,22 @@ export class AddArticleFormComponent implements OnInit, OnDestroy {
     if (!this.formDoi.valid) {
       return;
     }
-    const doi = this.doi.value.trim();
+    const doi = this.doiService.extractDoi(this.doi.value);
     this.doiService
       .getArticleByDoi(doi)
       .pipe(
-        switchMap((article: Article) =>
+        switchMap((article: Item) =>
           this.articleService
             .getArticleByDoi(this.doiService.extractDoi(doi))
             .pipe(
-              switchMap((oldArticle: Article | null) => {
+              switchMap((oldArticle: Item | null) => {
                 this.isNewArticle = !!!oldArticle;
                 return of(this.isNewArticle ? article : oldArticle);
               }),
             ),
         ),
       )
-      .subscribe((article: Article) => {
+      .subscribe((article: Item) => {
         this.article.next(article);
         this.formArticle.setValue({
           title: article.title,
@@ -187,7 +187,7 @@ export class AddArticleFormComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Ajout de l'article en cours de validation.
+   * Ajout d'un nouvel article.
    */
   private addArticle(): void {
     if (!this.formDoi.valid) {
@@ -197,18 +197,17 @@ export class AddArticleFormComponent implements OnInit, OnDestroy {
     const article = this.article.value;
 
     const order = {};
-    order[this.currentCourse.id] = this.currentCourse.articles.length + 1;
+    order[this.currentCourse.id] = this.currentCourse.items.length + 1;
     article.courseIds = [this.currentCourse.id];
     article.dateAdd = Date.now();
     article.dateUpdate = Date.now();
     article.orderByCourseId = order;
-    article.doi = this.doiService.extractDoi(this.doi.value);
     article.abstract = this.abstract.value;
     this.cancel();
 
     this.articleService.add(article).subscribe((_) => {
       this.store.dispatch(
-        new RefreshArticlesInCurrentCourse({ course: this.currentCourse }),
+        new RefreshItemsInCurrentCourse({ course: this.currentCourse }),
       );
       // Fermeture de la fenêtre modale.
       this.closeModalArticle.emit(true);
@@ -233,16 +232,15 @@ export class AddArticleFormComponent implements OnInit, OnDestroy {
       return;
     }
     article.orderByCourseId[this.currentCourse.id] =
-      this.currentCourse.articles.length + 1;
+      this.currentCourse.items.length + 1;
     article.courseIds.push(this.currentCourse.id);
     article.dateUpdate = Date.now();
-    article.doi = this.doiService.extractDoi(this.doi.value);
     article.abstract = this.abstract.value;
     this.cancel();
 
     this.articleService.update(article).subscribe((_) => {
       this.store.dispatch(
-        new RefreshArticlesInCurrentCourse({ course: this.currentCourse }),
+        new RefreshItemsInCurrentCourse({ course: this.currentCourse }),
       );
       // Fermeture de la fenêtre modale.
       this.closeModalArticle.emit(true);

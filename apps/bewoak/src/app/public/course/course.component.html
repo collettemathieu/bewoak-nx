@@ -1,7 +1,10 @@
 <ng-container *ngIf="course$ | async as course">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="jumbotron col-md-3 text-center hoverable mt-5 px-2 pt-2 pb-3" (click)="detailCourse()">
+      <div
+        class="jumbotron col-md-3 text-center hoverable mt-5 px-2 pt-2 pb-3"
+        (click)="detailCourse()"
+      >
         <div class="row">
           <div class="mx-4 my-3">
             <div class="view overlay">
@@ -33,44 +36,42 @@
               <span class="label">Début du parcours</span>
             </a>
           </li>
-          <ng-container *ngFor="let article of course.articles">
-            <li class="active">
-              <a href="{{ article.url }}" target="_blank">
-                <span class="circle">
-                  <mdb-icon fas icon="file-alt"></mdb-icon>
-                </span>
-                <span class="label">{{ article.title }}</span>
-              </a>
-              <div class="step-content">
-                <mdb-card class="w-100">
-                  <mdb-card-body>
-                    <mdb-card-title>
-                      <h5>{{ article.title }}</h5>
-                      <h6 class="text-muted mb-2">
-                        <small>{{ article.authors.join(', ') }}</small>
-                      </h6>
-                    </mdb-card-title>
-                    <mdb-card-text> {{ article.abstract }} </mdb-card-text>
-                    <div class="d-flex justify-content-start">
-                      <a
-                        href="{{ article.url }}"
-                        target="_blank"
-                        mdbBtn
-                        color="primary"
-                        >Consulter</a
-                      >
-                    </div>
-                  </mdb-card-body>
-                  <mdb-card-footer
-                    ><small class="text-muted"
-                      >{{ article.journal }} - {{ article.year }} -
-                      {{ article.doi }}</small
+          <li class="active" *ngFor="let item of course.items">
+            <a href="{{ item.url }}" target="_blank">
+              <span class="circle">
+                <mdb-icon fas icon="file-alt"></mdb-icon>
+              </span>
+              <span class="label">{{ item.title }}</span>
+            </a>
+            <div class="step-content">
+              <mdb-card class="w-100">
+                <mdb-card-body>
+                  <mdb-card-title>
+                    <h5>{{ item.title }}</h5>
+                    <h6 class="text-muted mb-2">
+                      <small>{{ item.authors.join(', ') }}</small>
+                    </h6>
+                  </mdb-card-title>
+                  <mdb-card-text> {{ item.abstract }} </mdb-card-text>
+                  <div class="d-flex justify-content-start">
+                    <a
+                      href="{{ item.url }}"
+                      target="_blank"
+                      mdbBtn
+                      color="primary"
+                      >Consulter</a
                     >
-                  </mdb-card-footer>
-                </mdb-card>
-              </div>
-            </li>
-          </ng-container>
+                  </div>
+                </mdb-card-body>
+                <mdb-card-footer
+                  ><small class="text-muted"
+                    >{{ item.journal }} - {{ item.year }} -
+                    {{ item.doi }}</small
+                  >
+                </mdb-card-footer>
+              </mdb-card>
+            </div>
+          </li>
           <li class="warning">
             <a>
               <span class="circle">

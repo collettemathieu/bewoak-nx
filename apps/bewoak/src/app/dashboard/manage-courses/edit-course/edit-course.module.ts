@@ -3,14 +3,14 @@ import { EditCourseComponent } from './edit-course.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { EditCourseRoutingModule } from './edit-course-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ManageArticlesModule } from '../../manage-articles/manage-articles.module';
+import { ManageItemsModule } from '../../manage-items/manage-items.module';
 
 @NgModule({
   declarations: [EditCourseComponent],
   imports: [
     SharedModule,
     ReactiveFormsModule,
-    ManageArticlesModule,
+    ManageItemsModule,
     EditCourseRoutingModule,
   ],
 })

@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { MDBModalRef } from 'angular-bootstrap-md';
 
 @Component({
-  selector: 'bw-add-article-modal',
-  templateUrl: './add-article-modal.component.html',
-  styleUrls: ['./add-article-modal.component.scss'],
+  selector: 'bw-add-item-modal',
+  templateUrl: './add-item-modal.component.html',
+  styleUrls: ['./add-item-modal.component.scss'],
 })
-export class AddArticleModalComponent {
+export class AddItemModalComponent {
   public title: string;
 
   constructor(private bsModelRef: MDBModalRef) {}

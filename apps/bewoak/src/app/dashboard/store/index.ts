@@ -26,7 +26,7 @@ export const {
 export const {
   LoadCurrentCourse,
   UpdateCurrentCourse,
-  RefreshArticlesInCurrentCourse,
+  RefreshItemsInCurrentCourse,
   ResetCurrentCourse,
 } = fromCurrentCourseActions;
 

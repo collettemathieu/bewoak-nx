@@ -6,7 +6,7 @@ export enum CurrentCourseActionTypes {
   LoadSuccess = '[Course] load a user course with success',
   Update = '[Course] update a user course',
   UpdateSuccess = '[Course] update success a user course',
-  RefreshArticles = '[Course] refresh articles in current course',
+  RefreshItems = '[Course] refresh items in current course',
   Reset = '[Course] reset the current course',
 }
 
@@ -34,8 +34,8 @@ export class UpdateCurrentCourseSuccess implements Action {
   constructor(public readonly payload: { course: Course }) {}
 }
 
-export class RefreshArticlesInCurrentCourse implements Action {
-  readonly type = CurrentCourseActionTypes.RefreshArticles;
+export class RefreshItemsInCurrentCourse implements Action {
+  readonly type = CurrentCourseActionTypes.RefreshItems;
 
   constructor(public readonly payload: { course: Course }) {}
 }
@@ -49,5 +49,5 @@ export type UserCourseAction =
   | LoadCurrentCourseSuccess
   | UpdateCurrentCourse
   | UpdateCurrentCourseSuccess
-  | RefreshArticlesInCurrentCourse
+  | RefreshItemsInCurrentCourse
   | ResetCurrentCourse;

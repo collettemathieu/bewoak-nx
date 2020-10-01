@@ -1,9 +1,9 @@
-import { Article } from './article';
+import { Item } from './item';
 
 export class Catalog {
-  articles: Article[];
+  items: Item[];
 
-  constructor(options: { articles?: Article[] }) {
-    this.articles = options.articles || [];
+  constructor(options: { items?: Item[] }) {
+    this.items = options.items || [];
   }
 }

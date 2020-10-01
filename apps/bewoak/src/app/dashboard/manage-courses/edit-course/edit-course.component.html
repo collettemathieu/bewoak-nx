@@ -49,44 +49,44 @@
             </a>
           </li>
           <ng-container
-            *ngFor="let article of course.articles; let index = index"
+            *ngFor="let item of course.items; let index = index"
           >
             <li class="active">
-              <a href="{{ article.url }}" target="_blank">
+              <a href="{{ item.url }}" target="_blank">
                 <span class="circle">
                   <mdb-icon fas icon="file-alt"></mdb-icon>
                 </span>
-                <span class="label">Article n°{{ index + 1 }}</span>
+                <span class="label">Item n°{{ index + 1 }}</span>
               </a>
               <div class="step-content">
                 <mdb-card class="w-10">
                   <mdb-card-body>
                     <mdb-card-title>
-                      <h5>{{ article.title }}</h5>
+                      <h5>{{ item.title }}</h5>
                       <h6 class="text-muted mb-2">
-                        <small>{{ article.authors.join(', ') }}</small>
+                        <small>{{ item.authors.join(', ') }}</small>
                       </h6>
                     </mdb-card-title>
                     <mdb-card-text>
-                      {{ article.abstract }}
+                      {{ item.abstract }}
                     </mdb-card-text>
                     <div class="d-flex justify-content-start">
                       <a
-                        href="{{ article.url }}"
+                        href="{{ item.url }}"
                         target="_blank"
                         mdbBtn
                         color="primary"
                         >Consulter</a
                       >
-                      <bw-remove-article
-                        [article]="article"
-                      ></bw-remove-article>
+                      <bw-remove-item
+                        [item]="item"
+                      ></bw-remove-item>
                     </div>
                   </mdb-card-body>
                   <mdb-card-footer
                     ><small class="text-muted"
-                      >{{ article.journal }} - {{ article.year }} - doi:
-                      {{ article.doi }}</small
+                      >{{ item.journal }} - {{ item.year }} - doi:
+                      {{ item.doi }}</small
                     >
                   </mdb-card-footer>
                 </mdb-card>
@@ -94,11 +94,11 @@
             </li>
           </ng-container>
           <li class="warning">
-            <a (click)="addArticle()">
+            <a (click)="addItem()">
               <span class="circle">
                 <mdb-icon fas icon="plus-circle" size="2x"></mdb-icon>
               </span>
-              <span class="label">Ajout d'un nouvel article</span>
+              <span class="label">Add an item</span>
             </a>
           </li>
         </ul>

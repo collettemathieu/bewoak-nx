@@ -50,11 +50,11 @@ export class CurrentCourseEffects {
   );
 
   @Effect()
-  $refreshArticles: Observable<Action> = this.action$.pipe(
-    ofType(CurrentCourseActionTypes.RefreshArticles),
+  $refreshItems: Observable<Action> = this.action$.pipe(
+    ofType(CurrentCourseActionTypes.RefreshItems),
     map((action: UpdateCurrentCourse) => action.payload.course),
     switchMap((course: Course) =>
-      this.courseService.refreshArticlesInCourse(course),
+      this.courseService.refreshItemsInCourse(course),
     ),
     handleLoadedCourse(),
   );

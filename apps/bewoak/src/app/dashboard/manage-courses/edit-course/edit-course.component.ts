@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MDBModalService, MDBModalRef } from 'angular-bootstrap-md';
 import { Store } from '@ngrx/store';
 import { State, getCurrentCourse, LoadCurrentCourse } from '../../store';
-import { AddArticleModalComponent } from '../../manage-articles/add-article/add-article-modal.component';
+import { AddItemModalComponent } from '../../manage-items/add-item/add-item-modal.component';
 
 @Component({
   selector: 'bw-edit-course',
@@ -44,13 +44,13 @@ export class EditCourseComponent implements OnInit {
   }
 
   /**
-   * Modal pour l'ajout d'un nouvel article.
+   * Modal pour l'ajout d'un nouvel item.
    */
-  public addArticle() {
-    this.modalRef = this.modalService.show(AddArticleModalComponent, {
+  public addItem() {
+    this.modalRef = this.modalService.show(AddItemModalComponent, {
       class: 'modal-lg',
       scroll: true,
     });
-    this.modalRef.content.title = 'Ajouter un article au parcours';
+    this.modalRef.content.title = 'Add an item to course';
   }
 }

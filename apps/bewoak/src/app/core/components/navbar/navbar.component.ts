@@ -18,7 +18,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public loginPath = 'login';
   public adminPath = 'administration';
   public addUserPath = '/administration/addUser';
-  public manageCoursePath = '/dashboard/manageCourse';
+  public manageCoursePath = '/dashboard/manageCourses';
   public settingsPath = 'settings';
   public settingsProfilePath = 'settings/profile';
   private subscription: Subscription;

@@ -8,8 +8,8 @@ import { ErrorService } from '../error.service';
 import { RandomService } from '../random.service';
 import { LoaderService } from '../loader.service';
 import { ToastrService } from '../toastr.service';
-import { Article } from '../../../shared/models/article';
-import { ArticleService } from '../article/article.service';
+import { Item } from '../../../shared/models/item';
+import { ItemService } from '../item/item.service';
 
 @Injectable()
 export class CourseService {
@@ -20,7 +20,7 @@ export class CourseService {
     private errorService: ErrorService,
     private randomService: RandomService,
     private handler: HttpBackend,
-    private articleService: ArticleService,
+    private itemService: ItemService,
     private loaderService: LoaderService,
     private toastrService: ToastrService,
   ) {
@@ -82,7 +82,7 @@ export class CourseService {
         const course: Course = this.getCourseFromFirestore(
           data[0].document.fields,
         );
-        return this.refreshArticlesInCourse(course);
+        return this.refreshItemsInCourse(course);
       }),
       catchError((error) => {
         return this.errorService.handleError(error);
@@ -227,19 +227,19 @@ export class CourseService {
   }
 
   /**
-   * Rafraîchit les articles du parcours pédagogique.
+   * Rafraîchit les items du parcours pédagogique.
    * @param course Le parcours pédagogique.
    */
-  public refreshArticlesInCourse(course: Course): Observable<Course> {
-    return this.articleService.getCourseArticles(course.id).pipe(
-      switchMap((articles) => {
-        const freshArticles: Article[] = [];
-        this.sortByOrder(articles, course.id).forEach((options) => {
-          freshArticles.push(new Article(options));
+  public refreshItemsInCourse(course: Course): Observable<Course> {
+    return this.itemService.getCourseItems(course.id).pipe(
+      switchMap((items) => {
+        const freshItems: Item[] = [];
+        this.sortByOrder(items, course.id).forEach((options) => {
+          freshItems.push(new Item(options));
         });
 
         const freshCourse = Object.assign({}, course, {
-          articles: freshArticles,
+          items: freshItems,
         });
 
         return of(freshCourse);
@@ -352,11 +352,11 @@ export class CourseService {
   }
 
   /**
-   * Tri les articles selon leur ordre d'apparition dans le parcours pédagogique.
-   * @param articles Un tableau d'articles à trier.
+   * Tri les items selon leur ordre d'apparition dans le parcours pédagogique.
+   * @param items Un tableau d'items à trier.
    */
-  private sortByOrder(articles: Article[], idCourse: string): Article[] {
-    return articles.sort((a: Article, b: Article) => {
+  private sortByOrder(items: Item[], idCourse: string): Item[] {
+    return items.sort((a: Item, b: Item) => {
       return a.orderByCourseId[idCourse] - b.orderByCourseId[idCourse];
     });
   }
