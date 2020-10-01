@@ -1,6 +1,6 @@
 <ng-container *ngIf="course$ | async as course">
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Caractéristiques</h4>
+    <h4 class="modal-title pull-left">Features</h4>
     <button
       type="button"
       class="close pull-right"
@@ -29,8 +29,7 @@
           <div class="col text-md-left mx-2 mt-3">
             <a href="#!" class="green-text">
               <h6 class="h6 pb-1">
-                <mdb-icon fas icon="desktop" class="pr-1"></mdb-icon> Parcours
-                pédagogique
+                <mdb-icon fas icon="desktop" class="pr-1"></mdb-icon> Course
               </h6>
             </a>
 
@@ -40,8 +39,8 @@
               {{ course.description }}
             </p>
             <p class="font-weight-normal">
-              par <a><strong>Carine Fox</strong></a
-              >, mise à jour le {{ course.dateUpdate | date: 'dd/MM/yyyy' }}
+              by <a><strong>Carine Fox</strong></a
+              >,updated at {{ course.dateUpdate | date: 'MM/dd/yyyy' }}
             </p>
           </div>
         </div>
