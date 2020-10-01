@@ -6,14 +6,14 @@
         <div class="md-form">
             <input mdbInput id="doi" formControlName="doi" name="doi" class="form-control" type="text"
                 autocomplete="false" autocorrect="false">
-            <label for="doi">Rechercher un article via son DOI*</label>
-            <mdb-error *ngIf="doi.errors && doi.dirty && doi.errors.required">Un identifiant DOI est requis.</mdb-error>
-            <mdb-error *ngIf="doi.errors && doi.dirty && doi.errors.pattern">L'identifiant DOI n'est pas valide (eg:
+            <label for="doi">Search for an article via its DOI*</label>
+            <mdb-error *ngIf="doi.errors && doi.dirty && doi.errors.required">A DOI ID is required.</mdb-error>
+            <mdb-error *ngIf="doi.errors && doi.dirty && doi.errors.pattern">DOI ID is not valid (eg:
                 10.1000/123456...).</mdb-error>
         </div>
         <div class="form-group form-row">
             <button type="submit" mdbWavesEffect mdbBtn class="ml-auto" color="success" [disabled]="!formDoi.valid">
-                Visualiser
+                Preview
             </button>
         </div>
     </form>
@@ -22,32 +22,32 @@
     <form [formGroup]="formArticle" role="form" (ngSubmit)="submit()" novalidate>
         <div class="md-form">
             <input mdbInput type="text" readonly class="form-control" id="title" formControlName="title"
-                autocomplete="false" autocorrect="false" mdbTooltip="Vous ne pouvez pas modifier le titre de l'article." placement="left">
+                autocomplete="false" autocorrect="false" mdbTooltip="You cannot change the title of the article." placement="left">
             <label for="title">Title</label>
         </div>
         <div class="md-form">
             <input mdbInput type="text" readonly class="form-control" id="authors" formControlName="authors"
-                autocomplete="false" autocorrect="false" mdbTooltip="Vous ne pouvez pas modifier les auteurs de l'article." placement="left">
+                autocomplete="false" autocorrect="false" mdbTooltip="You cannot modify the authors of the article." placement="left">
             <label for="authors">Authors</label>
         </div>
         <div class="md-form">
             <input mdbInput type="text" readonly class="form-control" id="journal" formControlName="journal"
-                autocomplete="false" autocorrect="false" mdbTooltip="Vous ne pouvez pas modifier le nom du journal de l'article." placement="left">
+                autocomplete="false" autocorrect="false" mdbTooltip="You cannot change the journal name of the article." placement="left">
             <label for="journal">Journal</label>
         </div>
         <div class="md-form">
             <input mdbInput type="text" readonly class="form-control" id="year" formControlName="year"
-                autocomplete="false" autocorrect="false" mdbTooltip="Vous ne pouvez pas modifier le date de publication de l'article." placement="left">
+                autocomplete="false" autocorrect="false" mdbTooltip="You cannot change the publication date of the article." placement="left">
             <label for="year">Published in</label>
         </div>
         <div class="md-form">
             <textarea type="text" id="abstract" class="md-textarea md-textarea-auto form-control"
                 formControlName="abstract" autocomplete="false" autocorrect="false" mdbInput></textarea>
             <label for="abstract">Abstract</label>
-            <mdb-error *ngIf="abstract.errors && abstract.dirty && abstract.errors.required">Un abstract est requis.
+            <mdb-error *ngIf="abstract.errors && abstract.dirty && abstract.errors.required">An abstract is required.
             </mdb-error>
-            <mdb-error *ngIf="abstract.errors && abstract.dirty && abstract.errors.minlength">L'abstract doit contenir
-                au moins 100 caractères.</mdb-error>
+            <mdb-error *ngIf="abstract.errors && abstract.dirty && abstract.errors.minlength">The abstract must contain
+                at least 100 characters.</mdb-error>
         </div>
         <div class="form-group form-row">
             <button (click)="cancel()" mdbWavesEffect mdbBtn color="primary" class="mb-2">

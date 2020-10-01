@@ -40,7 +40,7 @@ export class EditCourseComponent implements OnInit {
       class: 'modal-lg',
       scroll: true,
     });
-    this.modalRef.content.title = 'Modifier le parcours pédagogique';
+    this.modalRef.content.title = 'Edit the pedagogical course';
   }
 
   /**

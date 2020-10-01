@@ -157,7 +157,7 @@ export class CourseService {
         // Envoi d'un message à l'utilisateur.
         this.toastrService.showMessage({
           type: 'success',
-          message: 'Le parcours pédagogique a bien été enregistré.',
+          message: 'The pedagogical course has been created.',
         });
       }),
       catchError((error) => {
@@ -192,7 +192,7 @@ export class CourseService {
       tap((_) => {
         this.toastrService.showMessage({
           type: 'success',
-          message: 'Le parcours pédagogique a bien été modifié.',
+          message: 'The pedagogical course has been modified.',
         });
       }),
       finalize(() => {
@@ -219,6 +219,12 @@ export class CourseService {
       }),
       catchError((error) => {
         return this.errorService.handleError(error);
+      }),
+      tap((_) => {
+        this.toastrService.showMessage({
+          type: 'success',
+          message: 'The pedagogical course has been removed.',
+        });
       }),
       finalize(() => {
         this.loaderService.setLoading(false);

@@ -1,62 +1,62 @@
 <form [formGroup]="formProfile" (ngSubmit)="submit()" novalidate role="form">
     <div class="row align-items-baseline">
-        <label for="firstname" class="col-4">Prénom*</label>
+        <label for="firstname" class="col-4">First name*</label>
         <div class="col-8">
             <div class="md-form mb-0">
-                <label for="firstname">Prénom</label>
+                <label for="firstname">First name</label>
                 <input mdbInput id="firstname" formControlName="firstname" name="firstname" class="form-control"
                     type="text" autocomplete="false" autocorrect="false">
                 <small *ngIf="firstname.errors && firstname.dirty" class="form-text text-muted">
                     <span [hidden]="!firstname.errors.required">
-                        Un prénom est requis.
+                        A first name is required.
                     </span>
                     <span [hidden]="!firstname.errors.minlength">
-                        Le prénom doit comprendre au moins 3 caractères.
+                        The first name must be at least 3 characters long.
                     </span>
                 </small>
             </div>
         </div>
     </div>
     <div class="row align-items-baseline">
-        <label for="lastname" class="col-4">Nom*</label>
+        <label for="lastname" class="col-4">Last name*</label>
         <div class="col-8">
             <div class="md-form mb-0">
-                <label for="lastname">Nom</label>
+                <label for="lastname">Last name</label>
                 <input mdbInput id="lastname" name="lastname" formControlName="lastname" class="form-control"
                     type="text" autocomplete="false" autocorrect="false">
                 <small *ngIf="lastname.errors && lastname.dirty" class="form-text text-muted">
                     <span [hidden]="!lastname.errors.required">
-                        Un nom est requis.
+                        A last name is required.
                     </span>
                     <span [hidden]="!lastname.errors.minlength">
-                        Le nom doit comprendre au moins 3 caractères.
+                        The last name must be at least 3 characters long.
                     </span>
                 </small>
             </div>
         </div>
     </div>
     <div class="row align-items-baseline">
-        <label for="roles" class="col-4">Rôle(s)</label>
+        <label for="roles" class="col-4">Role(s)</label>
         <div class="col-8">
             <div class="md-form mb-0">
-                <input mdbInput id="roles" mdbTooltip="Vous ne pouvez pas modifier vos rôles." placement="left"
+                <input mdbInput id="roles" mdbTooltip="You cannot change your roles." placement="left"
                     class="form-control-plaintext" type="text" [value]="roles" readonly>
             </div>
         </div>
     </div>
     <div class="row align-items-baseline">
-        <label for="jobBackground" class="col-4">Activités*</label>
+        <label for="jobBackground" class="col-4">Background*</label>
         <div class="col-8">
             <div class="md-form mb-0">
-                <label for="jobBackground">Décrivez vos activités professionnelles</label>
+                <label for="jobBackground">Describe your professional activities</label>
                 <textarea mdbInput id="jobBackground" name="jobBackground" formControlName="jobBackground" cols="40"
                     rows="4" class="md-textarea form-control" autocomplete="false" autocorrect="false"></textarea>
                 <small *ngIf="jobBackground.errors && jobBackground.dirty" class="form-text text-muted">
                     <span [hidden]="!jobBackground.errors.required">
-                        Une description est requise.
+                        A description is required.
                     </span>
                     <span [hidden]="!jobBackground.errors.minlength">
-                        La description doit faire au moins 5 caractères.
+                        The description must be at least 5 characters long.
                     </span>
                 </small>
             </div>
@@ -65,7 +65,7 @@
     <div class="form-group form-row">
         <div class="offset-4 col-8">
             <button type="submit" mdbBtn color="primary" mdbWavesEffect [disabled]="!formProfile.valid">
-                Valider
+                Update
             </button>
         </div>
     </div>

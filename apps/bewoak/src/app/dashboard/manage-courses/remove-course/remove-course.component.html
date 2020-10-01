@@ -1,8 +1,8 @@
-<a class="white-text" (click)="openModal(template)" mdbBtn color="primary" mdbWavesEffect>Supprimer</a>
+<a class="white-text" (click)="openModal(template)" mdbBtn color="primary" mdbWavesEffect>Remove</a>
 <ng-template #template>
     <div class="modal-body text-center">
-        <p>Souhaitez-vous réellement supprimer ce parcours ?</p>
-        <button type="button" class="btn btn-default" (click)="remove()">Oui, j'en suis sûr(e) !</button>
-        <button type="button" class="btn btn-primary" (click)="decline()">Euh... non en fait !</button>
+        <p>Do you really want to delete this path?</p>
+        <button type="button" class="btn btn-default" (click)="remove()">Yes, I'm sure of it!</button>
+        <button type="button" class="btn btn-primary" (click)="decline()">Uh... no in fact!</button>
     </div>
 </ng-template>

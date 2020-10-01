@@ -15,7 +15,6 @@ import {
   State as CourseState,
   AddUserCourse,
   UpdateCurrentCourse,
-  getCurrentCourse,
 } from '../../../store';
 import { getCurrentUser } from 'apps/bewoak/src/app/store';
 
@@ -32,11 +31,11 @@ export class AddCourseFormComponent implements OnInit, OnDestroy {
   public levels: { id: number; name: string }[] = [
     {
       id: 1,
-      name: 'Débutant',
+      name: 'Beginner',
     },
     {
       id: 2,
-      name: 'Intermédiaire',
+      name: 'Intermediate',
     },
     {
       id: 3,
@@ -48,7 +47,7 @@ export class AddCourseFormComponent implements OnInit, OnDestroy {
     displayKey: 'name',
     search: false,
     height: 'auto',
-    placeholder: 'Sélectionner la difficulté',
+    placeholder: 'Select the level of the course',
   };
   // Utilisateur courant.
   private user: User;

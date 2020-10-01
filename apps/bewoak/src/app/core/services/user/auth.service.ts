@@ -85,7 +85,7 @@ export class AuthService {
           // Envoi d'un message.
           this.toastrService.showMessage({
             type: 'success',
-            message: `Bienvenue ${user.firstname}.`,
+            message: `Welcome ${user.firstname}.`,
           });
           this.router.navigate(['home']);
         }),
@@ -165,7 +165,7 @@ export class AuthService {
         // Envoi d'un message.
         this.toastrService.showMessage({
           type: 'success',
-          message: "L'utilisateur a bien été enregistré",
+          message: 'The user has been created.',
         });
       }),
       catchError((error) => {

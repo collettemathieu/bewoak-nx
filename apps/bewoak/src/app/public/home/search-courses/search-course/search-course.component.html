@@ -24,14 +24,14 @@
             {{course.description}}
         </mdb-card-text>
         <div class="d-flex justify-content-end">
-            <a class="white-text" (click)="navigateToCourse()" mdbBtn color="primary" mdbWavesEffect>Découvrir</a>
+            <a class="white-text" (click)="navigateToCourse()" mdbBtn color="primary" mdbWavesEffect>Read</a>
         </div>
     </mdb-card-body>
     <!--/.Card content-->
     <mdb-card-footer class="elegant-color white-text">
         <ul class="list-unstyled list-inline font-small mt-3">
             <li class="list-inline-item pr-2 white-text">
-                <mdb-icon far icon="clock" class="pr-1"></mdb-icon>{{course.dateUpdate | date: 'dd/MM/yyyy'}}
+                <mdb-icon far icon="clock" class="pr-1"></mdb-icon>{{course.dateUpdate | date: 'MM/dd/yyyy'}}
             </li>
             <li class="list-inline-item pr-2">
                 <a href="#" class="white-text">

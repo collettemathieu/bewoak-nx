@@ -1,6 +1,6 @@
 import { Item } from './item';
 
-export type typeCourseLevel = 'Débutant' | 'Intermédiaire' | 'Expert';
+export type typeCourseLevel = 'Beginner' | 'Intermediate' | 'Expert';
 
 export class Course {
   readonly id: string;
@@ -39,7 +39,7 @@ export class Course {
     this.avatar = options.avatar || '';
     this.like = options.like || 0;
     this.userId = options.userId;
-    this.level = options.level || 'Débutant';
+    this.level = options.level || 'Beginner';
     this.dateAdd = options.dateAdd || 0;
     this.dateUpdate = options.dateUpdate || 0;
   }

@@ -5,7 +5,8 @@ import { HttpHeaders, HttpClient, HttpBackend } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { ErrorService } from '../error.service';
 import { RandomService } from '../random.service';
-import { switchMap, catchError } from 'rxjs/operators';
+import { switchMap, catchError, tap } from 'rxjs/operators';
+import { ToastrService } from '../toastr.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,7 @@ export class ItemService {
     protected handler: HttpBackend,
     protected errorService: ErrorService,
     protected randomService: RandomService,
+    protected toastrService: ToastrService,
   ) {
     // Requête Http sans intercepteur.
     this.http = new HttpClient(this.handler);
@@ -72,6 +74,13 @@ export class ItemService {
       switchMap((data: any) => {
         return of(this.getItemFromFirestore(data.fields));
       }),
+      tap((_) => {
+        // Envoi d'un message à l'utilisateur.
+        this.toastrService.showMessage({
+          type: 'success',
+          message: 'The item has been added to the course.',
+        });
+      }),
       catchError((error) => {
         return this.errorService.handleError(error);
       }),
@@ -96,6 +105,13 @@ export class ItemService {
     return this.httpClient.patch<Item>(url, dataitem, httpOptions).pipe(
       switchMap((data: any) => {
         return of(this.getItemFromFirestore(data.fields));
+      }),
+      tap((_) => {
+        // Envoi d'un message à l'utilisateur.
+        this.toastrService.showMessage({
+          type: 'success',
+          message: 'The item has been updated.',
+        });
       }),
       catchError((error) => {
         return this.errorService.handleError(error);

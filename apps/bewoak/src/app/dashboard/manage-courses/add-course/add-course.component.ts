@@ -20,6 +20,6 @@ export class AddCourseComponent {
       class: 'modal-lg',
       scroll: true,
     });
-    this.modalRef.content.title = 'Nouveau parcours pédagogique';
+    this.modalRef.content.title = 'Add a pedagogical course';
   }
 }

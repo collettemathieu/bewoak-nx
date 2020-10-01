@@ -4,32 +4,32 @@
             <div class="md-form">
                 <input mdbInput type="email" class="form-control" id="email" formControlName="email"
                     autocomplete="false" autocorrect="false">
-                <label for="email">Adresse électronique</label>
+                <label for="email">E-mail address</label>
                 <small *ngIf="email.errors && email.dirty" class="form-text text-muted">
                     <span [hidden]="!email.errors.required">
-                        Une adresse électronique est requise.
+                        An e-mail address is required.
                     </span>
                     <span [hidden]="!email.errors.email">
-                        L'adresse électronique renseignée n'est pas valide.
+                        The e-mail address entered is not valid.
                     </span>
                 </small>
             </div>
             <div class="md-form">
                 <input mdbInput type="password" class="form-control" id="pwd" formControlName="password"
                     autocomplete="false" autocorrect="false">
-                <label for="pwd">Mot de passe</label>
+                <label for="pwd">Password</label>
                 <small *ngIf="password.errors && password.dirty" class="form-text text-muted">
                     <span [hidden]="!password.errors.required">
-                        Un mot de passe est requis.
+                        A password is required.
                     </span>
                     <span [hidden]="!password.errors.minlength">
-                        Votre mot de passe doit comporter plus de 8 caractères.
+                        Your password must be more than 8 characters long.
                     </span>
                 </small>
             </div>
             <div class="form-group form-row">
                 <button type="submit" mdbBtn class="ml-auto" color="primary" mdbWavesEffect [disabled]="!loginForm.valid">
-                    Valider
+                    Log in
                 </button>
             </div>
         </form>

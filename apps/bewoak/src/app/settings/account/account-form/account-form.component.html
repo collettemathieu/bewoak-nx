@@ -1,9 +1,9 @@
 <form [formGroup]="formAccount">
     <div class="row align-items-baseline">
-        <label for="email" class="col-4">Adresse électronique*</label>
+        <label for="email" class="col-4">E-mail address*</label>
         <div class="col-8">
             <div class="md-form mb-0">
-                <input mdbInput id="email" mdbTooltip="Vous ne pouvez pas encore modifier votre adresse électronique." placement="left"
+                <input mdbInput id="email" mdbTooltip="You cannot change your email address yet." placement="left"
                     class="form-control-plaintext" type="text" [value]="user?.email" readonly>
             </div>
         </div>
@@ -11,7 +11,7 @@
     <div class="form-group form-row">
         <div class="offset-4 col-8">
             <button type="submit" mdbBtn color="primary" mdbWavesEffect disabled>
-                Valider
+                Update
             </button>
         </div>
     </div>

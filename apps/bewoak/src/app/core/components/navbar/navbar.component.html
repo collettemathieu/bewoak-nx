@@ -8,11 +8,10 @@
             <li *ngIf="user?.hasRole('EXPERT')" dropdown class="nav-item" [class.active]='isActive(dashboardPath)'>
                 <a dropdownToggle mdbWavesEffect class="nav-link dropdown-toggle waves-light" type="button"
                     aria-haspopup="true" aria-expanded="false">
-                    Tableau de bord<span class="caret"></span>
+                    Dashboard<span class="caret"></span>
                 </a>
                 <div *dropdownMenu class="dropdown-menu dropdown" role="menu">
-                    <a mdbWavesEffect class="dropdown-item waves-light" (click)="navigate(manageCoursePath)">Gérer mes
-                        parcours</a>
+                    <a mdbWavesEffect class="dropdown-item waves-light" (click)="navigate(manageCoursePath)">Manage my courses</a>
                 </div>
             </li>
             <li *ngIf="user?.hasRole('ADMIN')" dropdown class="nav-item" [class.active]="isActive(adminPath)">
@@ -21,12 +20,11 @@
                     Administration<span class="caret"></span>
                 </a>
                 <div *dropdownMenu class="dropdown-menu dropdown" role="menu">
-                    <a mdbWavesEffect class="dropdown-item waves-light" (click)="navigate(addUserPath)">Ajouter un
-                        utilisateur</a>
+                    <a mdbWavesEffect class="dropdown-item waves-light" (click)="navigate(addUserPath)">Add a user</a>
                 </div>
             </li>
             <li *ngIf="!user" [class.active]='isActive(loginPath)' class="nav-item">
-                <a mdbWavesEffect class="nav-link waves-light" (click)="navigate(loginPath)">Connexion</a>
+                <a mdbWavesEffect class="nav-link waves-light" (click)="navigate(loginPath)">Login</a>
             </li>
         </ul>
         <ul *ngIf="user" class="navbar-nav">
@@ -37,9 +35,9 @@
                 </a>
                 <div *dropdownMenu class="dropdown dropdown-menu">
                     <a mdbWavesEffect class="dropdown-item waves-light"
-                        (click)="navigate(settingsProfilePath)">Paramètres</a>
+                        (click)="navigate(settingsProfilePath)">Settings</a>
                     <div class="dropdown-divider"></div>
-                    <a mdbWavesEffect class="dropdown-item waves-light" (click)="logOut()">Deconnexion</a>
+                    <a mdbWavesEffect class="dropdown-item waves-light" (click)="logOut()">Logout</a>
                 </div>
             </li>
         </ul>

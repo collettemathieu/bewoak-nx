@@ -28,13 +28,13 @@ export class AddUserComponent implements OnInit, OnDestroy {
     // a scroll defaults to auto. With auto height scroll will never appear.
     height: 'auto',
     // text to be displayed when no item is selected defaults to Select.
-    placeholder: 'Sélectionner les roles',
+    placeholder: 'Select the roles of the user',
     // text to be displayed whenmore than one items are selected like Option 1 + 5 more.
-    moreText: 'en plus',
+    moreText: 'more',
     // text to be displayed when no items are found while searching.
-    noResultsFound: 'Aucun résultat trouvé !',
+    noResultsFound: 'No results found !',
     // label thats displayed in search input.
-    searchPlaceholder: 'Rechercher',
+    searchPlaceholder: 'Search',
   };
   public currentUser: User;
   private subscription: Subscription;

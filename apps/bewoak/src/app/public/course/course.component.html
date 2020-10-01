@@ -20,8 +20,8 @@
           <div class="col text-md-left mx-2 mt-3">
             <h4 class="h4 mb-4">{{ course.name }}</h4>
             <p class="font-weight-normal">
-              par <a><strong>Carine Fox</strong></a
-              >, mise à jour le {{ course.dateUpdate | date: 'dd/MM/yyyy' }}
+              by <a><strong>Carine Fox</strong></a
+              >, update at {{ course.dateUpdate | date: 'MM/dd/yyyy' }}
             </p>
           </div>
         </div>
@@ -33,7 +33,7 @@
               <span class="circle">
                 <mdb-icon fas icon="folder-open"></mdb-icon>
               </span>
-              <span class="label">Début du parcours</span>
+              <span class="label">Start</span>
             </a>
           </li>
           <li class="active" *ngFor="let item of course.items">
@@ -59,7 +59,7 @@
                       target="_blank"
                       mdbBtn
                       color="primary"
-                      >Consulter</a
+                      >Read</a
                     >
                   </div>
                 </mdb-card-body>
@@ -77,7 +77,7 @@
               <span class="circle">
                 <mdb-icon fas icon="medal"></mdb-icon>
               </span>
-              <span class="label">Fin du parcours</span>
+              <span class="label">End of the course</span>
             </a>
           </li>
         </ul>
