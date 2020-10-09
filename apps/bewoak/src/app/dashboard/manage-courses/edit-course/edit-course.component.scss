@@ -6,3 +6,19 @@
   margin: 0;
   cursor: default;
 }
+
+.add-item {
+  cursor: pointer;
+}
+
+.card {
+  min-height: 200px;
+
+  .card-header {
+    min-height: 73px;
+
+    .handle {
+      cursor: move;
+    }
+  }
+}

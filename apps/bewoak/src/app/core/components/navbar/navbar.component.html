@@ -24,7 +24,7 @@
                 </div>
             </li>
             <li *ngIf="!user" [class.active]='isActive(loginPath)' class="nav-item">
-                <a mdbWavesEffect class="nav-link waves-light" (click)="navigate(loginPath)">Login</a>
+                <a mdbWavesEffect class="nav-link waves-light" (click)="navigate(loginPath)">Log in</a>
             </li>
         </ul>
         <ul *ngIf="user" class="navbar-nav">
@@ -37,7 +37,7 @@
                     <a mdbWavesEffect class="dropdown-item waves-light"
                         (click)="navigate(settingsProfilePath)">Settings</a>
                     <div class="dropdown-divider"></div>
-                    <a mdbWavesEffect class="dropdown-item waves-light" (click)="logOut()">Logout</a>
+                    <a mdbWavesEffect class="dropdown-item waves-light" (click)="logOut()">Log out</a>
                 </div>
             </li>
         </ul>

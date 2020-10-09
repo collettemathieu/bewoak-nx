@@ -8,9 +8,10 @@ import { ApiCrossRefService } from '@bewoak-nx/api-cross-ref';
 import { DoiService } from '../../core/services/article/doi.service';
 import { RemoveItemComponent } from './remove-item/remove-item.component';
 import { AddItemModule } from './add-item/add-item.module';
+import { EditItemsComponent } from './edit-items/edit-items.component';
 
 @NgModule({
-  declarations: [ViewItemComponent, RemoveItemComponent],
+  declarations: [ViewItemComponent, RemoveItemComponent, EditItemsComponent],
   imports: [
     SharedModule,
     ReactiveFormsModule,
@@ -18,6 +19,6 @@ import { AddItemModule } from './add-item/add-item.module';
     AddItemModule,
   ],
   providers: [ApiCrossRefService, DoiService],
-  exports: [ViewItemComponent, RemoveItemComponent],
+  exports: [ViewItemComponent, RemoveItemComponent, EditItemsComponent],
 })
 export class ManageItemsModule {}

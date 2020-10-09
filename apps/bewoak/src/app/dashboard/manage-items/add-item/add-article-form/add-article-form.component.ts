@@ -225,7 +225,7 @@ export class AddArticleFormComponent implements OnInit, OnDestroy {
       this.toastrService.showMessage({
         type: 'info',
         message:
-          'Vous ne pouvez pas ajouter plusieurs fois le même article dans un même parcours.',
+          'You cannot add the same item several times in the same path.',
       });
       // Fermeture de la fenêtre modale.
       this.closeModalArticle.emit(true);

@@ -15,6 +15,7 @@ import { AddItemModalComponent } from '../../manage-items/add-item/add-item-moda
 })
 export class EditCourseComponent implements OnInit {
   public course$: Observable<Course | null>;
+  public items: number[];
   private modalRef: MDBModalRef;
 
   constructor(
